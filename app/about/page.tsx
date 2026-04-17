@@ -16,17 +16,21 @@ export const metadata = {
 export default function AboutPage() {
   return (
     <Container width="content">
-      <div className="py-20 md:py-24 space-y-24">
+      <div className="py-20 md:py-28 space-y-24 md:space-y-28">
         {/* About the show */}
         <section>
-          <h1 className="text-xs uppercase tracking-[0.2em] text-fg-muted">
-            About the show
-          </h1>
-          <p className="mt-4 font-display text-4xl md:text-5xl text-fg leading-tight">
+          <p className="eyebrow">About the show</p>
+          <h1
+            className="mt-5 font-display text-5xl md:text-6xl text-fg"
+            style={{ lineHeight: 0.98, letterSpacing: "-0.035em" }}
+          >
             {showInfo.showTagline}
-          </p>
+          </h1>
 
-          <div className="mt-8 space-y-5 text-base md:text-lg text-fg leading-relaxed">
+          <div
+            className="mt-10 prose-serif drop-cap text-fg"
+            style={{ maxWidth: "68ch" }}
+          >
             <p>{showInfo.showDescriptionLong}</p>
             <p>
               The show is produced by {showInfo.productionLabel} in{" "}
@@ -34,7 +38,7 @@ export default function AboutPage() {
             </p>
           </div>
 
-          <p className="mt-8 text-sm text-fg-muted border-l-2 border-accent pl-4">
+          <p className="mt-10 text-sm text-fg-muted font-serif-body italic border-l-2 border-accent pl-4">
             Phase 1 branding — we're keeping the show name during the current
             engagement. Full rebrand coming later.
           </p>
@@ -49,27 +53,30 @@ export default function AboutPage() {
 
         {/* About Eric */}
         <section>
-          <h2 className="text-xs uppercase tracking-[0.2em] text-fg-muted">
-            About {showInfo.hostName}
-          </h2>
-          <p className="mt-4 font-display text-4xl md:text-5xl text-fg">
+          <p className="eyebrow">About {showInfo.hostName}</p>
+          <h2
+            className="mt-5 font-display text-5xl md:text-6xl text-fg"
+            style={{ lineHeight: 0.98, letterSpacing: "-0.035em" }}
+          >
             {showInfo.hostName}
+          </h2>
+          <p className="mt-3 text-sm text-fg-muted tabular">
+            {showInfo.hostLocation}
           </p>
-          <p className="mt-1 text-sm text-fg-muted">{showInfo.hostLocation}</p>
 
-          <div className="mt-8 grid grid-cols-1 md:grid-cols-[260px_1fr] gap-8 items-start">
+          <div className="mt-10 grid grid-cols-1 md:grid-cols-[260px_1fr] gap-10 items-start">
             <EricPhoto
               variant="portrait-01"
               alt={`${showInfo.hostName}, host of ${showInfo.showName}`}
               aspectRatio="4/5"
               priority
             />
-            <div className="space-y-5 text-base md:text-lg text-fg leading-relaxed">
+            <div className="prose-serif text-fg" style={{ maxWidth: "56ch" }}>
               <p>{showInfo.hostLongBio}</p>
             </div>
           </div>
 
-          <p className="mt-8 text-sm text-fg-muted border-l-2 border-border pl-4">
+          <p className="mt-10 text-sm text-fg-muted font-serif-body italic border-l-2 border-border pl-4">
             Recorded on professional broadcast equipment including Blackmagic 6K
             cameras at studio-grade quality.
           </p>
@@ -77,14 +84,15 @@ export default function AboutPage() {
 
         {/* The Chairapy connection */}
         <section>
-          <h2 className="text-xs uppercase tracking-[0.2em] text-fg-muted">
-            The Chairapy connection
-          </h2>
-          <p className="mt-4 font-display text-4xl md:text-5xl text-fg">
+          <p className="eyebrow">The Chairapy connection</p>
+          <h2
+            className="mt-5 font-display text-5xl md:text-6xl text-fg"
+            style={{ lineHeight: 0.98, letterSpacing: "-0.035em" }}
+          >
             Part of something bigger.
-          </p>
-          <div className="mt-8 grid grid-cols-1 md:grid-cols-[1fr_260px] gap-10 items-start">
-            <div className="space-y-5 text-base md:text-lg text-fg leading-relaxed">
+          </h2>
+          <div className="mt-10 grid grid-cols-1 md:grid-cols-[1fr_260px] gap-10 items-start">
+            <div className="prose-serif text-fg" style={{ maxWidth: "56ch" }}>
               <p>
                 This podcast is produced under the Chairapy brand, which also
                 includes a full-service salon in Metairie. Same voice, same
@@ -94,7 +102,7 @@ export default function AboutPage() {
               <p>
                 <Link
                   href="#"
-                  className="text-accent hover:text-accent-hover underline underline-offset-4"
+                  className="text-accent editorial-link underline underline-offset-4"
                 >
                   Visit chairapy.org →
                 </Link>

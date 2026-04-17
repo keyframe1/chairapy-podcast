@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Script from "next/script";
-import { Instrument_Serif, Inter } from "next/font/google";
+import { Fraunces, Inter, Newsreader } from "next/font/google";
 import "../styles/globals.css";
 import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
@@ -12,10 +12,17 @@ const inter = Inter({
   display: "swap",
 });
 
-const instrumentSerif = Instrument_Serif({
+const fraunces = Fraunces({
   subsets: ["latin"],
-  weight: "400",
   variable: "--font-display",
+  axes: ["SOFT", "WONK", "opsz"],
+  display: "swap",
+});
+
+const newsreader = Newsreader({
+  subsets: ["latin"],
+  variable: "--font-serif-body",
+  style: ["normal", "italic"],
   display: "swap",
 });
 
@@ -70,7 +77,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${instrumentSerif.variable}`}
+      className={`${inter.variable} ${fraunces.variable} ${newsreader.variable}`}
     >
       <body className="min-h-screen flex flex-col bg-bg text-fg">
         <a

@@ -4,10 +4,12 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 
 import Container from "../../../components/ui/Container";
-import EpisodeCard from "../../../components/podcast/EpisodeCard";
 import SpotifyPlayer from "../../../components/podcast/SpotifyPlayer";
 import AudioPlayer from "../../../components/podcast/AudioPlayer";
 import EmailSignup from "../../../components/podcast/EmailSignup";
+import EpisodeListRow from "../../../components/podcast/EpisodeListRow";
+import VideoPlaceholder from "../../../components/podcast/VideoPlaceholder";
+import MarkAsListened from "../../../components/podcast/MarkAsListened";
 
 import {
   getAllEpisodes,
@@ -15,6 +17,7 @@ import {
   getRelatedEpisodes,
   formatPublishedDate,
 } from "../../../lib/episodes";
+import { formatDurationLabel } from "../../../lib/duration";
 
 import guestsData from "../../../content/guests.json";
 import showInfoData from "../../../content/show-info.json";
@@ -79,6 +82,23 @@ function isHttp(url: string | null | undefined): url is string {
   return !!url && (url.startsWith("http://") || url.startsWith("https://"));
 }
 
+function extractPullQuote(
+  longDescription: string | null | undefined,
+  fallback: string,
+): string {
+  const source = (longDescription ?? fallback).trim();
+  if (!source) return fallback;
+  // First sentence, max ~180 chars, stripped of boilerplate social prompts.
+  const cleaned = source
+    .replace(/Connect with Eric[^.]*\./gi, "")
+    .replace(/Follow on [^.]*\./gi, "")
+    .replace(/\s+/g, " ")
+    .trim();
+  const firstSentence = cleaned.split(/(?<=[.!?])\s+/)[0] ?? cleaned;
+  if (firstSentence.length <= 220) return firstSentence;
+  return `${firstSentence.slice(0, 210).trim()}…`;
+}
+
 export default function EpisodeDetailPage({
   params,
 }: {
@@ -88,8 +108,10 @@ export default function EpisodeDetailPage({
   if (!episode) notFound();
 
   const published = formatPublishedDate(episode.publishedDate);
+  const duration = formatDurationLabel(episode.duration);
   const related = getRelatedEpisodes(episode, 3);
   const linkedGuests = findGuestsForEpisode(episode.id);
+  const pullQuote = extractPullQuote(episode.longDescription, episode.description);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -112,137 +134,150 @@ export default function EpisodeDetailPage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      <MarkAsListened slug={episode.slug} />
 
       <article>
-        {/* Above-the-fold */}
-        <section className="py-16 md:py-20 border-b border-border">
+        {/* Editorial article header */}
+        <section className="pt-12 md:pt-16 pb-10 md:pb-14">
           <Container width="content">
             <Link
               href="/episodes"
-              className="inline-flex items-center gap-2 text-sm text-fg-muted hover:text-accent"
+              className="inline-flex items-center gap-2 text-sm text-fg-muted hover:text-accent transition-colors"
             >
               <span aria-hidden="true">←</span>
               <span>All episodes</span>
             </Link>
 
-            <div className="mt-8 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs uppercase tracking-[0.2em] text-fg-muted">
-              <span className="font-mono text-accent">
-                Episode {episode.episodeNumber}
-              </span>
+            <p className="mt-10 eyebrow tabular">
+              <span className="text-accent">Episode {episode.episodeNumber}</span>
               {published && (
                 <>
-                  <span aria-hidden="true">·</span>
-                  <span>Published {published}</span>
+                  {" · "}
+                  <span>{published}</span>
                 </>
               )}
-            </div>
+              {duration && (
+                <>
+                  {" · "}
+                  <span>{duration}</span>
+                </>
+              )}
+              {episode.guestName && (
+                <>
+                  {" · "}
+                  <span>with {episode.guestName}</span>
+                </>
+              )}
+            </p>
 
-            <h1 className="mt-4 font-display text-4xl md:text-6xl text-fg leading-tight">
+            <h1
+              className="mt-5 font-display text-5xl md:text-6xl text-fg"
+              style={{ lineHeight: 0.98, letterSpacing: "-0.035em" }}
+            >
               {episode.title}
             </h1>
 
-            {episode.guestName && (
-              <p className="mt-3 text-lg text-fg-muted">
-                with {episode.guestName}
+            {pullQuote && (
+              <blockquote
+                className="mt-8 font-serif-body italic text-2xl md:text-3xl"
+                style={{
+                  color: "var(--color-accent)",
+                  lineHeight: 1.3,
+                  letterSpacing: "-0.015em",
+                  maxWidth: "44ch",
+                }}
+              >
+                "{pullQuote}"
+              </blockquote>
+            )}
+          </Container>
+        </section>
+
+        {/* Player — zero-chrome, sits directly on the page */}
+        <section className="pb-16">
+          <Container width="content">
+            {episode.spotifyEmbedUrl ? (
+              <SpotifyPlayer embedUrl={episode.spotifyEmbedUrl} lazy={false} bare />
+            ) : episode.audioUrl ? (
+              <AudioPlayer
+                audioUrl={episode.audioUrl}
+                title={episode.title}
+                episodeNumber={episode.episodeNumber}
+                thumbnailUrl={episode.thumbnailUrl ?? undefined}
+              />
+            ) : (
+              <p className="text-center font-serif-body italic text-fg-muted">
+                Audio isn't available right now.{" "}
+                <a
+                  href={showInfo.distributionLinks.spotify}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-accent editorial-link underline underline-offset-4"
+                >
+                  Try Spotify
+                </a>
+                .
               </p>
             )}
 
-            <div className="mt-10">
-              {episode.spotifyEmbedUrl ? (
-                <div className="grid grid-cols-1 md:grid-cols-[260px_1fr] gap-6 items-start">
-                  {episode.thumbnailUrl && (
-                    <div className="relative aspect-square w-full rounded-xl overflow-hidden border border-border bg-bg-elevated">
-                      <Image
-                        src={episode.thumbnailUrl}
-                        alt={`${episode.title} — episode artwork`}
-                        fill
-                        sizes="(max-width: 768px) 100vw, 260px"
-                        priority
-                        className="object-cover"
-                      />
-                    </div>
-                  )}
-                  <SpotifyPlayer
-                    embedUrl={episode.spotifyEmbedUrl}
-                    lazy={false}
-                  />
-                </div>
-              ) : episode.audioUrl ? (
-                <AudioPlayer
-                  audioUrl={episode.audioUrl}
-                  title={episode.title}
-                  episodeNumber={episode.episodeNumber}
-                  thumbnailUrl={episode.thumbnailUrl ?? undefined}
-                />
-              ) : (
-                <div className="rounded-xl border border-border bg-bg-elevated p-8 text-center text-sm text-fg-muted">
-                  Audio for this episode isn't available right now. Try{" "}
-                  <a
-                    href={showInfo.distributionLinks.spotify}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-accent hover:text-accent-hover underline"
-                  >
-                    listening on Spotify
-                  </a>
-                  .
-                </div>
-              )}
-            </div>
-
-            <div className="mt-6 flex flex-wrap gap-3 text-sm">
+            <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-sm text-fg-muted">
               {isHttp(showInfo.distributionLinks.spotify) && (
                 <a
                   href={showInfo.distributionLinks.spotify}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-fg-muted hover:text-accent"
+                  className="hover:text-accent transition-colors"
                 >
-                  Open in Spotify →
+                  Open in Spotify ↗
                 </a>
               )}
-              {isHttp(episode.applePodcastsUrl) && (
+              {isHttp(showInfo.distributionLinks.apple) && (
                 <a
-                  href={episode.applePodcastsUrl}
+                  href={showInfo.distributionLinks.apple}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-fg-muted hover:text-accent"
+                  className="hover:text-accent transition-colors"
                 >
-                  Apple Podcasts →
+                  Apple Podcasts ↗
                 </a>
               )}
-              {isHttp(episode.amazonMusicUrl) && (
+              {isHttp(showInfo.distributionLinks.amazon) && (
                 <a
-                  href={episode.amazonMusicUrl}
+                  href={showInfo.distributionLinks.amazon}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-fg-muted hover:text-accent"
+                  className="hover:text-accent transition-colors"
                 >
-                  Amazon Music →
+                  Amazon Music ↗
                 </a>
               )}
             </div>
           </Container>
         </section>
 
-        {/* Below-the-fold: description + guest sidebar */}
-        <section className="py-16 md:py-20">
+        {/* Show notes — Newsreader body with drop cap */}
+        <section className="pb-16 md:pb-20">
           <Container>
-            <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-12">
-              <div className="max-w-content">
-                <h2 className="text-xs uppercase tracking-[0.2em] text-fg-muted">
-                  Show notes
-                </h2>
-                <div className="mt-4 space-y-5 text-base md:text-lg text-fg leading-relaxed whitespace-pre-wrap">
-                  {episode.longDescription ?? episode.description}
+            <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-14">
+              <div>
+                <p className="eyebrow mb-6">Show notes</p>
+                <div
+                  className="prose-serif drop-cap text-fg"
+                  style={{ maxWidth: "68ch" }}
+                >
+                  {(episode.longDescription ?? episode.description)
+                    .split(/\n\n+/)
+                    .map((para, i) => (
+                      <p key={i}>{para}</p>
+                    ))}
                 </div>
 
                 {episode.topics.length > 0 && (
-                  <div className="mt-8 flex flex-wrap gap-2">
+                  <div className="mt-10 flex flex-wrap gap-2">
                     {episode.topics.map((topic) => (
                       <span
                         key={topic}
-                        className="inline-flex items-center rounded-full border border-border px-3 py-1 text-xs text-fg-muted"
+                        className="eyebrow inline-flex items-center border border-border px-3 py-1"
                       >
                         {topic}
                       </span>
@@ -253,20 +288,24 @@ export default function EpisodeDetailPage({
 
               {linkedGuests.length > 0 && (
                 <aside>
-                  <h2 className="text-xs uppercase tracking-[0.2em] text-fg-muted">
+                  <p className="eyebrow mb-4">
                     {linkedGuests.length === 1 ? "Guest" : "Guests"}
-                  </h2>
-                  <div className="mt-4 space-y-4">
+                  </p>
+                  <div className="space-y-4">
                     {linkedGuests.map((g) => (
                       <Link
                         key={g.id}
                         href={`/guests/${g.slug}`}
-                        className="block rounded-lg border border-border bg-bg-elevated p-5 transition-colors hover:border-accent"
+                        className="block border border-border p-5 transition-colors hover:border-accent hover:bg-bg-elevated"
+                        style={{ borderRadius: 4 }}
                       >
-                        <div className="font-display text-xl text-fg">
+                        <p
+                          className="font-display text-xl text-fg"
+                          style={{ lineHeight: 1.05 }}
+                        >
                           {g.name}
-                        </div>
-                        <p className="mt-2 text-sm text-fg-muted">
+                        </p>
+                        <p className="mt-2 font-serif-body text-sm italic text-fg-muted">
                           {g.headline}
                         </p>
                       </Link>
@@ -278,8 +317,40 @@ export default function EpisodeDetailPage({
           </Container>
         </section>
 
+        {/* Video callout — static placeholder */}
+        <section className="py-14 border-t border-border">
+          <Container width="content">
+            <div className="flex flex-col sm:flex-row gap-6 items-start">
+              <div className="sm:w-2/5 flex-none">
+                <VideoPlaceholder />
+              </div>
+              <div className="sm:flex-1">
+                <p className="eyebrow eyebrow--amber">Watch</p>
+                <p
+                  className="mt-3 font-display text-2xl text-fg"
+                  style={{ lineHeight: 1.1 }}
+                >
+                  Video version coming soon.
+                </p>
+                <p className="mt-3 text-fg-muted font-serif-body text-lg">
+                  We're producing video cuts of every episode. Be the first to know.
+                </p>
+                <Link
+                  href="/watch"
+                  className="mt-4 inline-flex items-center gap-2 text-sm text-accent editorial-link"
+                >
+                  <span className="underline underline-offset-4 hover:[text-underline-offset:8px] transition-all">
+                    Get on the list
+                  </span>
+                  <span aria-hidden="true">→</span>
+                </Link>
+              </div>
+            </div>
+          </Container>
+        </section>
+
         {/* Email signup */}
-        <section className="py-12 md:py-16 border-t border-border">
+        <section className="py-14 border-t border-border">
           <Container width="content">
             <EmailSignup
               variant="compact"
@@ -289,18 +360,18 @@ export default function EpisodeDetailPage({
           </Container>
         </section>
 
-        {/* More episodes */}
+        {/* More episodes — minimal list */}
         {related.length > 0 && (
-          <section className="py-16 md:py-20 border-t border-border">
+          <section className="py-14 border-t border-border">
             <Container>
-              <h2 className="text-xs uppercase tracking-[0.2em] text-fg-muted">
-                More episodes
-              </h2>
-              <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+              <p className="eyebrow mb-4">More episodes</p>
+              <ul>
                 {related.map((ep) => (
-                  <EpisodeCard key={ep.id} episode={ep} variant="compact" />
+                  <li key={ep.id}>
+                    <EpisodeListRow episode={ep} />
+                  </li>
                 ))}
-              </div>
+              </ul>
             </Container>
           </section>
         )}

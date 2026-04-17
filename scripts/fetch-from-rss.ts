@@ -155,10 +155,9 @@ function transformToEpisodes(items: RssItem[]): Episode[] {
       topics: [],
       featured: false,
       thumbnailUrl: null,
+      audioUrl: item.enclosureUrl,
+      duration: item.duration,
     };
-
-    // Stash the mp3 enclosure on a non-typed field for the linker/UI to pick up.
-    (ep as Episode & { audioUrl: string }).audioUrl = item.enclosureUrl;
     return ep;
   });
 }
@@ -200,6 +199,7 @@ function preserveFields(
     if (prior.thumbnailUrl) next.thumbnailUrl = prior.thumbnailUrl;
     if (prior.topics.length) next.topics = prior.topics;
     if (prior.guestName) next.guestName = prior.guestName;
+    if (prior.duration && !next.duration) next.duration = prior.duration;
     return next;
   });
 

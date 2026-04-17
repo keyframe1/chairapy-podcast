@@ -1,25 +1,28 @@
 import Link from "next/link";
 import Container from "../components/ui/Container";
-import CTAButton from "../components/ui/CTAButton";
 import EricPhoto from "../components/podcast/EricPhoto";
-import EpisodeCard from "../components/podcast/EpisodeCard";
-import GuestCard from "../components/podcast/GuestCard";
-import PlatformButton from "../components/podcast/PlatformButton";
 import SpotifyPlayer from "../components/podcast/SpotifyPlayer";
 import AudioPlayer from "../components/podcast/AudioPlayer";
 import EmailSignup from "../components/podcast/EmailSignup";
+import VideoPlaceholder from "../components/podcast/VideoPlaceholder";
+import ContinueExploring from "../components/podcast/ContinueExploring";
+import GuestCard from "../components/podcast/GuestCard";
+import PlatformButton from "../components/podcast/PlatformButton";
 
 import showInfoData from "../content/show-info.json";
 import guestsData from "../content/guests.json";
 import type { Guest, ShowInfo } from "../lib/types";
-import { getFeaturedEpisode } from "../lib/episodes";
+import { getAllEpisodes, getFeaturedEpisode, formatPublishedDate } from "../lib/episodes";
+import { formatDurationLabel } from "../lib/duration";
 import { SITE_URL } from "../lib/site";
 
 const showInfo = showInfoData as ShowInfo;
 const guests = guestsData as Guest[];
 
 export default function HomePage() {
+  const allEpisodes = getAllEpisodes();
   const featuredEpisode = getFeaturedEpisode();
+  const latestEpisode = allEpisodes[0];
   const teaserGuests = guests.slice(0, 6);
 
   const jsonLd = {
@@ -28,14 +31,8 @@ export default function HomePage() {
     name: showInfo.showName,
     url: SITE_URL,
     description: showInfo.showDescription,
-    author: {
-      "@type": "Person",
-      name: showInfo.hostName,
-    },
-    publisher: {
-      "@type": "Organization",
-      name: showInfo.productionLabel,
-    },
+    author: { "@type": "Person", name: showInfo.hostName },
+    publisher: { "@type": "Organization", name: showInfo.productionLabel },
     sameAs: [
       showInfo.distributionLinks.spotify,
       showInfo.socialLinks.instagram,
@@ -50,79 +47,240 @@ export default function HomePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      {/* Hero */}
-      <section className="relative min-h-[70vh] flex items-center justify-center overflow-hidden">
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background:
-              "radial-gradient(ellipse at 50% 30%, rgba(193, 113, 68, 0.12), transparent 60%)",
-          }}
-        />
+
+      {/* Editorial hero — typographic masthead, asymmetric two-column */}
+      <section className="pt-16 md:pt-24 pb-12 md:pb-20">
         <Container>
-          <div className="py-24 md:py-32 text-center">
-            <h1
-              className="font-display leading-[1.05] text-fg"
-              style={{ fontSize: "clamp(3rem, 8vw, 6rem)" }}
-            >
-              {showInfo.showName}
-            </h1>
-
-            <div
-              aria-hidden="true"
-              className="mx-auto mt-6 h-px w-24 bg-accent"
-            />
-
-            <p className="mt-6 mx-auto max-w-content text-lg md:text-xl text-fg-muted">
-              {showInfo.showTagline}
-            </p>
-
-            <div className="mt-10 flex flex-col sm:flex-row gap-3 justify-center">
-              <CTAButton
-                href={showInfo.distributionLinks.spotify}
-                variant="primary"
-                external
+          <div className="grid grid-cols-1 md:grid-cols-[3fr_2fr] gap-10 md:gap-16 items-end">
+            <div className="reveal">
+              <p className="eyebrow mb-6">A Chairapy Media podcast · New Orleans</p>
+              <h1
+                className="font-display text-fg"
+                style={{
+                  fontSize: "var(--text-display)",
+                  lineHeight: 0.98,
+                  letterSpacing: "-0.035em",
+                  fontVariationSettings: '"opsz" 144, "SOFT" 100, "WONK" 1',
+                }}
               >
-                Listen on Spotify
-              </CTAButton>
-              <CTAButton href="/episodes" variant="secondary">
-                Browse Episodes
-              </CTAButton>
+                Eric's
+                <br />
+                ADHD
+                <br />
+                Experience
+              </h1>
+              <div
+                aria-hidden="true"
+                className="mt-8 h-px w-20 bg-accent"
+              />
+              <p
+                className="mt-8 font-serif-body italic text-2xl md:text-3xl text-fg-muted max-w-content"
+                style={{ lineHeight: 1.3 }}
+              >
+                {showInfo.showTagline}
+              </p>
+            </div>
+
+            <aside className="reveal md:pb-4">
+              <p className="eyebrow eyebrow--sage tabular">
+                {allEpisodes.length} episodes · new drops monthly
+              </p>
+              <p className="mt-8 text-base text-fg max-w-content" style={{ lineHeight: 1.65 }}>
+                Long-form conversations with paramedics, musicians, fighters, fishermen,
+                comedians, and people you'd pass at the counter. Hosted by {showInfo.hostName}
+                {" "}in {showInfo.hostLocation}.
+              </p>
+              {latestEpisode && (
+                <Link
+                  href={`/episodes/${latestEpisode.slug}`}
+                  className="group mt-10 block border border-border p-5 transition-colors hover:bg-bg-elevated"
+                  style={{ borderRadius: 4 }}
+                >
+                  <p className="eyebrow eyebrow--accent tabular">
+                    Latest · Ep {latestEpisode.episodeNumber}
+                  </p>
+                  <p
+                    className="mt-2 font-display text-xl text-fg group-hover:text-accent transition-colors"
+                    style={{ lineHeight: 1.1 }}
+                  >
+                    {latestEpisode.title}
+                  </p>
+                  <p className="mt-2 text-xs text-fg-muted tabular">
+                    {formatPublishedDate(latestEpisode.publishedDate)}
+                  </p>
+                </Link>
+              )}
+            </aside>
+          </div>
+        </Container>
+      </section>
+
+      {/* Featured episode — split-screen magazine layout */}
+      {featuredEpisode && (
+        <section className="py-16 md:py-24 border-t border-border">
+          <Container>
+            <p className="eyebrow mb-8">
+              Featured · start here if you're new
+            </p>
+            <article className="grid grid-cols-1 md:grid-cols-[4fr_6fr] gap-10 md:gap-16 items-start">
+              <div className="relative aspect-square bg-bg-elevated border border-border overflow-hidden">
+                {featuredEpisode.thumbnailUrl ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={featuredEpisode.thumbnailUrl}
+                    alt={`${featuredEpisode.title} — episode artwork`}
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
+                ) : (
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <span
+                      className="font-display text-7xl text-accent"
+                      style={{ fontVariationSettings: '"opsz" 144, "SOFT" 100, "WONK" 1' }}
+                    >
+                      {featuredEpisode.episodeNumber}
+                    </span>
+                  </div>
+                )}
+              </div>
+
+              <div>
+                <p className="eyebrow eyebrow--accent tabular">
+                  Episode {featuredEpisode.episodeNumber}
+                  {featuredEpisode.publishedDate && (
+                    <> · <span>{formatPublishedDate(featuredEpisode.publishedDate)}</span></>
+                  )}
+                  {formatDurationLabel(featuredEpisode.duration) && (
+                    <> · <span>{formatDurationLabel(featuredEpisode.duration)}</span></>
+                  )}
+                  {featuredEpisode.guestName && (
+                    <> · with {featuredEpisode.guestName}</>
+                  )}
+                </p>
+
+                <h2
+                  className="mt-4 font-display text-4xl md:text-5xl text-fg"
+                  style={{ lineHeight: 1.02, letterSpacing: "-0.03em" }}
+                >
+                  {featuredEpisode.title}
+                </h2>
+
+                <p
+                  className="mt-6 font-serif-body text-xl text-fg italic max-w-content"
+                  style={{ lineHeight: 1.4 }}
+                >
+                  {featuredEpisode.description}
+                </p>
+
+                <div className="mt-10 flex flex-wrap items-center gap-6">
+                  <Link
+                    href={`/episodes/${featuredEpisode.slug}`}
+                    className="group inline-flex items-center gap-3 text-accent editorial-link"
+                  >
+                    <span aria-hidden="true" className="text-xl">▶</span>
+                    <span className="text-lg underline underline-offset-4 group-hover:[text-underline-offset:8px] transition-all">
+                      Listen now
+                    </span>
+                  </Link>
+                  <Link
+                    href="/episodes"
+                    className="text-sm text-fg-muted hover:text-accent transition-colors"
+                  >
+                    View all episodes →
+                  </Link>
+                </div>
+
+                {featuredEpisode.spotifyEmbedUrl ? (
+                  <div className="mt-8">
+                    <SpotifyPlayer
+                      embedUrl={featuredEpisode.spotifyEmbedUrl}
+                      compact
+                    />
+                  </div>
+                ) : featuredEpisode.audioUrl ? (
+                  <div className="mt-8">
+                    <AudioPlayer
+                      audioUrl={featuredEpisode.audioUrl}
+                      title={featuredEpisode.title}
+                      episodeNumber={featuredEpisode.episodeNumber}
+                      thumbnailUrl={featuredEpisode.thumbnailUrl ?? undefined}
+                    />
+                  </div>
+                ) : null}
+              </div>
+            </article>
+          </Container>
+        </section>
+      )}
+
+      {/* Video — coming soon */}
+      <section className="py-20 md:py-24 border-t border-border">
+        <Container>
+          <div className="grid grid-cols-1 md:grid-cols-[5fr_7fr] gap-10 md:gap-16 items-start">
+            <div>
+              <p className="eyebrow eyebrow--amber">Coming to video</p>
+              <h2
+                className="mt-3 font-display text-3xl md:text-4xl text-fg"
+                style={{ lineHeight: 1.05 }}
+              >
+                Full episodes, watchable soon.
+              </h2>
+              <p className="mt-4 text-base text-fg-muted max-w-content" style={{ lineHeight: 1.6 }}>
+                Video versions of Eric's ADHD Experience are coming to YouTube and the
+                site. Get on the list to know when they drop.
+              </p>
+              <div className="mt-8">
+                <EmailSignup
+                  variant="compact"
+                  headline="Notify me when video is live."
+                  subheadline="One email, no spam."
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 reveal-stagger">
+              <VideoPlaceholder />
+              <VideoPlaceholder />
+              <VideoPlaceholder />
             </div>
           </div>
         </Container>
       </section>
 
-      {/* About strip */}
-      <section className="py-16 md:py-24 border-t border-border">
+      {/* About strip — portrait + restrained positioning */}
+      <section className="py-20 md:py-24 border-t border-border">
         <Container>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-14 items-center">
             <div className="md:col-span-1">
               <EricPhoto
                 variant="portrait-02"
-                alt="Eric Falgout at work in the Chairapy salon"
+                alt={`${showInfo.hostName} at work in the Chairapy salon`}
                 aspectRatio="square"
               />
             </div>
             <div className="md:col-span-2">
-              <h2 className="text-xs uppercase tracking-[0.2em] text-fg-muted font-body">
-                About the host
-              </h2>
-              <p className="mt-4 font-display text-3xl md:text-4xl text-fg">
+              <p className="eyebrow">About the host</p>
+              <p
+                className="mt-4 font-display text-4xl md:text-5xl text-fg"
+                style={{ lineHeight: 1.02, letterSpacing: "-0.03em" }}
+              >
                 {showInfo.hostName}
               </p>
-              <p className="mt-1 text-sm text-fg-muted">
+              <p className="mt-2 text-sm text-fg-muted tabular">
                 {showInfo.hostLocation}
               </p>
-              <p className="mt-6 text-base md:text-lg text-fg leading-relaxed">
+              <p
+                className="mt-6 font-serif-body text-lg md:text-xl text-fg max-w-content"
+                style={{ lineHeight: 1.6 }}
+              >
                 {showInfo.hostShortBio}
               </p>
               <Link
                 href="/about"
-                className="mt-6 inline-flex items-center gap-2 text-sm text-accent hover:text-accent-hover"
+                className="mt-8 inline-flex items-center gap-2 text-sm text-accent editorial-link"
               >
-                <span>Read the full story</span>
+                <span className="underline underline-offset-4 hover:[text-underline-offset:8px] transition-all">
+                  Read the full story
+                </span>
                 <span aria-hidden="true">→</span>
               </Link>
             </div>
@@ -130,37 +288,11 @@ export default function HomePage() {
         </Container>
       </section>
 
-      {/* Featured episode */}
-      {featuredEpisode && (
-        <section className="py-16 md:py-24 border-t border-border">
-          <Container>
-            <h2 className="text-xs uppercase tracking-[0.2em] text-fg-muted mb-8">
-              Featured episode
-            </h2>
-            <EpisodeCard episode={featuredEpisode} variant="feature" />
-            {featuredEpisode.spotifyEmbedUrl ? (
-              <div className="mt-6">
-                <SpotifyPlayer
-                  embedUrl={featuredEpisode.spotifyEmbedUrl}
-                  compact
-                />
-              </div>
-            ) : featuredEpisode.audioUrl ? (
-              <div className="mt-6">
-                <AudioPlayer
-                  audioUrl={featuredEpisode.audioUrl}
-                  title={featuredEpisode.title}
-                  episodeNumber={featuredEpisode.episodeNumber}
-                  thumbnailUrl={featuredEpisode.thumbnailUrl ?? undefined}
-                />
-              </div>
-            ) : null}
-          </Container>
-        </section>
-      )}
+      {/* Continue exploring — only renders when 3+ episodes opened */}
+      <ContinueExploring episodes={allEpisodes} />
 
       {/* Email signup */}
-      <section className="py-16 md:py-20 border-t border-border">
+      <section className="py-20 md:py-24 border-t border-border">
         <Container width="content">
           <EmailSignup
             headline="New episodes, in your inbox."
@@ -169,67 +301,52 @@ export default function HomePage() {
         </Container>
       </section>
 
-      {/* Recent guests teaser */}
-      <section className="py-16 md:py-24 border-t border-border">
+      {/* Guests — restrained grid */}
+      <section className="py-20 md:py-24 border-t border-border">
         <Container>
-          <div className="flex items-end justify-between mb-8">
+          <div className="flex items-end justify-between flex-wrap gap-4 mb-10">
             <div>
-              <h2 className="text-xs uppercase tracking-[0.2em] text-fg-muted">
-                Who's been on the show
-              </h2>
-              <p className="mt-4 font-display text-3xl md:text-4xl text-fg">
+              <p className="eyebrow">Who's been on the show</p>
+              <h2
+                className="mt-3 font-display text-3xl md:text-4xl text-fg"
+                style={{ lineHeight: 1.05 }}
+              >
                 Guests
-              </p>
+              </h2>
             </div>
+            <Link
+              href="/guests"
+              className="inline-flex items-center gap-2 text-sm text-accent editorial-link"
+            >
+              <span className="underline underline-offset-4 hover:[text-underline-offset:8px] transition-all">
+                See all
+              </span>
+              <span aria-hidden="true">→</span>
+            </Link>
           </div>
-
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {teaserGuests.map((guest) => (
               <GuestCard key={guest.id} guest={guest} />
             ))}
           </div>
-
-          <div className="mt-8">
-            <Link
-              href="/guests"
-              className="inline-flex items-center gap-2 text-sm text-accent hover:text-accent-hover"
-            >
-              <span>See all guests</span>
-              <span aria-hidden="true">→</span>
-            </Link>
-          </div>
         </Container>
       </section>
 
       {/* Where to listen */}
-      <section className="py-16 md:py-24 border-t border-border">
+      <section className="py-20 md:py-24 border-t border-border">
         <Container width="content">
-          <div className="text-center">
-            <h2 className="text-xs uppercase tracking-[0.2em] text-fg-muted">
-              Where to listen
-            </h2>
-            <p className="mt-4 font-display text-3xl md:text-4xl text-fg">
-              Available on all major platforms.
-            </p>
-          </div>
-
+          <p className="eyebrow text-center">Where to listen</p>
+          <h2
+            className="mt-3 font-display text-3xl md:text-4xl text-fg text-center"
+            style={{ lineHeight: 1.05 }}
+          >
+            Available on all major platforms.
+          </h2>
           <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <PlatformButton
-              platform="spotify"
-              href={showInfo.distributionLinks.spotify}
-            />
-            <PlatformButton
-              platform="apple"
-              href={showInfo.distributionLinks.apple}
-            />
-            <PlatformButton
-              platform="amazon"
-              href={showInfo.distributionLinks.amazon}
-            />
-            <PlatformButton
-              platform="youtube"
-              href={showInfo.distributionLinks.youtube}
-            />
+            <PlatformButton platform="spotify" href={showInfo.distributionLinks.spotify} />
+            <PlatformButton platform="apple" href={showInfo.distributionLinks.apple} />
+            <PlatformButton platform="amazon" href={showInfo.distributionLinks.amazon} />
+            <PlatformButton platform="youtube" href={showInfo.distributionLinks.youtube} />
           </div>
         </Container>
       </section>

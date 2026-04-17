@@ -4,10 +4,11 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const navLinks = [
+const navLinks: { href: string; label: string; badge?: string }[] = [
   { href: "/episodes", label: "Episodes" },
   { href: "/guests", label: "Guests" },
   { href: "/about", label: "About" },
+  { href: "/watch", label: "Watch", badge: "Soon" },
   { href: "/subscribe", label: "Subscribe" },
 ];
 
@@ -105,9 +106,16 @@ export default function MobileNavToggle() {
                   key={link.href}
                   href={link.href}
                   onClick={() => setOpen(false)}
-                  className="flex items-center justify-between rounded-md px-3 py-4 text-lg text-fg hover:text-accent hover:bg-bg/40 transition-colors"
+                  className="flex items-center justify-between px-3 py-4 text-lg text-fg hover:text-accent hover:bg-bg/40 transition-colors"
                 >
-                  <span>{link.label}</span>
+                  <span className="inline-flex items-center gap-3">
+                    {link.label}
+                    {link.badge && (
+                      <span className="eyebrow eyebrow--amber">
+                        {link.badge}
+                      </span>
+                    )}
+                  </span>
                   <span aria-hidden="true" className="text-accent">
                     →
                   </span>

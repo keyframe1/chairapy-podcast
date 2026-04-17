@@ -1,32 +1,49 @@
 import Link from "next/link";
 import Container from "@/components/ui/Container";
 
+export const metadata = {
+  title: "Off-script",
+};
+
 export default function NotFound() {
   return (
-    <Container>
-      <div className="min-h-[60vh] flex flex-col items-center justify-center text-center py-24">
-        <p className="text-sm uppercase tracking-widest text-accent mb-4">
-          404
-        </p>
-        <h1 className="font-display text-4xl sm:text-5xl mb-6">
-          That page doesn't exist.
+    <Container width="content">
+      <div className="min-h-[60vh] flex flex-col items-start justify-center py-24">
+        <p className="eyebrow eyebrow--accent tabular">404 · page not found</p>
+        <h1
+          className="mt-6 font-display text-fg"
+          style={{
+            fontSize: "var(--text-display)",
+            lineHeight: 0.95,
+            letterSpacing: "-0.035em",
+            fontVariationSettings: '"opsz" 144, "SOFT" 100, "WONK" 1',
+          }}
+        >
+          You're off-script.
         </h1>
-        <p className="text-fg-muted max-w-md mb-10">
-          Either the link is broken or the episode moved. Try the full list —
-          if it's here, you'll find it.
+        <p
+          className="mt-6 font-serif-body text-xl text-fg-muted max-w-content"
+          style={{ lineHeight: 1.6 }}
+        >
+          That page isn't here. Maybe try the archive — most things live there.
         </p>
-        <div className="flex flex-col sm:flex-row gap-4">
+
+        <div className="mt-10 flex flex-col sm:flex-row gap-6">
           <Link
             href="/episodes"
-            className="px-6 py-3 bg-accent text-bg rounded-lg hover:bg-accent-hover transition font-medium"
+            className="inline-flex items-center gap-2 text-accent editorial-link"
           >
-            Browse episodes
+            <span aria-hidden="true">▶</span>
+            <span className="underline underline-offset-4 hover:[text-underline-offset:8px] transition-all text-lg">
+              Browse every episode
+            </span>
           </Link>
           <Link
             href="/"
-            className="px-6 py-3 border border-border rounded-lg hover:bg-bg-elevated transition"
+            className="inline-flex items-center gap-2 text-sm text-fg-muted hover:text-accent transition-colors"
           >
-            Back to home
+            <span aria-hidden="true">←</span>
+            <span>Back to home</span>
           </Link>
         </div>
       </div>

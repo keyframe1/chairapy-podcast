@@ -2,6 +2,8 @@ import Link from "next/link";
 import Image from "next/image";
 import type { Episode } from "../../lib/types";
 import { formatPublishedDate } from "../../lib/episodes";
+import { formatDurationLabel } from "../../lib/duration";
+import ListenedIndicator from "./ListenedIndicator";
 
 type EpisodeCardProps = {
   episode: Episode;
@@ -15,22 +17,22 @@ export default function EpisodeCard({
   const isFeature = variant === "feature";
   const isCompact = variant === "compact";
   const published = formatPublishedDate(episode.publishedDate);
+  const duration = formatDurationLabel(episode.duration);
   const showThumbnail = !isCompact && Boolean(episode.thumbnailUrl);
 
   return (
     <Link
       href={`/episodes/${episode.slug}`}
-      className={`group block rounded-lg border border-border bg-bg-elevated transition-colors hover:border-accent overflow-hidden ${
-        isFeature ? "md:flex md:items-stretch" : ""
+      className={`group block border border-border bg-bg-elevated transition-colors hover:bg-bg hover:border-accent ${
+        isFeature ? "md:grid md:grid-cols-[4fr_6fr] md:items-stretch" : ""
       }`}
+      style={{ borderRadius: 4 }}
     >
       {showThumbnail && (
         <div
           className={`relative bg-bg ${
-            isFeature
-              ? "md:w-72 md:flex-none aspect-square md:aspect-square"
-              : "aspect-square"
-          }`}
+            isFeature ? "aspect-square" : "aspect-square"
+          } overflow-hidden`}
         >
           <Image
             src={episode.thumbnailUrl!}
@@ -38,68 +40,73 @@ export default function EpisodeCard({
             fill
             sizes={
               isFeature
-                ? "(max-width: 768px) 100vw, 288px"
+                ? "(max-width: 768px) 100vw, 480px"
                 : "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             }
-            className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+            className="object-cover"
           />
         </div>
       )}
 
       <div
         className={`${
-          isFeature ? "p-8 md:p-10 md:flex-1" : isCompact ? "p-5" : "p-6"
+          isFeature ? "p-8 md:p-12" : isCompact ? "p-5" : "p-6"
         }`}
       >
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs uppercase tracking-[0.2em] text-fg-muted">
-          <span className="font-mono text-accent">
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+          <span className="eyebrow eyebrow--accent tabular">
             Ep {episode.episodeNumber}
           </span>
           {published && (
             <>
-              <span aria-hidden="true">·</span>
-              <span>{published}</span>
+              <span aria-hidden="true" className="text-border">·</span>
+              <span className="eyebrow tabular">{published}</span>
             </>
           )}
-          {episode.featured && isFeature && (
+          {duration && (
             <>
-              <span aria-hidden="true">·</span>
-              <span className="text-accent">Featured</span>
+              <span aria-hidden="true" className="text-border">·</span>
+              <span className="eyebrow tabular">{duration}</span>
             </>
           )}
+          <ListenedIndicator slug={episode.slug} />
         </div>
 
         <h3
-          className={`mt-3 font-display text-fg ${
+          className={`mt-3 font-display text-fg group-hover:text-accent transition-colors ${
             isFeature
-              ? "text-3xl md:text-4xl"
+              ? "text-4xl md:text-5xl"
               : isCompact
                 ? "text-xl"
                 : "text-2xl"
           }`}
+          style={{ lineHeight: 1.05 }}
         >
           {episode.title}
         </h3>
 
         {episode.guestName && (
-          <p className="mt-1 text-sm text-fg-muted">
-            With {episode.guestName}
+          <p className="mt-2 text-base font-serif-body italic text-fg-muted">
+            with {episode.guestName}
           </p>
         )}
 
         {!isCompact && (
           <p
-            className={`mt-4 text-fg-muted ${
-              isFeature ? "text-base md:text-lg max-w-content" : "text-sm"
+            className={`mt-5 text-fg-muted ${
+              isFeature ? "text-lg max-w-content" : "text-sm"
             }`}
+            style={{ lineHeight: 1.55 }}
           >
             {episode.description}
           </p>
         )}
 
-        <div className="mt-6 inline-flex items-center gap-2 text-sm text-accent">
-          <span>{isCompact ? "Open episode" : "Listen to this episode"}</span>
-          <span aria-hidden="true">→</span>
+        <div className="mt-7 inline-flex items-center gap-2 text-sm text-accent editorial-link">
+          <span aria-hidden="true">▶</span>
+          <span className="underline underline-offset-4 group-hover:[text-underline-offset:8px] transition-all">
+            {isCompact ? "Open" : isFeature ? "Listen now" : "Listen"}
+          </span>
         </div>
       </div>
     </Link>

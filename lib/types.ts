@@ -14,6 +14,7 @@ export interface Episode {
   featured: boolean;
   thumbnailUrl?: string | null;
   audioUrl?: string | null;
+  duration?: string | null; // "hh:mm:ss" from RSS itunes:duration
 }
 
 export interface Guest {

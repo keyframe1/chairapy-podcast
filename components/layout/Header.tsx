@@ -17,6 +17,10 @@ export default function Header() {
           <Link
             href="/"
             className="font-display text-2xl tracking-tight text-fg hover:text-accent transition-colors"
+            style={{
+              fontVariationSettings: '"opsz" 144, "SOFT" 100, "WONK" 1',
+              letterSpacing: "-0.02em",
+            }}
           >
             Chairapy
           </Link>
@@ -31,6 +35,19 @@ export default function Header() {
                 {link.label}
               </Link>
             ))}
+            <Link
+              href="/watch"
+              className="group inline-flex items-center gap-2 text-sm text-fg hover:text-accent transition-colors"
+            >
+              <span>Watch</span>
+              <span
+                aria-hidden="true"
+                className="text-border text-xs"
+              >
+                •
+              </span>
+              <span className="eyebrow eyebrow--amber">Soon</span>
+            </Link>
           </nav>
 
           <MobileNavToggle />

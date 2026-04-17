@@ -7,15 +7,25 @@ type SpotifyPlayerProps = {
    * so it's visible immediately.
    */
   lazy?: boolean;
+  /**
+   * When true, drops all container chrome (border, background, rounding)
+   * so the iframe sits flush on the page — editorial article style.
+   */
+  bare?: boolean;
 };
 
 export default function SpotifyPlayer({
   embedUrl,
   compact = false,
   lazy = true,
+  bare = false,
 }: SpotifyPlayerProps) {
+  const container = bare
+    ? "w-full overflow-hidden"
+    : "w-full rounded-xl overflow-hidden border border-border bg-bg-elevated";
+
   return (
-    <div className="w-full rounded-xl overflow-hidden border border-border bg-bg-elevated">
+    <div className={container}>
       <iframe
         src={embedUrl}
         width="100%"
