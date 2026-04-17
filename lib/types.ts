@@ -12,6 +12,7 @@ export interface Episode {
   longDescription: string | null;
   topics: string[];
   featured: boolean;
+  thumbnailUrl?: string | null;
 }
 
 export interface Guest {

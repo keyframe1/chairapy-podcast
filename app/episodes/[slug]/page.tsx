@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 
@@ -39,6 +40,17 @@ export function generateMetadata({
     160,
   );
 
+  const ogImages = episode.thumbnailUrl
+    ? [
+        {
+          url: episode.thumbnailUrl,
+          width: 1400,
+          height: 1400,
+          alt: `${episode.title} — episode artwork`,
+        },
+      ]
+    : undefined;
+
   return {
     title: `${episode.title} · Episode ${episode.episodeNumber}`,
     description,
@@ -47,11 +59,13 @@ export function generateMetadata({
       description,
       type: "music.song",
       url: `${SITE_URL}/episodes/${episode.slug}`,
+      images: ogImages,
     },
     twitter: {
       card: "summary_large_image",
       title: `${episode.title} · Episode ${episode.episodeNumber}`,
       description,
+      images: episode.thumbnailUrl ? [episode.thumbnailUrl] : undefined,
     },
   };
 }
@@ -132,21 +146,35 @@ export default function EpisodeDetailPage({
               </p>
             )}
 
-            <div className="mt-10">
-              {episode.spotifyEmbedUrl ? (
-                <SpotifyPlayer
-                  embedUrl={episode.spotifyEmbedUrl}
-                  lazy={false}
-                />
-              ) : (
-                <div className="rounded-xl border border-border bg-bg-elevated p-8 text-center text-sm text-fg-muted">
-                  Player coming soon. Run{" "}
-                  <code className="font-mono text-fg">
-                    npm run fetch-episodes
-                  </code>{" "}
-                  to pull Spotify embed data.
+            <div className="mt-10 grid grid-cols-1 md:grid-cols-[260px_1fr] gap-6 items-start">
+              {episode.thumbnailUrl && (
+                <div className="relative aspect-square w-full rounded-xl overflow-hidden border border-border bg-bg-elevated">
+                  <Image
+                    src={episode.thumbnailUrl}
+                    alt={`${episode.title} — episode artwork`}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 260px"
+                    priority
+                    className="object-cover"
+                  />
                 </div>
               )}
+              <div>
+                {episode.spotifyEmbedUrl ? (
+                  <SpotifyPlayer
+                    embedUrl={episode.spotifyEmbedUrl}
+                    lazy={false}
+                  />
+                ) : (
+                  <div className="rounded-xl border border-border bg-bg-elevated p-8 text-center text-sm text-fg-muted">
+                    Player coming soon. Run{" "}
+                    <code className="font-mono text-fg">
+                      npm run fetch-episodes
+                    </code>{" "}
+                    to pull Spotify embed data.
+                  </div>
+                )}
+              </div>
             </div>
 
             <div className="mt-6 flex flex-wrap gap-3 text-sm">

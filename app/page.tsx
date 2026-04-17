@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Container from "../components/ui/Container";
 import CTAButton from "../components/ui/CTAButton";
-import PhotoPlaceholder from "../components/ui/PhotoPlaceholder";
+import EricPhoto from "../components/podcast/EricPhoto";
 import EpisodeCard from "../components/podcast/EpisodeCard";
 import GuestCard from "../components/podcast/GuestCard";
 import PlatformButton from "../components/podcast/PlatformButton";
@@ -98,7 +98,11 @@ export default function HomePage() {
         <Container>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-14 items-center">
             <div className="md:col-span-1">
-              <PhotoPlaceholder />
+              <EricPhoto
+                variant="portrait-02"
+                alt="Eric Falgout at work in the Chairapy salon"
+                aspectRatio="square"
+              />
             </div>
             <div className="md:col-span-2">
               <h2 className="text-xs uppercase tracking-[0.2em] text-fg-muted font-body">

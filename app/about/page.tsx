@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Container from "../../components/ui/Container";
-import PhotoPlaceholder from "../../components/ui/PhotoPlaceholder";
+import EricPhoto from "../../components/podcast/EricPhoto";
 import EmailSignup from "../../components/podcast/EmailSignup";
 import showInfoData from "../../content/show-info.json";
 import type { ShowInfo } from "../../lib/types";
@@ -57,8 +57,13 @@ export default function AboutPage() {
           </p>
           <p className="mt-1 text-sm text-fg-muted">{showInfo.hostLocation}</p>
 
-          <div className="mt-8 grid grid-cols-1 md:grid-cols-[200px_1fr] gap-8 items-start">
-            <PhotoPlaceholder />
+          <div className="mt-8 grid grid-cols-1 md:grid-cols-[260px_1fr] gap-8 items-start">
+            <EricPhoto
+              variant="portrait-01"
+              alt={`${showInfo.hostName}, host of ${showInfo.showName}`}
+              aspectRatio="4/5"
+              priority
+            />
             <div className="space-y-5 text-base md:text-lg text-fg leading-relaxed">
               <p>{showInfo.hostLongBio}</p>
             </div>
@@ -78,21 +83,28 @@ export default function AboutPage() {
           <p className="mt-4 font-display text-4xl md:text-5xl text-fg">
             Part of something bigger.
           </p>
-          <div className="mt-8 space-y-5 text-base md:text-lg text-fg leading-relaxed">
-            <p>
-              This podcast is produced under the Chairapy brand, which also
-              includes a full-service salon in Metairie. Same voice, same
-              sensibility — people first, conversation over transaction, no
-              polish where honesty will do.
-            </p>
-            <p>
-              <Link
-                href="#"
-                className="text-accent hover:text-accent-hover underline underline-offset-4"
-              >
-                Visit chairapy.org →
-              </Link>
-            </p>
+          <div className="mt-8 grid grid-cols-1 md:grid-cols-[1fr_260px] gap-10 items-start">
+            <div className="space-y-5 text-base md:text-lg text-fg leading-relaxed">
+              <p>
+                This podcast is produced under the Chairapy brand, which also
+                includes a full-service salon in Metairie. Same voice, same
+                sensibility — people first, conversation over transaction, no
+                polish where honesty will do.
+              </p>
+              <p>
+                <Link
+                  href="#"
+                  className="text-accent hover:text-accent-hover underline underline-offset-4"
+                >
+                  Visit chairapy.org →
+                </Link>
+              </p>
+            </div>
+            <EricPhoto
+              variant="portrait-03"
+              alt="Eric in a Chairapy t-shirt at the salon"
+              aspectRatio="square"
+            />
           </div>
         </section>
       </div>

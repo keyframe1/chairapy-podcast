@@ -44,7 +44,7 @@ export default function EpisodesPage({
           </p>
         </header>
 
-        <ul className="mt-12 space-y-4">
+        <ul className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {pageItems.map((ep) => (
             <li key={ep.id}>
               <EpisodeCard episode={ep} />
