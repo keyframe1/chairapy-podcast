@@ -11,7 +11,7 @@ const navLinks = [
 
 export default function Header() {
   return (
-    <header className="relative border-b border-border bg-bg">
+    <header className="sticky top-0 z-50 border-b border-border bg-bg/95 backdrop-blur">
       <Container>
         <div className="flex h-16 items-center justify-between">
           <Link

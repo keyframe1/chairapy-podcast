@@ -6,6 +6,7 @@ import EpisodeCard from "../components/podcast/EpisodeCard";
 import GuestCard from "../components/podcast/GuestCard";
 import PlatformButton from "../components/podcast/PlatformButton";
 import SpotifyPlayer from "../components/podcast/SpotifyPlayer";
+import AudioPlayer from "../components/podcast/AudioPlayer";
 import EmailSignup from "../components/podcast/EmailSignup";
 
 import showInfoData from "../content/show-info.json";
@@ -137,14 +138,23 @@ export default function HomePage() {
               Featured episode
             </h2>
             <EpisodeCard episode={featuredEpisode} variant="feature" />
-            {featuredEpisode.spotifyEmbedUrl && (
+            {featuredEpisode.spotifyEmbedUrl ? (
               <div className="mt-6">
                 <SpotifyPlayer
                   embedUrl={featuredEpisode.spotifyEmbedUrl}
                   compact
                 />
               </div>
-            )}
+            ) : featuredEpisode.audioUrl ? (
+              <div className="mt-6">
+                <AudioPlayer
+                  audioUrl={featuredEpisode.audioUrl}
+                  title={featuredEpisode.title}
+                  episodeNumber={featuredEpisode.episodeNumber}
+                  thumbnailUrl={featuredEpisode.thumbnailUrl ?? undefined}
+                />
+              </div>
+            ) : null}
           </Container>
         </section>
       )}

@@ -6,6 +6,7 @@ import type { Metadata } from "next";
 import Container from "../../../components/ui/Container";
 import EpisodeCard from "../../../components/podcast/EpisodeCard";
 import SpotifyPlayer from "../../../components/podcast/SpotifyPlayer";
+import AudioPlayer from "../../../components/podcast/AudioPlayer";
 import EmailSignup from "../../../components/podcast/EmailSignup";
 
 import {
@@ -146,35 +147,47 @@ export default function EpisodeDetailPage({
               </p>
             )}
 
-            <div className="mt-10 grid grid-cols-1 md:grid-cols-[260px_1fr] gap-6 items-start">
-              {episode.thumbnailUrl && (
-                <div className="relative aspect-square w-full rounded-xl overflow-hidden border border-border bg-bg-elevated">
-                  <Image
-                    src={episode.thumbnailUrl}
-                    alt={`${episode.title} — episode artwork`}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 260px"
-                    priority
-                    className="object-cover"
-                  />
-                </div>
-              )}
-              <div>
-                {episode.spotifyEmbedUrl ? (
+            <div className="mt-10">
+              {episode.spotifyEmbedUrl ? (
+                <div className="grid grid-cols-1 md:grid-cols-[260px_1fr] gap-6 items-start">
+                  {episode.thumbnailUrl && (
+                    <div className="relative aspect-square w-full rounded-xl overflow-hidden border border-border bg-bg-elevated">
+                      <Image
+                        src={episode.thumbnailUrl}
+                        alt={`${episode.title} — episode artwork`}
+                        fill
+                        sizes="(max-width: 768px) 100vw, 260px"
+                        priority
+                        className="object-cover"
+                      />
+                    </div>
+                  )}
                   <SpotifyPlayer
                     embedUrl={episode.spotifyEmbedUrl}
                     lazy={false}
                   />
-                ) : (
-                  <div className="rounded-xl border border-border bg-bg-elevated p-8 text-center text-sm text-fg-muted">
-                    Player coming soon. Run{" "}
-                    <code className="font-mono text-fg">
-                      npm run fetch-episodes
-                    </code>{" "}
-                    to pull Spotify embed data.
-                  </div>
-                )}
-              </div>
+                </div>
+              ) : episode.audioUrl ? (
+                <AudioPlayer
+                  audioUrl={episode.audioUrl}
+                  title={episode.title}
+                  episodeNumber={episode.episodeNumber}
+                  thumbnailUrl={episode.thumbnailUrl ?? undefined}
+                />
+              ) : (
+                <div className="rounded-xl border border-border bg-bg-elevated p-8 text-center text-sm text-fg-muted">
+                  Audio for this episode isn't available right now. Try{" "}
+                  <a
+                    href={showInfo.distributionLinks.spotify}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-accent hover:text-accent-hover underline"
+                  >
+                    listening on Spotify
+                  </a>
+                  .
+                </div>
+              )}
             </div>
 
             <div className="mt-6 flex flex-wrap gap-3 text-sm">

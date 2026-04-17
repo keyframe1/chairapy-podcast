@@ -13,6 +13,7 @@ export interface Episode {
   topics: string[];
   featured: boolean;
   thumbnailUrl?: string | null;
+  audioUrl?: string | null;
 }
 
 export interface Guest {

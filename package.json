@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
-    "fetch-episodes": "tsx scripts/fetch-episodes.ts",
+    "fetch-episodes": "tsx scripts/fetch-from-rss.ts",
+    "fetch-episodes-spotify": "tsx scripts/fetch-episodes.ts",
     "suggest-guest-links": "tsx scripts/suggest-guest-links.ts",
     "fetch-thumbnails": "tsx scripts/fetch-thumbnails.ts",
     "link-thumbnails": "tsx scripts/link-thumbnails.ts"
