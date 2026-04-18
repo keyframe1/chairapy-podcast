@@ -1,101 +1,80 @@
 [
   {
-    "id": "steve-schulkens",
-    "name": "Steve Schulkens",
     "slug": "steve-schulkens",
-    "headline": "Award-winning TV producer, PR executive, and native New Orleanian",
-    "longBio": "Steve Schulkens is an award-winning TV producer and PR executive, and a native New Orleanian. He is a former TV/radio news reporter whose career has spanned decades in the media industry. He appeared on the show in Episode 15, '9 Lives.'",
-    "episodeIds": ["ep-15"],
-    "externalLinks": []
+    "name": "Steve Schulkens",
+    "role": "Award-winning TV producer, PR executive, and native New Orleanian",
+    "bio": "Steve Schulkens is an award-winning TV producer and PR executive, and a native New Orleanian. He is a former TV/radio news reporter whose career has spanned decades in the media industry. He appeared on the show in Episode 15, '9 Lives.'",
+    "episodes": ["ep-15-9-lives"]
   },
   {
-    "id": "ashley-morrison",
-    "name": "Ashley Morrison",
     "slug": "ashley-morrison",
-    "headline": "Paramedic with West Jefferson EMS",
-    "longBio": "Ashley Morrison has served as a paramedic with West Jefferson EMS for 16 years.",
-    "episodeIds": [],
-    "externalLinks": []
+    "name": "Ashley Morrison",
+    "role": "Paramedic with West Jefferson EMS",
+    "bio": "Ashley Morrison has served as a paramedic with West Jefferson EMS for 16 years.",
+    "episodes": []
   },
   {
-    "id": "shawn-oddo",
-    "name": "Shawn Oddo",
     "slug": "shawn-oddo",
-    "headline": "Owner of Valhalla Training Grounds and competitive bodybuilder",
-    "longBio": "Shawn Oddo is the owner of Valhalla Training Grounds and a competitive bodybuilder.",
-    "episodeIds": [],
-    "externalLinks": []
+    "name": "Shawn Oddo",
+    "role": "Owner of Valhalla Training Grounds and competitive bodybuilder",
+    "bio": "Shawn Oddo is the owner of Valhalla Training Grounds and a competitive bodybuilder.",
+    "episodes": []
   },
   {
-    "id": "jon-mccarthy",
-    "name": "Jon McCarthy",
     "slug": "jon-mccarthy",
-    "headline": "Veteran paramedic, published author, comic creator",
-    "longBio": "Jon McCarthy is a veteran paramedic and the published author of 'Hard Roll.' He is also a comic creator.",
-    "episodeIds": [],
-    "externalLinks": []
+    "name": "Jon McCarthy",
+    "role": "Veteran paramedic, published author, comic creator",
+    "bio": "Jon McCarthy is a veteran paramedic and the published author of 'Hard Roll.' He is also a comic creator.",
+    "episodes": []
   },
   {
-    "id": "jourdan-blue",
-    "name": "Jourdan Blue",
     "slug": "jourdan-blue",
-    "headline": "Musician and 2021 American Idol contestant",
-    "longBio": "Jourdan Blue is a musician and was a contestant on American Idol in 2021.",
-    "episodeIds": [],
-    "externalLinks": []
+    "name": "Jourdan Blue",
+    "role": "Musician and 2021 American Idol contestant",
+    "bio": "Jourdan Blue is a musician and was a contestant on American Idol in 2021.",
+    "episodes": []
   },
   {
-    "id": "dr-ryan-estaris",
-    "name": "Dr. Ryan Estaris",
     "slug": "dr-ryan-estaris",
-    "headline": "Physician, public speaker, ADHD advocate",
-    "longBio": "Dr. Ryan Estaris is a physician and public speaker who lives with ADHD.",
-    "episodeIds": [],
-    "externalLinks": []
+    "name": "Dr. Ryan Estaris",
+    "role": "Physician, public speaker, ADHD advocate",
+    "bio": "Dr. Ryan Estaris is a physician and public speaker who lives with ADHD.",
+    "episodes": []
   },
   {
-    "id": "jude-blued",
-    "name": "Jude Blued",
     "slug": "jude-blued",
-    "headline": "50+ year radio broadcasting veteran and comedian",
-    "longBio": "Jude Blued is a radio broadcasting veteran with over 50 years in the industry, and a comedian.",
-    "episodeIds": [],
-    "externalLinks": []
+    "name": "Jude Blued",
+    "role": "50+ year radio broadcasting veteran and comedian",
+    "bio": "Jude Blued is a radio broadcasting veteran with over 50 years in the industry, and a comedian.",
+    "episodes": []
   },
   {
-    "id": "joker-of-new-orleans",
-    "name": "The Joker of New Orleans",
     "slug": "joker-of-new-orleans",
-    "headline": "Street performer and mentalist",
-    "longBio": "The Joker of New Orleans is a street performer and mentalist based in New Orleans.",
-    "episodeIds": [],
-    "externalLinks": []
+    "name": "The Joker of New Orleans",
+    "role": "Street performer and mentalist",
+    "bio": "The Joker of New Orleans is a street performer and mentalist based in New Orleans.",
+    "location": "New Orleans, LA",
+    "episodes": []
   },
   {
-    "id": "theophile-bourgeois",
-    "name": "Theophile Bourgeois IV",
     "slug": "theophile-bourgeois",
-    "headline": "Cajun Vista Fishing Lodge owner, filmmaker, tattoo artist, musician",
-    "longBio": "Theophile Bourgeois IV owns Cajun Vista Fishing Lodge and is a filmmaker, tattoo artist, and musician.",
-    "episodeIds": [],
-    "externalLinks": []
+    "name": "Theophile Bourgeois IV",
+    "role": "Cajun Vista Fishing Lodge owner, filmmaker, tattoo artist, musician",
+    "bio": "Theophile Bourgeois IV owns Cajun Vista Fishing Lodge and is a filmmaker, tattoo artist, and musician.",
+    "episodes": []
   },
   {
-    "id": "alexander-reyes",
-    "name": "Alexander Steven Reyes",
     "slug": "alexander-reyes",
-    "headline": "Comedian and philanthropist",
-    "longBio": "Alexander Steven Reyes is a comedian and philanthropist.",
-    "episodeIds": [],
-    "externalLinks": []
+    "name": "Alexander Steven Reyes",
+    "role": "Comedian and philanthropist",
+    "bio": "Alexander Steven Reyes is a comedian and philanthropist.",
+    "episodes": []
   },
   {
-    "id": "stale-kracker",
-    "name": "Stale Kracker (Justin Chiasson)",
     "slug": "stale-kracker",
-    "headline": "Social media personality, retired State Trooper, CEO of Cajun 2 Step",
-    "longBio": "Justin Chiasson, known on social media as Stale Kracker, is a retired Louisiana State Trooper and the CEO of Cajun 2 Step.",
-    "episodeIds": [],
-    "externalLinks": []
+    "name": "Stale Kracker (Justin Chiasson)",
+    "role": "Social media personality, retired State Trooper, CEO of Cajun 2 Step",
+    "bio": "Justin Chiasson, known on social media as Stale Kracker, is a retired Louisiana State Trooper and the CEO of Cajun 2 Step.",
+    "episodes": []
   }
 ]

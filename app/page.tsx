@@ -8,7 +8,6 @@ import EmailSignupBlock from "../components/podcast/EmailSignupBlock";
 import ContinueExploring from "../components/podcast/ContinueExploring";
 import SignupCard from "../components/podcast/SignupCard";
 import GuestCard from "../components/podcast/GuestCard";
-import PlatformButton from "../components/podcast/PlatformButton";
 import EpisodeBackplate from "../components/podcast/EpisodeBackplate";
 import SectionDivider from "../components/podcast/SectionDivider";
 import HeroDiagonal from "../components/podcast/HeroDiagonal";
@@ -292,27 +291,8 @@ export default function HomePage() {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {teaserGuests.map((guest) => (
-              <GuestCard key={guest.id} guest={guest} />
+              <GuestCard key={guest.slug} guest={guest} />
             ))}
-          </div>
-        </Container>
-      </section>
-
-      {/* Where to listen */}
-      <section className="py-20 md:py-24 border-t border-border">
-        <Container width="content">
-          <p className="eyebrow text-center">Where to listen</p>
-          <h2
-            className="mt-3 font-display text-3xl md:text-4xl text-fg text-center"
-            style={{ lineHeight: 1.05 }}
-          >
-            Available on all major platforms.
-          </h2>
-          <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-3">
-            <PlatformButton platform="spotify" href={showInfo.distributionLinks.spotify} />
-            <PlatformButton platform="apple" href={showInfo.distributionLinks.apple} />
-            <PlatformButton platform="amazon" href={showInfo.distributionLinks.amazon} />
-            <PlatformButton platform="youtube" href={showInfo.distributionLinks.youtube} />
           </div>
         </Container>
       </section>

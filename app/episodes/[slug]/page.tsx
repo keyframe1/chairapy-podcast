@@ -74,8 +74,8 @@ export function generateMetadata({
   };
 }
 
-function findGuestsForEpisode(episodeId: string): Guest[] {
-  return guests.filter((g) => g.episodeIds.includes(episodeId));
+function findGuestsForEpisode(episodeSlug: string): Guest[] {
+  return guests.filter((g) => g.episodes.includes(episodeSlug));
 }
 
 function isHttp(url: string | null | undefined): url is string {
@@ -110,7 +110,7 @@ export default function EpisodeDetailPage({
   const published = formatPublishedDate(episode.publishedDate);
   const duration = formatDurationLabel(episode.duration);
   const related = getRelatedEpisodes(episode, 3);
-  const linkedGuests = findGuestsForEpisode(episode.id);
+  const linkedGuests = findGuestsForEpisode(episode.slug);
   const pullQuote = extractPullQuote(episode.longDescription, episode.description);
 
   const jsonLd = {
@@ -294,7 +294,7 @@ export default function EpisodeDetailPage({
                   <div className="space-y-4">
                     {linkedGuests.map((g) => (
                       <Link
-                        key={g.id}
+                        key={g.slug}
                         href={`/guests/${g.slug}`}
                         className="block border border-border p-5 transition-colors hover:border-accent hover:bg-bg-elevated"
                         style={{ borderRadius: 4 }}
@@ -306,7 +306,7 @@ export default function EpisodeDetailPage({
                           {g.name}
                         </p>
                         <p className="mt-2 font-serif-body text-sm italic text-fg-muted">
-                          {g.headline}
+                          {g.role}
                         </p>
                       </Link>
                     ))}

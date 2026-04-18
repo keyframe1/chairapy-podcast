@@ -17,17 +17,28 @@ export interface Episode {
   duration?: string | null; // "hh:mm:ss" from RSS itunes:duration
 }
 
+export interface GuestImage {
+  src: string;
+  alt: string;
+  credit?: string;
+  caption?: string;
+}
+
 export interface Guest {
-  id: string;
-  name: string;
   slug: string;
-  headline: string;
-  longBio: string | null;
-  episodeIds: string[];
-  externalLinks: {
-    label: string;
-    url: string;
-  }[];
+  name: string;
+  role: string;
+  bio: string;
+  location?: string;
+  links?: {
+    website?: string;
+    instagram?: string;
+    linkedin?: string;
+  };
+  heroImage?: GuestImage;
+  gallery?: GuestImage[];
+  /** Episode slugs (not ids). Matches Episode.slug in content/episodes.json. */
+  episodes: string[];
 }
 
 export interface ShowInfo {

@@ -89,7 +89,7 @@ function main() {
   }
 
   console.log(
-    "\nReview each suggestion and manually update `episodeIds` in content/guests.json.\n" +
+    "\nReview each suggestion and manually update `episodes` (episode slugs) in content/guests.json.\n" +
       "This script never modifies guests.json automatically.\n",
   );
 }

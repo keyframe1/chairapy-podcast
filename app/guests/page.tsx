@@ -14,26 +14,29 @@ export const metadata = {
 export default function GuestsPage() {
   return (
     <Container>
-      <div className="py-20 md:py-24">
+      <div className="py-20 md:py-28">
         <header className="max-w-content">
-          <p className="text-xs uppercase tracking-[0.2em] text-fg-muted">
+          <p className="eyebrow">Who's been on the show</p>
+          <h1
+            className="mt-4 font-display text-5xl md:text-6xl text-fg"
+            style={{ lineHeight: 0.98, letterSpacing: "-0.035em" }}
+          >
             Guests
-          </p>
-          <h1 className="mt-4 font-display text-4xl md:text-6xl text-fg leading-tight">
-            The People Who've Been On the Show
           </h1>
-          <p className="mt-6 text-base md:text-lg text-fg-muted leading-relaxed">
+          <p className="mt-6 font-serif-body text-lg md:text-xl text-fg-muted max-w-content" style={{ lineHeight: 1.55 }}>
             Every guest here has a story worth hearing. Paramedics, musicians,
             fighters, comedians, working people — the kind of people whose
             stories don't usually make it onto a microphone.
           </p>
         </header>
 
-        <div className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <ul className="mt-16 md:mt-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-12 md:gap-y-14">
           {guests.map((guest) => (
-            <GuestCard key={guest.id} guest={guest} />
+            <li key={guest.slug}>
+              <GuestCard guest={guest} />
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </Container>
   );
