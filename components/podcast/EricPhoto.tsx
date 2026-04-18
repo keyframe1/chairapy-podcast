@@ -17,6 +17,12 @@ type EricPhotoProps = {
   alt: string;
   aspectRatio?: AspectRatio;
   priority?: boolean;
+  /**
+   * "portrait" applies the magazine author treatment — soft warm shadow,
+   * barely-there vignette, nearly-sharp corners (2px). Reserved for the
+   * primary Eric photo on the About page.
+   */
+  treatment?: "default" | "portrait";
   className?: string;
 };
 
@@ -40,14 +46,19 @@ export default function EricPhoto({
   alt,
   aspectRatio = "square",
   priority = false,
+  treatment = "default",
   className = "",
 }: EricPhotoProps) {
   const [failed, setFailed] = useState(false);
   const src = VARIANT_MAP[variant];
+  const isPortrait = treatment === "portrait";
+  const frameClass = isPortrait
+    ? "eric-portrait-frame bg-bg-elevated"
+    : "rounded-md bg-bg-elevated border border-border overflow-hidden";
 
   return (
     <div
-      className={`${ASPECT_CLASS[aspectRatio]} relative overflow-hidden rounded-md bg-bg-elevated border border-border ${className}`}
+      className={`${ASPECT_CLASS[aspectRatio]} relative ${frameClass} ${className}`}
     >
       {failed ? (
         <div className="w-full h-full flex items-center justify-center">

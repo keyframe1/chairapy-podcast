@@ -1,20 +1,17 @@
 /**
- * Full-width terracotta pattern strip — "finish line" marker. Appears once per
- * page, immediately above the footer. Consistency across pages is the point.
+ * Footer signature strip. No longer a crisp opaque band — the pattern
+ * dissolves into the cream at both edges via pseudo-element gradients,
+ * multiply-blended and desaturated so it reads as a sign-off rather than
+ * a decoration.
  */
 export default function TerraFooterStrip() {
   return (
     <div
       role="presentation"
       aria-hidden="true"
-      className="w-full"
-      style={{
-        height: "72px",
-        backgroundImage: "url(/images/brand/pattern-terra.png)",
-        backgroundRepeat: "repeat-x",
-        backgroundSize: "auto 72px",
-        backgroundPosition: "center",
-      }}
-    />
+      className="footer-signature-strip w-full"
+    >
+      <div className="footer-signature-strip-inner" />
+    </div>
   );
 }

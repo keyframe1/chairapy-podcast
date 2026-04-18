@@ -5,6 +5,7 @@ import EricPhoto from "../../components/podcast/EricPhoto";
 import EmailSignup from "../../components/podcast/EmailSignup";
 import EmailSignupBlock from "../../components/podcast/EmailSignupBlock";
 import FleuronOrnament from "../../components/podcast/FleuronOrnament";
+import HeroDiagonal from "../../components/podcast/HeroDiagonal";
 import SectionDivider from "../../components/podcast/SectionDivider";
 import showInfoData from "../../content/show-info.json";
 import type { ShowInfo } from "../../lib/types";
@@ -19,112 +20,136 @@ export const metadata = {
 
 export default function AboutPage() {
   return (
-    <Container width="content">
-      <div className="py-16 md:py-24">
-        <FleuronOrnament maxWidth={320} className="mb-10 md:mb-14" />
-
-        {/* About the show — text with vertical accent hanging past the bio */}
-        <section>
-          <p className="eyebrow">About the show</p>
-          <h1
-            className="mt-5 font-display text-5xl md:text-6xl text-fg"
-            style={{ lineHeight: 0.98, letterSpacing: "-0.035em" }}
-          >
-            {showInfo.showTagline}
-          </h1>
-
-          <div className="relative mt-10">
-            {/* Accent — positioned absolute on desktop so it starts at the H1
-                baseline above and hangs ~100px past the bio below. On mobile
-                it becomes a right-floated 45%-width image with bio text wrap. */}
-            <div
-              className="sm:float-right sm:w-[45%] sm:ml-6 sm:mb-4 md:float-none md:ml-0 md:mb-0 md:absolute md:right-0 md:-top-24 md:w-[36%] md:h-[calc(100%+160px)] relative aspect-[1/3] md:aspect-auto overflow-hidden"
-              aria-hidden="true"
+    <>
+      {/* 1. Hero — substrate treatment */}
+      <HeroDiagonal scale="compact">
+        <Container className="relative h-full">
+          <div className="flex flex-col justify-center min-h-[46vh] md:min-h-[52vh] py-12">
+            <p className="eyebrow">About the show</p>
+            <h1
+              className="mt-5 font-display text-5xl md:text-6xl text-fg"
+              style={{ lineHeight: 0.98, letterSpacing: "-0.035em" }}
             >
-              <Image
-                src="/images/brand/sidebar-accent-vertical.png"
-                alt=""
-                fill
-                sizes="(max-width: 640px) 100vw, (max-width: 768px) 45vw, 36vw"
-                className="object-cover"
+              The Show
+            </h1>
+            <p
+              className="mt-5 font-serif-body italic text-xl md:text-2xl text-fg-muted max-w-content"
+              style={{ lineHeight: 1.4 }}
+            >
+              {showInfo.showTagline}
+            </p>
+          </div>
+        </Container>
+      </HeroDiagonal>
+
+      {/* 2. Immediate Eric — portrait first, name/pull quote right */}
+      <section className="py-20 md:py-28">
+        <Container>
+          <div className="grid grid-cols-1 md:grid-cols-[42fr_58fr] gap-10 md:gap-16 items-start">
+            <div>
+              <EricPhoto
+                variant="portrait-01"
+                alt={`${showInfo.hostName}, host of ${showInfo.showName}`}
+                aspectRatio="4/5"
+                treatment="portrait"
+                priority
               />
             </div>
-
-            <div className="md:pr-[40%]">
-              <div
-                className="prose-serif drop-cap text-fg"
-                style={{ maxWidth: "60ch" }}
+            <div className="md:pt-4">
+              <p className="eyebrow">The host</p>
+              <h2
+                className="mt-5 font-display text-5xl md:text-6xl text-fg"
+                style={{ lineHeight: 0.96, letterSpacing: "-0.035em" }}
               >
-                <p>{showInfo.showDescriptionLong}</p>
-                <p>
-                  The show is produced by {showInfo.productionLabel} in{" "}
-                  {showInfo.recordingLocation}.
-                </p>
-              </div>
-
-              <p className="mt-10 text-sm text-fg-muted font-serif-body italic border-l-2 border-accent pl-4">
-                Phase 1 branding — we're keeping the show name during the
-                current engagement. Full rebrand coming later.
+                {showInfo.hostName}
+              </h2>
+              <p className="mt-4 eyebrow tabular">
+                {showInfo.hostLocation.toUpperCase()}
               </p>
+              <blockquote
+                className="mt-8 font-serif-body italic"
+                style={{
+                  fontSize: "var(--text-2xl)",
+                  lineHeight: 1.35,
+                  color: "var(--terracotta)",
+                  maxWidth: "42ch",
+                  letterSpacing: "-0.015em",
+                }}
+              >
+                "{showInfo.hostShortBio}"
+              </blockquote>
             </div>
-            <div className="clear-both" />
           </div>
+        </Container>
+      </section>
 
-          <div className="mt-16">
-            <EmailSignupBlock>
-              <EmailSignup
-                headline="Follow the show."
-                subheadline="New episodes land in your inbox, no spam."
-              />
-            </EmailSignupBlock>
-          </div>
-        </section>
-
-        <SectionDivider />
-
-        {/* About Eric */}
-        <section>
-          <p className="eyebrow">About {showInfo.hostName}</p>
-          <h2
-            className="mt-5 font-display text-5xl md:text-6xl text-fg"
-            style={{ lineHeight: 0.98, letterSpacing: "-0.035em" }}
-          >
-            {showInfo.hostName}
-          </h2>
-          <p className="mt-3 text-sm text-fg-muted tabular">
-            {showInfo.hostLocation}
-          </p>
-
-          <div className="mt-10 grid grid-cols-1 md:grid-cols-[260px_1fr] gap-10 items-start">
-            <EricPhoto
-              variant="portrait-01"
-              alt={`${showInfo.hostName}, host of ${showInfo.showName}`}
-              aspectRatio="4/5"
-              priority
-            />
-            <div className="prose-serif text-fg" style={{ maxWidth: "56ch" }}>
-              <p>{showInfo.hostLongBio}</p>
-            </div>
+      {/* 3. Bio body — drop-cap, comfortable measure */}
+      <section className="pb-20 md:pb-28">
+        <Container width="content">
+          <div className="prose-serif drop-cap text-fg" style={{ maxWidth: "62ch" }}>
+            <p>{showInfo.hostLongBio}</p>
           </div>
 
           <p className="mt-10 text-sm text-fg-muted font-serif-body italic border-l-2 border-border pl-4">
-            Recorded on professional broadcast equipment including Blackmagic 6K
-            cameras at studio-grade quality.
+            Recorded on professional broadcast equipment including Blackmagic
+            6K cameras at studio-grade quality.
           </p>
-        </section>
+        </Container>
+      </section>
 
-        <SectionDivider />
+      {/* 4. Full-width atmospheric transition band — the ex-sidebar accent */}
+      <div className="relative w-full h-40 md:h-56 overflow-hidden" aria-hidden="true">
+        <Image
+          src="/images/brand/sidebar-accent-vertical.png"
+          alt=""
+          fill
+          sizes="100vw"
+          className="object-cover object-center"
+          style={{ opacity: 0.25, mixBlendMode: "multiply" }}
+        />
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(to bottom, var(--cream) 0%, transparent 30%, transparent 70%, var(--cream) 100%)",
+          }}
+        />
+      </div>
 
-        {/* The Chairapy connection */}
-        <section>
-          <p className="eyebrow">The Chairapy connection</p>
+      {/* 5. Show description */}
+      <section className="py-20 md:py-28">
+        <Container width="content">
+          <p className="eyebrow">About the show</p>
           <h2
-            className="mt-5 font-display text-5xl md:text-6xl text-fg"
-            style={{ lineHeight: 0.98, letterSpacing: "-0.035em" }}
+            className="mt-5 font-display text-4xl md:text-5xl text-fg"
+            style={{ lineHeight: 1, letterSpacing: "-0.03em" }}
           >
-            Part of something bigger.
+            What we do here.
           </h2>
-          <div className="mt-10 grid grid-cols-1 md:grid-cols-[1fr_260px] gap-10 items-start">
+          <div
+            className="mt-10 prose-serif text-fg"
+            style={{ maxWidth: "62ch" }}
+          >
+            <p>{showInfo.showDescriptionLong}</p>
+            <p>
+              The show is produced by {showInfo.productionLabel} in{" "}
+              {showInfo.recordingLocation}.
+            </p>
+          </div>
+
+          {/* 6. Phase 1 callout */}
+          <p className="mt-10 text-sm text-fg-muted font-serif-body italic border-l-2 border-accent pl-4">
+            Phase 1 branding — we're keeping the show name during the current
+            engagement. Full rebrand coming later.
+          </p>
+        </Container>
+      </section>
+
+      {/* Chairapy connection — kept as a subsection before the signup */}
+      <section className="pb-20 md:pb-24">
+        <Container width="content">
+          <p className="eyebrow">The Chairapy connection</p>
+          <div className="grid grid-cols-1 md:grid-cols-[1fr_220px] gap-10 items-start mt-5">
             <div className="prose-serif text-fg" style={{ maxWidth: "56ch" }}>
               <p>
                 This podcast is produced under the Chairapy brand, which also
@@ -147,8 +172,27 @@ export default function AboutPage() {
               aspectRatio="square"
             />
           </div>
-        </section>
+        </Container>
+      </section>
+
+      {/* 7. Subscribe CTA block */}
+      <section className="pb-20 md:pb-24">
+        <Container width="content">
+          <EmailSignupBlock>
+            <EmailSignup
+              headline="Follow the show."
+              subheadline="New episodes land in your inbox, no spam."
+            />
+          </EmailSignupBlock>
+        </Container>
+      </section>
+
+      <SectionDivider />
+
+      {/* 8. Fleuron — now at the bottom per spec */}
+      <div className="pb-16">
+        <FleuronOrnament maxWidth={240} />
       </div>
-    </Container>
+    </>
   );
 }

@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  /* --- Palette: warm editorial cream, terracotta accent, deep charcoal text --- */
+  /* --- Palette ------------------------------------------------------------ */
   --color-bg: #F5F0E8;
   --color-bg-elevated: #EDE6D8;
   --color-fg: #1A1613;
@@ -14,7 +14,37 @@
   --color-sage: #7A8B72;
   --color-amber: #C49A4A;
 
-  /* --- Type scale (modular 1.333) --- */
+  /* Aliases aligned with the substrate spec — lets components use either set */
+  --cream: var(--color-bg);
+  --cream-elevated: var(--color-bg-elevated);
+  --terracotta: var(--color-accent);
+  --terracotta-hover: var(--color-accent-hover);
+  --terracotta-soft: rgba(193, 113, 68, 0.15);
+  --terracotta-whisper: rgba(193, 113, 68, 0.06);
+  --charcoal: var(--color-fg);
+  --charcoal-soft: rgba(44, 36, 24, 0.08);
+  --sage: var(--color-sage);
+  --amber: var(--color-amber);
+
+  /* --- Substrate system -------------------------------------------------- */
+  --substrate-grain: url("/images/brand/hero-diagonal.png");
+  --substrate-grain-opacity: 0.06;
+  --substrate-grain-filter: saturate(0) brightness(1.15) contrast(1.1);
+  --substrate-blend: multiply;
+  --accent-pattern: url("/images/brand/pattern-terra.png");
+  --accent-pattern-faint-opacity: 0.08;
+  --accent-pattern-subtle-opacity: 0.18;
+  --hero-diagonal: url("/images/brand/hero-diagonal.png");
+  --hero-diagonal-filter: saturate(0.75) brightness(1.05);
+  --hero-diagonal-opacity: 0.82;
+
+  /* --- Shadows (tokenized for future brand shifts) ----------------------- */
+  --shadow-soft: 0 2px 4px rgba(44, 36, 24, 0.06);
+  --shadow-portrait:
+    0 2px 4px rgba(44, 36, 24, 0.06),
+    0 12px 32px rgba(193, 113, 68, 0.15);
+
+  /* --- Type scale -------------------------------------------------------- */
   --text-xs: 0.75rem;
   --text-sm: 0.875rem;
   --text-base: 1rem;
@@ -36,6 +66,21 @@
   --content-width: 680px;
 }
 
+/*
+ * Dark-mode variant stub. Not implemented — uncomment and wire
+ * data-theme="dark" on <html> to activate.
+ *
+ * [data-theme="dark"] {
+ *   --color-bg: #1A1610;
+ *   --color-bg-elevated: #2C2418;
+ *   --color-fg: #F5F0E8;
+ *   --color-fg-muted: #A89D8D;
+ *   --color-border: rgba(245, 240, 232, 0.12);
+ *   --color-accent: #E68B5D;
+ *   --substrate-grain-opacity: 0.12;
+ * }
+ */
+
 html,
 body {
   background-color: var(--color-bg);
@@ -54,7 +99,6 @@ h3,
 h4 {
   font-family: var(--font-display);
   font-feature-settings: "ss01", "ss02", "kern";
-  /* Default Fraunces tuning — tilt toward display optical size with soft/wonk on */
   font-variation-settings: "opsz" 144, "SOFT" 50, "WONK" 1;
   color: var(--color-fg);
   letter-spacing: -0.025em;
@@ -77,7 +121,6 @@ a.editorial-link,
   text-decoration: underline;
   text-underline-offset: 4px;
 }
-
 a.editorial-link:hover,
 .editorial-link a:hover {
   text-underline-offset: 8px;
@@ -87,7 +130,205 @@ a.editorial-link:hover,
   box-sizing: border-box;
 }
 
-/* Numeric displays: tabular nums + lining figures */
+/* =====================================================================
+ * Substrate — always-on atmospheric grain layer
+ * =====================================================================
+ * Rendered as a fixed-position pseudo-layer via <div.atmosphere-base />
+ * injected at the top of <body>. Multiply-blends the hero-diagonal asset
+ * desaturated at ~6% opacity across the whole viewport for the entire
+ * site. Shouldn't be noticed as an image — just textures the cream.
+ */
+.atmosphere-base {
+  position: fixed;
+  inset: 0;
+  z-index: -10;
+  pointer-events: none;
+  background-image: var(--substrate-grain);
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  filter: var(--substrate-grain-filter);
+  opacity: var(--substrate-grain-opacity);
+  mix-blend-mode: var(--substrate-blend);
+}
+
+/* =====================================================================
+ * Page hero — compositional substrate (not a photo)
+ * ===================================================================== */
+.page-hero {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.hero-substrate {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: var(--hero-diagonal);
+  background-size: cover;
+  background-position: center;
+  filter: var(--hero-diagonal-filter);
+  mix-blend-mode: multiply;
+  opacity: var(--hero-diagonal-opacity);
+}
+
+.hero-substrate::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    rgba(193, 113, 68, 0.16) 0%,
+    rgba(193, 113, 68, 0.06) 35%,
+    rgba(245, 240, 232, 0) 60%,
+    rgba(245, 240, 232, 0.35) 100%
+  );
+}
+
+@media (max-width: 767px) {
+  .hero-substrate {
+    background-position: 80% center;
+    background-attachment: scroll;
+  }
+}
+
+/* =====================================================================
+ * Footer signature strip — dissolved, not pasted on
+ * ===================================================================== */
+.footer-signature-strip {
+  position: relative;
+  height: 120px;
+  pointer-events: none;
+}
+
+.footer-signature-strip-inner {
+  position: absolute;
+  inset: 0;
+  background-image: var(--accent-pattern);
+  background-repeat: repeat-x;
+  background-size: auto 64px;
+  background-position: center;
+  mix-blend-mode: multiply;
+  opacity: 0.5;
+  filter: saturate(0.75);
+}
+
+.footer-signature-strip::before,
+.footer-signature-strip::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 36px;
+  z-index: 1;
+}
+
+.footer-signature-strip::before {
+  top: 0;
+  background: linear-gradient(to bottom, var(--cream) 0%, transparent 100%);
+}
+
+.footer-signature-strip::after {
+  bottom: 0;
+  background: linear-gradient(to top, var(--cream) 0%, transparent 100%);
+}
+
+/* =====================================================================
+ * Eric portrait — magazine author treatment
+ * ===================================================================== */
+.eric-portrait-frame {
+  position: relative;
+  border-radius: 2px;
+  overflow: hidden;
+  box-shadow: var(--shadow-portrait);
+}
+
+.eric-portrait-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 55%,
+    rgba(44, 36, 24, 0.1) 100%
+  );
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* =====================================================================
+ * Platform buttons — brand-aware CTA
+ * =====================================================================
+ * color-mix is used for hover; Safari 16.2+, Chrome 111+, FF 113+.
+ */
+.platform-button {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 1rem 1.25rem;
+  background: var(--cream);
+  border: 1px solid var(--charcoal-soft);
+  border-radius: 4px;
+  text-decoration: none;
+  color: var(--charcoal);
+  transition:
+    background 200ms ease,
+    border-color 200ms ease;
+  --platform-color: var(--terracotta);
+}
+
+.platform-button:hover {
+  background: color-mix(in srgb, var(--platform-color) 10%, var(--cream));
+  border-color: color-mix(in srgb, var(--platform-color) 30%, transparent);
+}
+
+.platform-button--sm {
+  padding: 0.6rem 0.85rem;
+  gap: 0.65rem;
+  font-size: var(--text-sm);
+}
+
+.platform-button--disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  color: var(--color-fg-muted);
+}
+
+.platform-button--disabled:hover {
+  background: var(--cream);
+  border-color: var(--charcoal-soft);
+}
+
+.platform-icon {
+  flex-shrink: 0;
+}
+
+.platform-icon--disabled {
+  filter: grayscale(1);
+  color: var(--color-fg-muted);
+}
+
+.platform-button-arrow {
+  color: var(--terracotta);
+  transition: transform 200ms ease;
+}
+
+.platform-button:hover .platform-button-arrow {
+  transform: translateX(4px);
+}
+
+.platform-label--coming-soon {
+  font-family: var(--font-body);
+  font-size: 0.625rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-fg-muted);
+}
+
+/* =====================================================================
+ * Numeric / editorial utilities
+ * ===================================================================== */
 .tabular,
 .num,
 time,
@@ -96,7 +337,6 @@ time,
   font-feature-settings: "tnum" 1, "lnum" 1;
 }
 
-/* Small-caps editorial labels */
 .eyebrow {
   font-family: var(--font-body);
   font-size: var(--text-xs);
@@ -109,16 +349,13 @@ time,
 .eyebrow--accent {
   color: var(--color-accent);
 }
-
 .eyebrow--sage {
   color: var(--color-sage);
 }
-
 .eyebrow--amber {
   color: var(--color-amber);
 }
 
-/* Long-form body type (episode descriptions, about-page paragraphs) */
 .prose-serif {
   font-family: var(--font-serif-body);
   font-size: var(--text-lg);
@@ -141,7 +378,7 @@ time,
   color: var(--color-accent);
 }
 
-/* Focus: terracotta ring with offset */
+/* Focus */
 :focus-visible {
   outline: 2px solid var(--color-accent);
   outline-offset: 2px;
@@ -156,7 +393,7 @@ textarea:focus-visible,
   outline-offset: 3px;
 }
 
-/* Custom range slider track / thumb (used by AudioPlayer) */
+/* Range slider for AudioPlayer */
 input[type="range"]::-webkit-slider-thumb {
   appearance: none;
   width: 14px;
@@ -175,7 +412,7 @@ input[type="range"]::-moz-range-thumb {
   border: 2px solid var(--color-bg);
 }
 
-/* Scroll reveal — scoped to .reveal, disabled under reduced-motion */
+/* Scroll reveal */
 @media (prefers-reduced-motion: no-preference) {
   .reveal {
     opacity: 0;
@@ -187,24 +424,12 @@ input[type="range"]::-moz-range-thumb {
     transform: translateY(12px);
     animation: reveal 500ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
   }
-  .reveal-stagger > *:nth-child(1) {
-    animation-delay: 0ms;
-  }
-  .reveal-stagger > *:nth-child(2) {
-    animation-delay: 60ms;
-  }
-  .reveal-stagger > *:nth-child(3) {
-    animation-delay: 120ms;
-  }
-  .reveal-stagger > *:nth-child(4) {
-    animation-delay: 180ms;
-  }
-  .reveal-stagger > *:nth-child(5) {
-    animation-delay: 240ms;
-  }
-  .reveal-stagger > *:nth-child(6) {
-    animation-delay: 300ms;
-  }
+  .reveal-stagger > *:nth-child(1) { animation-delay: 0ms; }
+  .reveal-stagger > *:nth-child(2) { animation-delay: 60ms; }
+  .reveal-stagger > *:nth-child(3) { animation-delay: 120ms; }
+  .reveal-stagger > *:nth-child(4) { animation-delay: 180ms; }
+  .reveal-stagger > *:nth-child(5) { animation-delay: 240ms; }
+  .reveal-stagger > *:nth-child(6) { animation-delay: 300ms; }
 }
 
 @keyframes reveal {
@@ -214,7 +439,6 @@ input[type="range"]::-moz-range-thumb {
   }
 }
 
-/* Full motion disable under reduced-motion */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -223,7 +447,6 @@ input[type="range"]::-moz-range-thumb {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-
   .reveal,
   .reveal-stagger > * {
     opacity: 1 !important;
@@ -231,12 +454,12 @@ input[type="range"]::-moz-range-thumb {
   }
 }
 
-/* Print: clean text-only output — hide decorative assets so paginated copies
-   don't waste toner on textures that don't serve the content. */
 @media print {
   [role="separator"],
   .asterism-divider,
-  .fleuron-ornament {
+  .fleuron-ornament,
+  .atmosphere-base,
+  .footer-signature-strip {
     display: none !important;
   }
   body {

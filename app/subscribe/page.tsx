@@ -13,12 +13,6 @@ export const metadata = {
 };
 
 export default function SubscribePage() {
-  const social = [
-    { label: "Instagram", href: showInfo.socialLinks.instagram },
-    { label: "TikTok", href: showInfo.socialLinks.tiktok },
-    { label: "Facebook", href: showInfo.socialLinks.facebook },
-  ];
-
   return (
     <>
       <HeroDiagonal scale="compact">
@@ -65,25 +59,29 @@ export default function SubscribePage() {
         </div>
 
         <section className="mt-20">
-          <h2 className="text-xs uppercase tracking-[0.2em] text-fg-muted">
-            Follow
-          </h2>
-          <p className="mt-4 font-display text-2xl md:text-3xl text-fg">
+          <p className="eyebrow">Follow</p>
+          <h2
+            className="mt-4 font-display text-3xl md:text-4xl text-fg"
+            style={{ lineHeight: 1.05, letterSpacing: "-0.03em" }}
+          >
             Between episodes, we're here.
-          </p>
+          </h2>
           <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-3">
-            {social.map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-between rounded-md border border-border bg-bg-elevated px-5 py-4 text-sm text-fg hover:border-accent hover:text-accent transition-colors"
-              >
-                <span className="font-medium">{item.label}</span>
-                <span aria-hidden="true" className="text-accent">→</span>
-              </a>
-            ))}
+            <PlatformButton
+              platform="instagram"
+              href={showInfo.socialLinks.instagram}
+              size="large"
+            />
+            <PlatformButton
+              platform="tiktok"
+              href={showInfo.socialLinks.tiktok}
+              size="large"
+            />
+            <PlatformButton
+              platform="facebook"
+              href={showInfo.socialLinks.facebook}
+              size="large"
+            />
           </div>
         </section>
       </div>

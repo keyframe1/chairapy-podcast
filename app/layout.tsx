@@ -88,6 +88,7 @@ export default function RootLayout({
       className={`${inter.variable} ${fraunces.variable} ${newsreader.variable}`}
     >
       <body className="min-h-screen flex flex-col bg-bg text-fg">
+        <div className="atmosphere-base" aria-hidden="true" />
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-accent focus:px-4 focus:py-2 focus:text-bg focus:outline-none"
