@@ -16,19 +16,19 @@ export default function EpisodeListRow({ episode }: EpisodeListRowProps) {
   return (
     <Link
       href={`/episodes/${episode.slug}`}
-      className="group grid grid-cols-[auto_64px_1fr_auto] items-center gap-4 md:gap-6 border-b border-border py-5 transition-colors hover:bg-bg-elevated/60"
+      className="group grid grid-cols-[auto_56px_1fr_auto] items-center gap-4 md:gap-6 border-b border-border py-4 md:py-5 transition-colors hover:bg-bg-elevated/60"
     >
       <span className="font-mono text-sm tabular text-fg-muted w-10 text-right">
         {String(episode.episodeNumber).padStart(2, "0")}
       </span>
 
-      <div className="relative w-16 h-16 rounded-sm overflow-hidden bg-bg-elevated border border-border flex-none">
+      <div className="relative w-14 h-14 rounded-sm overflow-hidden bg-bg-elevated border border-border flex-none">
         {episode.thumbnailUrl ? (
           <Image
             src={episode.thumbnailUrl}
             alt=""
             fill
-            sizes="64px"
+            sizes="56px"
             className="object-cover"
           />
         ) : (

@@ -47,11 +47,13 @@ export interface ShowInfo {
     apple: string;
     amazon: string;
     youtube: string | null;
+    rss?: string | null;
   };
   socialLinks: {
     instagram: string;
     tiktok: string;
     facebook: string;
+    rumble?: string | null;
   };
   contactEmail: string | null;
   episodeCount: string;

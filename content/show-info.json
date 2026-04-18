@@ -14,12 +14,14 @@
     "spotify": "https://open.spotify.com/show/7js9w3OGKcx153xlh9rBId",
     "apple": "https://podcasts.apple.com/us/podcast/erics-adhd-experience/id1606793460",
     "amazon": "https://music.amazon.com/podcasts/6f67ed72-2c2e-4ded-88ea-4300cd8deec9/eric's-adhd-experience",
-    "youtube": null
+    "youtube": null,
+    "rss": "https://anchor.fm/s/7b5fead0/podcast/rss"
   },
   "socialLinks": {
     "instagram": "https://instagram.com/ericsadhdexperience",
     "tiktok": "https://tiktok.com/@erics_adhd_experience",
-    "facebook": "https://facebook.com/ericsadhdexperience"
+    "facebook": "https://facebook.com/ericsadhdexperience",
+    "rumble": null
   },
   "contactEmail": null,
   "episodeCount": "55+",

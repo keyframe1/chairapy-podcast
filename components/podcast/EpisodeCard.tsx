@@ -49,7 +49,7 @@ export default function EpisodeCard({
                   ? "(max-width: 768px) 100vw, 480px"
                   : "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
               }
-              className="object-cover"
+              className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.02]"
             />
           ) : (
             <EpisodeBackplate
