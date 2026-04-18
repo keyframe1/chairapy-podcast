@@ -2,6 +2,7 @@ import Link from "next/link";
 import Container from "../ui/Container";
 import EmailSignup from "../podcast/EmailSignup";
 import FleuronOrnament from "../podcast/FleuronOrnament";
+import TerraFooterStrip from "../podcast/TerraFooterStrip";
 import showInfoData from "../../content/show-info.json";
 import type { ShowInfo } from "../../lib/types";
 
@@ -24,7 +25,9 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="border-t border-border bg-bg mt-24">
+    <>
+      <TerraFooterStrip />
+      <footer className="bg-bg">
       <Container>
         <div className="py-12 border-b border-border">
           <div className="max-w-content">
@@ -104,6 +107,7 @@ export default function Footer() {
           </p>
         </div>
       </Container>
-    </footer>
+      </footer>
+    </>
   );
 }

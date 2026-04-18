@@ -4,12 +4,14 @@ import EricPhoto from "../components/podcast/EricPhoto";
 import SpotifyPlayer from "../components/podcast/SpotifyPlayer";
 import AudioPlayer from "../components/podcast/AudioPlayer";
 import EmailSignup from "../components/podcast/EmailSignup";
+import EmailSignupBlock from "../components/podcast/EmailSignupBlock";
 import VideoPlaceholder from "../components/podcast/VideoPlaceholder";
 import ContinueExploring from "../components/podcast/ContinueExploring";
 import GuestCard from "../components/podcast/GuestCard";
 import PlatformButton from "../components/podcast/PlatformButton";
 import EpisodeBackplate from "../components/podcast/EpisodeBackplate";
 import SectionDivider from "../components/podcast/SectionDivider";
+import HeroDiagonal from "../components/podcast/HeroDiagonal";
 
 import showInfoData from "../content/show-info.json";
 import guestsData from "../content/guests.json";
@@ -50,10 +52,11 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      {/* Editorial hero — typographic masthead, asymmetric two-column */}
-      <section className="pt-16 md:pt-24 pb-12 md:pb-20">
-        <Container>
-          <div className="grid grid-cols-1 md:grid-cols-[3fr_2fr] gap-10 md:gap-16 items-end">
+      {/* Editorial hero — hero-diagonal backdrop with typographic masthead on the cream (right) side */}
+      <HeroDiagonal scale="full">
+        <Container className="relative h-full">
+          <div className="grid grid-cols-1 md:grid-cols-[2fr_3fr] gap-10 md:gap-16 items-end pt-16 md:pt-24 pb-12 md:pb-20 min-h-[70vh] md:min-h-[78vh]">
+            <div className="hidden md:block" aria-hidden="true" />
             <div className="reveal">
               <p className="eyebrow mb-6">A Chairapy Media podcast · New Orleans</p>
               <h1
@@ -81,41 +84,30 @@ export default function HomePage() {
               >
                 {showInfo.showTagline}
               </p>
-            </div>
 
-            <aside className="reveal md:pb-4">
-              <p className="eyebrow eyebrow--sage tabular">
-                {allEpisodes.length} episodes · new drops monthly
-              </p>
-              <p className="mt-8 text-base text-fg max-w-content" style={{ lineHeight: 1.65 }}>
-                Long-form conversations with paramedics, musicians, fighters, fishermen,
-                comedians, and people you'd pass at the counter. Hosted by {showInfo.hostName}
-                {" "}in {showInfo.hostLocation}.
-              </p>
-              {latestEpisode && (
-                <Link
-                  href={`/episodes/${latestEpisode.slug}`}
-                  className="group mt-10 block border border-border p-5 transition-colors hover:bg-bg-elevated"
-                  style={{ borderRadius: 4 }}
-                >
-                  <p className="eyebrow eyebrow--accent tabular">
-                    Latest · Ep {latestEpisode.episodeNumber}
-                  </p>
-                  <p
-                    className="mt-2 font-display text-xl text-fg group-hover:text-accent transition-colors"
-                    style={{ lineHeight: 1.1 }}
+              <div className="mt-10 flex flex-wrap items-baseline gap-x-6 gap-y-3">
+                <p className="eyebrow eyebrow--sage tabular">
+                  {allEpisodes.length} episodes · new drops monthly
+                </p>
+                {latestEpisode && (
+                  <Link
+                    href={`/episodes/${latestEpisode.slug}`}
+                    className="group text-sm text-fg hover:text-accent transition-colors"
                   >
-                    {latestEpisode.title}
-                  </p>
-                  <p className="mt-2 text-xs text-fg-muted tabular">
-                    {formatPublishedDate(latestEpisode.publishedDate)}
-                  </p>
-                </Link>
-              )}
-            </aside>
+                    <span className="eyebrow eyebrow--accent tabular mr-2">
+                      Latest
+                    </span>
+                    <span className="font-serif-body italic">
+                      Ep {latestEpisode.episodeNumber} · {latestEpisode.title}
+                    </span>
+                    <span aria-hidden="true" className="text-accent ml-1">→</span>
+                  </Link>
+                )}
+              </div>
+            </div>
           </div>
         </Container>
-      </section>
+      </HeroDiagonal>
 
       {/* Featured episode — split-screen magazine layout */}
       {featuredEpisode && (
@@ -302,10 +294,12 @@ export default function HomePage() {
       {/* Email signup */}
       <section className="py-20 md:py-24 border-t border-border">
         <Container width="content">
-          <EmailSignup
-            headline="New episodes, in your inbox."
-            subheadline="No spam. Just a note when a new conversation drops."
-          />
+          <EmailSignupBlock>
+            <EmailSignup
+              headline="New episodes, in your inbox."
+              subheadline="No spam. Just a note when a new conversation drops."
+            />
+          </EmailSignupBlock>
         </Container>
       </section>
 

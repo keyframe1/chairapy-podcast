@@ -1,14 +1,14 @@
 import Image from "next/image";
 
 type FleuronOrnamentProps = {
-  /** Cap width in pixels. 320 for page tops, 240 for footer. */
+  /** Cap width in pixels. 320 for page tops, 180 for footer. */
   maxWidth?: number;
   className?: string;
 };
 
 /**
- * Ornate fleuron ornament. Always rendered at 60% opacity to soften
- * its solid black down toward sepia so it sits inside the palette.
+ * Ornate fleuron. Rendered at 45% opacity with a warm sepia duotone filter
+ * so the solid black source reads as deep sepia and sits in the palette.
  */
 export default function FleuronOrnament({
   maxWidth = 320,
@@ -21,8 +21,13 @@ export default function FleuronOrnament({
       className={`flex justify-center ${className}`}
     >
       <div
-        className="relative w-full"
-        style={{ maxWidth: `${maxWidth}px`, aspectRatio: "6 / 1", opacity: 0.6 }}
+        className="relative w-full fleuron-ornament"
+        style={{
+          maxWidth: `${maxWidth}px`,
+          aspectRatio: "6 / 1",
+          opacity: 0.45,
+          filter: "sepia(0.6) hue-rotate(-20deg) saturate(0.8)",
+        }}
       >
         <Image
           src="/images/brand/ornamental-fleuron.png"

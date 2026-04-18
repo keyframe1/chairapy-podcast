@@ -6,18 +6,19 @@ type SectionDividerProps = {
 };
 
 /**
- * Decorative asterism divider — three terracotta diamonds with dot separators.
- * Use between genuine section shifts, not between every block.
+ * Decorative asterism divider. Reserved for genuine section shifts —
+ * target cadence is 1 per tonal transition, max 2–3 per long page.
+ * 140px max keeps it punctuation-scale rather than announcement-scale.
  */
 export default function SectionDivider({
   className = "",
-  maxWidth = 180,
+  maxWidth = 140,
 }: SectionDividerProps) {
   return (
     <div
       role="separator"
       aria-hidden="true"
-      className={`flex justify-center my-14 md:my-20 ${className}`}
+      className={`asterism-divider flex justify-center my-16 md:my-20 ${className}`}
     >
       <div
         className="relative w-full"

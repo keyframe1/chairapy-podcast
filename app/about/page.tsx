@@ -3,6 +3,7 @@ import Image from "next/image";
 import Container from "../../components/ui/Container";
 import EricPhoto from "../../components/podcast/EricPhoto";
 import EmailSignup from "../../components/podcast/EmailSignup";
+import EmailSignupBlock from "../../components/podcast/EmailSignupBlock";
 import FleuronOrnament from "../../components/podcast/FleuronOrnament";
 import SectionDivider from "../../components/podcast/SectionDivider";
 import showInfoData from "../../content/show-info.json";
@@ -22,7 +23,7 @@ export default function AboutPage() {
       <div className="py-16 md:py-24">
         <FleuronOrnament maxWidth={320} className="mb-10 md:mb-14" />
 
-        {/* About the show — text left, vertical accent right */}
+        {/* About the show — text with vertical accent hanging past the bio */}
         <section>
           <p className="eyebrow">About the show</p>
           <h1
@@ -32,9 +33,28 @@ export default function AboutPage() {
             {showInfo.showTagline}
           </h1>
 
-          <div className="mt-10 grid grid-cols-1 md:grid-cols-[3fr_2fr] gap-10 md:gap-16 items-start">
-            <div>
-              <div className="prose-serif drop-cap text-fg" style={{ maxWidth: "62ch" }}>
+          <div className="relative mt-10">
+            {/* Accent — positioned absolute on desktop so it starts at the H1
+                baseline above and hangs ~100px past the bio below. On mobile
+                it becomes a right-floated 45%-width image with bio text wrap. */}
+            <div
+              className="sm:float-right sm:w-[45%] sm:ml-6 sm:mb-4 md:float-none md:ml-0 md:mb-0 md:absolute md:right-0 md:-top-24 md:w-[36%] md:h-[calc(100%+160px)] relative aspect-[1/3] md:aspect-auto overflow-hidden"
+              aria-hidden="true"
+            >
+              <Image
+                src="/images/brand/sidebar-accent-vertical.png"
+                alt=""
+                fill
+                sizes="(max-width: 640px) 100vw, (max-width: 768px) 45vw, 36vw"
+                className="object-cover"
+              />
+            </div>
+
+            <div className="md:pr-[40%]">
+              <div
+                className="prose-serif drop-cap text-fg"
+                style={{ maxWidth: "60ch" }}
+              >
                 <p>{showInfo.showDescriptionLong}</p>
                 <p>
                   The show is produced by {showInfo.productionLabel} in{" "}
@@ -47,23 +67,16 @@ export default function AboutPage() {
                 current engagement. Full rebrand coming later.
               </p>
             </div>
-
-            <div className="relative w-full aspect-[1/3] md:aspect-auto md:h-full md:min-h-[440px] overflow-hidden border border-border">
-              <Image
-                src="/images/brand/sidebar-accent-vertical.png"
-                alt=""
-                fill
-                sizes="(max-width: 768px) 100vw, 40vw"
-                className="object-cover"
-              />
-            </div>
+            <div className="clear-both" />
           </div>
 
-          <div className="mt-14">
-            <EmailSignup
-              headline="Follow the show."
-              subheadline="New episodes land in your inbox, no spam."
-            />
+          <div className="mt-16">
+            <EmailSignupBlock>
+              <EmailSignup
+                headline="Follow the show."
+                subheadline="New episodes land in your inbox, no spam."
+              />
+            </EmailSignupBlock>
           </div>
         </section>
 

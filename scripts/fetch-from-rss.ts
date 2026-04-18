@@ -154,7 +154,7 @@ function transformToEpisodes(items: RssItem[]): Episode[] {
       longDescription,
       topics: [],
       featured: false,
-      thumbnailUrl: null,
+      thumbnailUrl: item.itunesImage,
       audioUrl: item.enclosureUrl,
       duration: item.duration,
     };

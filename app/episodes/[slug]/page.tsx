@@ -7,6 +7,7 @@ import Container from "../../../components/ui/Container";
 import SpotifyPlayer from "../../../components/podcast/SpotifyPlayer";
 import AudioPlayer from "../../../components/podcast/AudioPlayer";
 import EmailSignup from "../../../components/podcast/EmailSignup";
+import EmailSignupBlock from "../../../components/podcast/EmailSignupBlock";
 import EpisodeListRow from "../../../components/podcast/EpisodeListRow";
 import VideoPlaceholder from "../../../components/podcast/VideoPlaceholder";
 import MarkAsListened from "../../../components/podcast/MarkAsListened";
@@ -355,11 +356,13 @@ export default function EpisodeDetailPage({
         {/* Email signup */}
         <section className="py-14 border-t border-border">
           <Container width="content">
-            <EmailSignup
-              variant="compact"
-              headline="Don't miss the next one."
-              subheadline="Get new episodes when they drop."
-            />
+            <EmailSignupBlock>
+              <EmailSignup
+                variant="compact"
+                headline="Don't miss the next one."
+                subheadline="Get new episodes when they drop."
+              />
+            </EmailSignupBlock>
           </Container>
         </section>
 

@@ -230,3 +230,17 @@ input[type="range"]::-moz-range-thumb {
     transform: none !important;
   }
 }
+
+/* Print: clean text-only output — hide decorative assets so paginated copies
+   don't waste toner on textures that don't serve the content. */
+@media print {
+  [role="separator"],
+  .asterism-divider,
+  .fleuron-ornament {
+    display: none !important;
+  }
+  body {
+    background: white !important;
+    color: black !important;
+  }
+}
