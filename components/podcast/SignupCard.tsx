@@ -204,12 +204,12 @@ export default function SignupCard() {
                 placeholder="you@example.com"
                 disabled={status === "loading"}
                 aria-invalid={status === "error"}
-                className="w-full rounded-md border border-border bg-bg px-3 py-2.5 text-sm text-fg placeholder:text-fg-muted focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/40 disabled:opacity-60"
+                className="w-full rounded-md border border-border bg-bg px-3 py-2.5 text-sm text-fg placeholder:text-fg-muted focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/40 disabled:opacity-70"
               />
               <button
                 type="submit"
                 disabled={status === "loading"}
-                className="w-full rounded-md bg-accent text-bg px-4 py-2.5 text-sm font-medium hover:bg-accent-hover active:opacity-85 disabled:opacity-60 transition-colors"
+                className="w-full rounded-md bg-accent text-bg px-4 py-2.5 text-sm font-medium hover:bg-accent-hover active:opacity-85 disabled:opacity-70 transition-colors"
               >
                 {status === "loading" ? "Subscribing…" : "Subscribe"}
               </button>
@@ -218,7 +218,9 @@ export default function SignupCard() {
             {message && (
               <p
                 role={status === "error" ? "alert" : "status"}
-                className="mt-2 text-xs text-fg-muted"
+                className={`mt-2 text-xs ${
+                  status === "error" ? "text-accent" : "text-fg-muted"
+                }`}
               >
                 {message}
               </p>

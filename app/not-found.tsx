@@ -22,7 +22,7 @@ export default function NotFound() {
 
       <Container width="content">
         <div className="min-h-[70vh] flex flex-col items-start justify-center py-24">
-          <p className="eyebrow eyebrow--accent tabular">404 · page not found</p>
+          <p className="eyebrow eyebrow--accent tabular">Off the trail</p>
           <h1
             className="mt-6 font-display text-fg"
             style={{
@@ -32,34 +32,18 @@ export default function NotFound() {
               fontVariationSettings: '"opsz" 144, "SOFT" 100, "WONK" 1',
             }}
           >
-            You're off-script.
+            This page isn't here.
           </h1>
-          <p
-            className="mt-6 font-serif-body text-xl text-fg-muted max-w-content"
-            style={{ lineHeight: 1.6 }}
-          >
-            That page isn't here. Try the episodes archive — most things live
-            there.
-          </p>
 
-          <div className="mt-10 flex flex-col sm:flex-row gap-6">
-            <Link
-              href="/episodes"
-              className="inline-flex items-center gap-2 text-accent editorial-link"
-            >
-              <span aria-hidden="true">▶</span>
-              <span className="underline underline-offset-4 hover:[text-underline-offset:8px] transition-all text-lg">
-                Browse every episode
-              </span>
-            </Link>
-            <Link
-              href="/"
-              className="inline-flex items-center gap-2 text-sm text-fg-muted hover:text-accent transition-colors"
-            >
-              <span aria-hidden="true">←</span>
-              <span>Back to home</span>
-            </Link>
-          </div>
+          <Link
+            href="/episodes"
+            className="mt-10 inline-flex items-center gap-2 text-accent editorial-link"
+          >
+            <span className="text-lg underline underline-offset-4 hover:[text-underline-offset:8px] transition-all">
+              Try the episodes archive
+            </span>
+            <span aria-hidden="true">→</span>
+          </Link>
         </div>
       </Container>
     </div>

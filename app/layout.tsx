@@ -76,6 +76,9 @@ export const metadata: Metadata = {
     canonical: SITE_URL,
   },
   manifest: "/manifest.json",
+  icons: {
+    icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
+  },
 };
 
 export const viewport = {

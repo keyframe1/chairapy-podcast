@@ -9,7 +9,6 @@ import ContinueExploring from "../components/podcast/ContinueExploring";
 import SignupCard from "../components/podcast/SignupCard";
 import GuestCard from "../components/podcast/GuestCard";
 import EpisodeBackplate from "../components/podcast/EpisodeBackplate";
-import SectionDivider from "../components/podcast/SectionDivider";
 import HeroDiagonal from "../components/podcast/HeroDiagonal";
 
 import showInfoData from "../content/show-info.json";
@@ -108,11 +107,49 @@ export default function HomePage() {
         </Container>
       </HeroDiagonal>
 
+      {/* Host byline — small editorial strip between hero and featured */}
+      <section className="py-16 md:py-20">
+        <Container>
+          <div className="flex items-center gap-6 md:gap-8 max-w-content">
+            <div
+              className="relative w-[120px] h-[120px] md:w-[150px] md:h-[150px] flex-none overflow-hidden"
+              style={{
+                borderRadius: 2,
+                boxShadow:
+                  "0 4px 12px rgba(44, 36, 24, 0.06), 0 12px 32px rgba(193, 113, 68, 0.12)",
+              }}
+            >
+              <EricPhoto
+                variant="portrait-03"
+                alt="Eric Falgout, host"
+                aspectRatio="square"
+                treatment="portrait"
+              />
+            </div>
+            <div>
+              <p className="eyebrow eyebrow--accent">Your host</p>
+              <p
+                className="mt-3 font-display text-2xl md:text-3xl text-fg"
+                style={{
+                  lineHeight: 1.05,
+                  letterSpacing: "-0.02em",
+                  fontVariationSettings: '"opsz" 96, "SOFT" 80, "WONK" 1',
+                }}
+              >
+                {showInfo.hostName}
+              </p>
+              <p className="mt-2 font-serif-body italic text-base text-fg-muted">
+                Host. Records in {showInfo.hostLocation}.
+              </p>
+            </div>
+          </div>
+        </Container>
+      </section>
+
       {/* Featured episode — split-screen magazine layout */}
       {featuredEpisode && (
         <>
-          <SectionDivider />
-          <section className="pb-16 md:pb-24">
+          <section className="pb-16 md:pb-24 border-t border-border pt-16 md:pt-20">
             <Container>
             <p className="eyebrow mb-8">
               Featured · start here if you're new

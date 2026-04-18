@@ -100,26 +100,36 @@ export default function MobileNavToggle() {
             className="fixed inset-x-0 top-16 z-50 border-t border-border bg-bg-elevated shadow-xl"
           >
             <nav className="flex flex-col px-6 py-6 gap-1">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setOpen(false)}
-                  className="flex items-center justify-between px-3 py-4 text-lg text-fg hover:text-accent hover:bg-bg/40 transition-colors"
-                >
-                  <span className="inline-flex items-center gap-3">
-                    {link.label}
-                    {link.badge && (
-                      <span className="eyebrow eyebrow--amber">
-                        {link.badge}
-                      </span>
-                    )}
-                  </span>
-                  <span aria-hidden="true" className="text-accent">
-                    →
-                  </span>
-                </Link>
-              ))}
+              {navLinks.map((link) => {
+                const active =
+                  pathname === link.href ||
+                  (link.href !== "/" && pathname.startsWith(`${link.href}/`));
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setOpen(false)}
+                    aria-current={active ? "page" : undefined}
+                    className={`flex items-center justify-between px-3 py-4 text-lg transition-colors ${
+                      active
+                        ? "text-accent"
+                        : "text-fg hover:text-accent hover:bg-bg/40"
+                    }`}
+                  >
+                    <span className="inline-flex items-center gap-3">
+                      {link.label}
+                      {link.badge && (
+                        <span className="eyebrow eyebrow--amber">
+                          {link.badge}
+                        </span>
+                      )}
+                    </span>
+                    <span aria-hidden="true" className="text-accent">
+                      →
+                    </span>
+                  </Link>
+                );
+              })}
             </nav>
           </div>
         </>

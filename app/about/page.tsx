@@ -82,7 +82,7 @@ export default function AboutPage() {
       </section>
 
       {/* 3. Bio body — drop-cap, comfortable measure */}
-      <section className="pb-20 md:pb-28">
+      <section className="pb-20 md:pb-24">
         <Container width="content">
           <div className="prose-serif drop-cap text-fg" style={{ maxWidth: "62ch" }}>
             <p>{showInfo.hostLongBio}</p>
@@ -92,6 +92,26 @@ export default function AboutPage() {
             Recorded on professional broadcast equipment including Blackmagic
             6K cameras at studio-grade quality.
           </p>
+        </Container>
+      </section>
+
+      {/* 3b. Marathon photo moment — visual beat between bio and show description */}
+      <section className="pb-20 md:pb-28">
+        <Container width="content">
+          <figure>
+            <EricPhoto
+              variant="portrait-04"
+              alt={`${showInfo.hostName} at the Crescent City Classic`}
+              aspectRatio="3/4"
+              treatment="portrait"
+            />
+            <figcaption
+              className="mt-4 font-serif-body italic text-base text-fg-muted text-center"
+              style={{ letterSpacing: "-0.005em" }}
+            >
+              Crescent City Classic. New Orleans.
+            </figcaption>
+          </figure>
         </Container>
       </section>
 

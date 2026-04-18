@@ -170,12 +170,12 @@ export default function EmailSignup({
           placeholder="you@example.com"
           aria-describedby={message ? messageId : undefined}
           aria-invalid={status === "error"}
-          className="flex-1 rounded-md border border-border bg-bg px-4 py-3 text-base text-fg placeholder:text-fg-muted focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/40 disabled:opacity-60"
+          className="flex-1 rounded-md border border-border bg-bg px-4 py-3 text-base text-fg placeholder:text-fg-muted focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/40 disabled:opacity-70"
         />
         <button
           type="submit"
           disabled={status === "loading"}
-          className="inline-flex items-center justify-center rounded-md bg-accent px-5 py-3 text-base font-medium text-bg hover:bg-accent-hover focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-bg disabled:opacity-60 disabled:cursor-not-allowed active:opacity-80 transition-[background-color,opacity] duration-150"
+          className="inline-flex items-center justify-center rounded-md bg-accent px-5 py-3 text-base font-medium text-bg hover:bg-accent-hover focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-bg disabled:opacity-70 disabled:cursor-not-allowed active:opacity-80 transition-[background-color,opacity] duration-150"
         >
           {status === "loading" ? "Subscribing…" : "Subscribe"}
         </button>
