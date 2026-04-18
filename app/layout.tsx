@@ -53,12 +53,20 @@ export const metadata: Metadata = {
     description:
       "Long-form conversations with paramedics, musicians, fighters, and working people.",
     url: SITE_URL,
-    // og-image is generated dynamically by app/opengraph-image.tsx
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Eric's ADHD Experience — A Chairapy Media podcast",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Eric's ADHD Experience",
     description: "Long-form conversations, recorded in New Orleans.",
+    images: ["/og-image.png"],
   },
   robots: {
     index: true,

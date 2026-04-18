@@ -1,7 +1,10 @@
 import Link from "next/link";
+import Image from "next/image";
 import Container from "../../components/ui/Container";
 import EricPhoto from "../../components/podcast/EricPhoto";
 import EmailSignup from "../../components/podcast/EmailSignup";
+import FleuronOrnament from "../../components/podcast/FleuronOrnament";
+import SectionDivider from "../../components/podcast/SectionDivider";
 import showInfoData from "../../content/show-info.json";
 import type { ShowInfo } from "../../lib/types";
 
@@ -16,8 +19,10 @@ export const metadata = {
 export default function AboutPage() {
   return (
     <Container width="content">
-      <div className="py-20 md:py-28 space-y-24 md:space-y-28">
-        {/* About the show */}
+      <div className="py-16 md:py-24">
+        <FleuronOrnament maxWidth={320} className="mb-10 md:mb-14" />
+
+        {/* About the show — text left, vertical accent right */}
         <section>
           <p className="eyebrow">About the show</p>
           <h1
@@ -27,29 +32,42 @@ export default function AboutPage() {
             {showInfo.showTagline}
           </h1>
 
-          <div
-            className="mt-10 prose-serif drop-cap text-fg"
-            style={{ maxWidth: "68ch" }}
-          >
-            <p>{showInfo.showDescriptionLong}</p>
-            <p>
-              The show is produced by {showInfo.productionLabel} in{" "}
-              {showInfo.recordingLocation}.
-            </p>
+          <div className="mt-10 grid grid-cols-1 md:grid-cols-[3fr_2fr] gap-10 md:gap-16 items-start">
+            <div>
+              <div className="prose-serif drop-cap text-fg" style={{ maxWidth: "62ch" }}>
+                <p>{showInfo.showDescriptionLong}</p>
+                <p>
+                  The show is produced by {showInfo.productionLabel} in{" "}
+                  {showInfo.recordingLocation}.
+                </p>
+              </div>
+
+              <p className="mt-10 text-sm text-fg-muted font-serif-body italic border-l-2 border-accent pl-4">
+                Phase 1 branding — we're keeping the show name during the
+                current engagement. Full rebrand coming later.
+              </p>
+            </div>
+
+            <div className="relative w-full aspect-[1/3] md:aspect-auto md:h-full md:min-h-[440px] overflow-hidden border border-border">
+              <Image
+                src="/images/brand/sidebar-accent-vertical.png"
+                alt=""
+                fill
+                sizes="(max-width: 768px) 100vw, 40vw"
+                className="object-cover"
+              />
+            </div>
           </div>
 
-          <p className="mt-10 text-sm text-fg-muted font-serif-body italic border-l-2 border-accent pl-4">
-            Phase 1 branding — we're keeping the show name during the current
-            engagement. Full rebrand coming later.
-          </p>
-
-          <div className="mt-12">
+          <div className="mt-14">
             <EmailSignup
               headline="Follow the show."
               subheadline="New episodes land in your inbox, no spam."
             />
           </div>
         </section>
+
+        <SectionDivider />
 
         {/* About Eric */}
         <section>
@@ -81,6 +99,8 @@ export default function AboutPage() {
             cameras at studio-grade quality.
           </p>
         </section>
+
+        <SectionDivider />
 
         {/* The Chairapy connection */}
         <section>

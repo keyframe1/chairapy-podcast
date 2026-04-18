@@ -4,6 +4,7 @@ import type { Episode } from "../../lib/types";
 import { formatPublishedDate } from "../../lib/episodes";
 import { formatDurationLabel } from "../../lib/duration";
 import ListenedIndicator from "./ListenedIndicator";
+import EpisodeBackplate from "./EpisodeBackplate";
 
 type EpisodeCardProps = {
   episode: Episode;
@@ -18,7 +19,11 @@ export default function EpisodeCard({
   const isCompact = variant === "compact";
   const published = formatPublishedDate(episode.publishedDate);
   const duration = formatDurationLabel(episode.duration);
-  const showThumbnail = !isCompact && Boolean(episode.thumbnailUrl);
+  const hasRealThumb = Boolean(episode.thumbnailUrl);
+  const showArt = !isCompact;
+  // When there's no real thumb we render the backplate with the title overlaid —
+  // the card body below then skips the title to avoid duplication.
+  const titleOnArt = showArt && !hasRealThumb;
 
   return (
     <Link
@@ -28,23 +33,30 @@ export default function EpisodeCard({
       }`}
       style={{ borderRadius: 4 }}
     >
-      {showThumbnail && (
+      {showArt && (
         <div
-          className={`relative bg-bg ${
-            isFeature ? "aspect-square" : "aspect-square"
-          } overflow-hidden`}
+          className={`relative bg-bg aspect-square overflow-hidden ${
+            isFeature ? "" : ""
+          }`}
         >
-          <Image
-            src={episode.thumbnailUrl!}
-            alt={`${episode.title} — episode artwork`}
-            fill
-            sizes={
-              isFeature
-                ? "(max-width: 768px) 100vw, 480px"
-                : "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            }
-            className="object-cover"
-          />
+          {hasRealThumb ? (
+            <Image
+              src={episode.thumbnailUrl!}
+              alt={`${episode.title} — episode artwork`}
+              fill
+              sizes={
+                isFeature
+                  ? "(max-width: 768px) 100vw, 480px"
+                  : "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              }
+              className="object-cover"
+            />
+          ) : (
+            <EpisodeBackplate
+              title={episode.title}
+              variant={isFeature ? "feature" : "card"}
+            />
+          )}
         </div>
       )}
 
@@ -72,21 +84,27 @@ export default function EpisodeCard({
           <ListenedIndicator slug={episode.slug} />
         </div>
 
-        <h3
-          className={`mt-3 font-display text-fg group-hover:text-accent transition-colors ${
-            isFeature
-              ? "text-4xl md:text-5xl"
-              : isCompact
-                ? "text-xl"
-                : "text-2xl"
-          }`}
-          style={{ lineHeight: 1.05 }}
-        >
-          {episode.title}
-        </h3>
+        {!titleOnArt && (
+          <h3
+            className={`mt-3 font-display text-fg group-hover:text-accent transition-colors ${
+              isFeature
+                ? "text-4xl md:text-5xl"
+                : isCompact
+                  ? "text-xl"
+                  : "text-2xl"
+            }`}
+            style={{ lineHeight: 1.05 }}
+          >
+            {episode.title}
+          </h3>
+        )}
 
         {episode.guestName && (
-          <p className="mt-2 text-base font-serif-body italic text-fg-muted">
+          <p
+            className={`${
+              titleOnArt ? "mt-3" : "mt-2"
+            } text-base font-serif-body italic text-fg-muted`}
+          >
             with {episode.guestName}
           </p>
         )}

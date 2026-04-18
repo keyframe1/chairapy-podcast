@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Container from "../ui/Container";
 import EmailSignup from "../podcast/EmailSignup";
+import FleuronOrnament from "../podcast/FleuronOrnament";
 import showInfoData from "../../content/show-info.json";
 import type { ShowInfo } from "../../lib/types";
 
@@ -96,8 +97,11 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-border py-6 text-xs text-fg-muted">
-          A Chairapy production. New Orleans, Louisiana.
+        <div className="border-t border-border pt-10 pb-8">
+          <FleuronOrnament maxWidth={240} className="mb-6" />
+          <p className="text-center text-xs text-fg-muted">
+            A Chairapy production. New Orleans, Louisiana.
+          </p>
         </div>
       </Container>
     </footer>

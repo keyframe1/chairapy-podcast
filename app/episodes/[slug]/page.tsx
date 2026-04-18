@@ -10,6 +10,7 @@ import EmailSignup from "../../../components/podcast/EmailSignup";
 import EpisodeListRow from "../../../components/podcast/EpisodeListRow";
 import VideoPlaceholder from "../../../components/podcast/VideoPlaceholder";
 import MarkAsListened from "../../../components/podcast/MarkAsListened";
+import SectionDivider from "../../../components/podcast/SectionDivider";
 
 import {
   getAllEpisodes,
@@ -317,8 +318,10 @@ export default function EpisodeDetailPage({
           </Container>
         </section>
 
+        <SectionDivider />
+
         {/* Video callout — static placeholder */}
-        <section className="py-14 border-t border-border">
+        <section className="py-14">
           <Container width="content">
             <div className="flex flex-col sm:flex-row gap-6 items-start">
               <div className="sm:w-2/5 flex-none">

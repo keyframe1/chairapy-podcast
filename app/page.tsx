@@ -8,6 +8,8 @@ import VideoPlaceholder from "../components/podcast/VideoPlaceholder";
 import ContinueExploring from "../components/podcast/ContinueExploring";
 import GuestCard from "../components/podcast/GuestCard";
 import PlatformButton from "../components/podcast/PlatformButton";
+import EpisodeBackplate from "../components/podcast/EpisodeBackplate";
+import SectionDivider from "../components/podcast/SectionDivider";
 
 import showInfoData from "../content/show-info.json";
 import guestsData from "../content/guests.json";
@@ -117,8 +119,10 @@ export default function HomePage() {
 
       {/* Featured episode — split-screen magazine layout */}
       {featuredEpisode && (
-        <section className="py-16 md:py-24 border-t border-border">
-          <Container>
+        <>
+          <SectionDivider />
+          <section className="pb-16 md:pb-24">
+            <Container>
             <p className="eyebrow mb-8">
               Featured · start here if you're new
             </p>
@@ -132,14 +136,11 @@ export default function HomePage() {
                     className="absolute inset-0 w-full h-full object-cover"
                   />
                 ) : (
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <span
-                      className="font-display text-7xl text-accent"
-                      style={{ fontVariationSettings: '"opsz" 144, "SOFT" 100, "WONK" 1' }}
-                    >
-                      {featuredEpisode.episodeNumber}
-                    </span>
-                  </div>
+                  <EpisodeBackplate
+                    title={featuredEpisode.title}
+                    variant="feature"
+                    priority
+                  />
                 )}
               </div>
 
@@ -157,15 +158,19 @@ export default function HomePage() {
                   )}
                 </p>
 
-                <h2
-                  className="mt-4 font-display text-4xl md:text-5xl text-fg"
-                  style={{ lineHeight: 1.02, letterSpacing: "-0.03em" }}
-                >
-                  {featuredEpisode.title}
-                </h2>
+                {featuredEpisode.thumbnailUrl && (
+                  <h2
+                    className="mt-4 font-display text-4xl md:text-5xl text-fg"
+                    style={{ lineHeight: 1.02, letterSpacing: "-0.03em" }}
+                  >
+                    {featuredEpisode.title}
+                  </h2>
+                )}
 
                 <p
-                  className="mt-6 font-serif-body text-xl text-fg italic max-w-content"
+                  className={`${
+                    featuredEpisode.thumbnailUrl ? "mt-6" : "mt-4"
+                  } font-serif-body text-xl text-fg italic max-w-content`}
                   style={{ lineHeight: 1.4 }}
                 >
                   {featuredEpisode.description}
@@ -209,11 +214,14 @@ export default function HomePage() {
               </div>
             </article>
           </Container>
-        </section>
+          </section>
+        </>
       )}
 
+      <SectionDivider />
+
       {/* Video — coming soon */}
-      <section className="py-20 md:py-24 border-t border-border">
+      <section className="py-16 md:py-20">
         <Container>
           <div className="grid grid-cols-1 md:grid-cols-[5fr_7fr] gap-10 md:gap-16 items-start">
             <div>
