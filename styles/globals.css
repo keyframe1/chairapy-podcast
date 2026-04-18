@@ -194,47 +194,6 @@ a.editorial-link:hover,
 }
 
 /* =====================================================================
- * Footer signature strip — dissolved, not pasted on
- * ===================================================================== */
-.footer-signature-strip {
-  position: relative;
-  height: 120px;
-  pointer-events: none;
-}
-
-.footer-signature-strip-inner {
-  position: absolute;
-  inset: 0;
-  background-image: var(--accent-pattern);
-  background-repeat: repeat-x;
-  background-size: auto 64px;
-  background-position: center;
-  mix-blend-mode: multiply;
-  opacity: 0.5;
-  filter: saturate(0.75);
-}
-
-.footer-signature-strip::before,
-.footer-signature-strip::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 36px;
-  z-index: 1;
-}
-
-.footer-signature-strip::before {
-  top: 0;
-  background: linear-gradient(to bottom, var(--cream) 0%, transparent 100%);
-}
-
-.footer-signature-strip::after {
-  bottom: 0;
-  background: linear-gradient(to top, var(--cream) 0%, transparent 100%);
-}
-
-/* =====================================================================
  * Eric portrait — magazine author treatment
  * ===================================================================== */
 .eric-portrait-frame {
@@ -476,8 +435,7 @@ input[type="range"]::-moz-range-thumb {
   [role="separator"],
   .asterism-divider,
   .fleuron-ornament,
-  .atmosphere-base,
-  .footer-signature-strip {
+  .atmosphere-base {
     display: none !important;
   }
   body {

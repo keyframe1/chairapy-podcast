@@ -4,9 +4,7 @@ import Container from "../../components/ui/Container";
 import EricPhoto from "../../components/podcast/EricPhoto";
 import EmailSignup from "../../components/podcast/EmailSignup";
 import EmailSignupBlock from "../../components/podcast/EmailSignupBlock";
-import FleuronOrnament from "../../components/podcast/FleuronOrnament";
 import HeroDiagonal from "../../components/podcast/HeroDiagonal";
-import SectionDivider from "../../components/podcast/SectionDivider";
 import showInfoData from "../../content/show-info.json";
 import type { ShowInfo } from "../../lib/types";
 
@@ -187,12 +185,6 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      <SectionDivider />
-
-      {/* 8. Fleuron — now at the bottom per spec */}
-      <div className="pb-16">
-        <FleuronOrnament maxWidth={240} />
-      </div>
     </>
   );
 }
