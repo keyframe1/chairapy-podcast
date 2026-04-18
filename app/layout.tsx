@@ -75,6 +75,12 @@ export const metadata: Metadata = {
   alternates: {
     canonical: SITE_URL,
   },
+  manifest: "/manifest.json",
+};
+
+export const viewport = {
+  themeColor: "#C17144",
+  colorScheme: "light" as const,
 };
 
 export default function RootLayout({
@@ -96,7 +102,7 @@ export default function RootLayout({
           Skip to main content
         </a>
         <Header />
-        <main id="main-content" className="flex-1">
+        <main id="main-content" className="flex-1 page-fade">
           {children}
         </main>
         <Footer />

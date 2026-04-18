@@ -71,7 +71,7 @@ export default function GuestDetailPage({
         )}
 
         <section className="mt-16">
-          <p className="eyebrow mb-4">Appears in</p>
+          <h2 className="eyebrow mb-4 m-0">Appears in</h2>
           {appearances.length > 0 ? (
             <ul>
               {appearances.map((ep) => (
@@ -89,7 +89,7 @@ export default function GuestDetailPage({
 
         {guest.externalLinks.length > 0 && (
           <section className="mt-16">
-            <p className="eyebrow mb-4">Links</p>
+            <h2 className="eyebrow mb-4 m-0">Links</h2>
             <ul className="space-y-2">
               {guest.externalLinks.map((link) => (
                 <li key={link.url}>

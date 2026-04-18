@@ -84,7 +84,7 @@ export default function EpisodesPage({
             {grouped.map(([month, items]) => (
               <section key={month} className="mb-4">
                 <div className="flex items-center gap-4 mt-10 mb-2">
-                  <span className="eyebrow tabular">{month}</span>
+                  <h2 className="eyebrow tabular m-0">{month}</h2>
                   <span
                     aria-hidden="true"
                     className="flex-1 h-px bg-border"

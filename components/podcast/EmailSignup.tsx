@@ -44,7 +44,9 @@ export default function EmailSignup({
 
       if (!res.ok) {
         setStatus("error");
-        setMessage(data.error ?? "Something went wrong. Try again?");
+        setMessage(
+          data.error ?? "That didn't go through. Try again in a moment.",
+        );
         return;
       }
 
@@ -58,11 +60,11 @@ export default function EmailSignup({
       }
 
       setStatus("success");
-      setMessage("You're in. Check your email for confirmation.");
+      setMessage("You're in. First episode heads to your inbox soon.");
       setEmail("");
     } catch {
       setStatus("error");
-      setMessage("Something went wrong. Try again?");
+      setMessage("That didn't go through. Try again in a moment.");
     }
   }
 
@@ -76,6 +78,51 @@ export default function EmailSignup({
       : "rounded-xl border border-border bg-bg-elevated p-8 md:p-10";
 
   const headingSize = isCompact ? "text-xl md:text-2xl" : "text-3xl md:text-4xl";
+
+  // Success state: replace the form with an acknowledgment card so people
+  // get a clear signal instead of a silent form-clear.
+  if (status === "success") {
+    return (
+      <section className={`${containerClass} ${className}`} aria-live="polite">
+        <div className="flex items-start gap-4">
+          <span
+            aria-hidden="true"
+            className="font-display text-3xl mt-1"
+            style={{
+              color: "var(--terracotta)",
+              fontVariationSettings: '"opsz" 144, "SOFT" 80, "WONK" 1',
+            }}
+          >
+            ✓
+          </span>
+          <div>
+            <h2 className={`font-display text-fg ${headingSize}`}>
+              You're in.
+            </h2>
+            <p
+              className={`${
+                isCompact ? "mt-2 text-sm" : "mt-3 text-base md:text-lg"
+              } font-serif-body italic text-fg-muted`}
+            >
+              First episode heads to your inbox soon.
+            </p>
+            <button
+              type="button"
+              onClick={() => {
+                setStatus("idle");
+                setMessage("");
+              }}
+              className="mt-5 inline-flex items-center gap-2 text-sm text-accent editorial-link"
+            >
+              <span className="underline underline-offset-4 hover:[text-underline-offset:8px] transition-all">
+                Subscribe another email
+              </span>
+            </button>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className={`${containerClass} ${className}`}>
@@ -119,7 +166,7 @@ export default function EmailSignup({
         <button
           type="submit"
           disabled={status === "loading"}
-          className="inline-flex items-center justify-center rounded-md bg-accent px-5 py-3 text-base font-medium text-bg hover:bg-accent-hover focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-bg disabled:opacity-60 disabled:cursor-not-allowed transition-colors"
+          className="inline-flex items-center justify-center rounded-md bg-accent px-5 py-3 text-base font-medium text-bg hover:bg-accent-hover focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-bg disabled:opacity-60 disabled:cursor-not-allowed active:opacity-80 transition-[background-color,opacity] duration-150"
         >
           {status === "loading" ? "Subscribing…" : "Subscribe"}
         </button>
@@ -130,7 +177,7 @@ export default function EmailSignup({
           id={messageId}
           role={status === "error" ? "alert" : "status"}
           className={`mt-3 text-sm ${
-            status === "error" ? "text-red-300" : "text-fg-muted"
+            status === "error" ? "text-accent" : "text-fg-muted"
           }`}
         >
           {message}
