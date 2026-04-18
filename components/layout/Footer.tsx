@@ -47,6 +47,7 @@ export default function Footer() {
                 platform="rss"
                 href={showInfo.distributionLinks.rss}
               />
+              <PlatformLink platform="patreon" soon />
             </div>
           </div>
 

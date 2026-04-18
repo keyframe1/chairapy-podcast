@@ -9,9 +9,7 @@ import AudioPlayer from "../../../components/podcast/AudioPlayer";
 import EmailSignup from "../../../components/podcast/EmailSignup";
 import EmailSignupBlock from "../../../components/podcast/EmailSignupBlock";
 import EpisodeListRow from "../../../components/podcast/EpisodeListRow";
-import VideoPlaceholder from "../../../components/podcast/VideoPlaceholder";
 import MarkAsListened from "../../../components/podcast/MarkAsListened";
-import SectionDivider from "../../../components/podcast/SectionDivider";
 
 import {
   getAllEpisodes,
@@ -315,40 +313,6 @@ export default function EpisodeDetailPage({
                   </div>
                 </aside>
               )}
-            </div>
-          </Container>
-        </section>
-
-        <SectionDivider />
-
-        {/* Video callout — static placeholder */}
-        <section className="py-14">
-          <Container width="content">
-            <div className="flex flex-col sm:flex-row gap-6 items-start">
-              <div className="sm:w-2/5 flex-none">
-                <VideoPlaceholder />
-              </div>
-              <div className="sm:flex-1">
-                <p className="eyebrow eyebrow--amber">Watch</p>
-                <p
-                  className="mt-3 font-display text-2xl text-fg"
-                  style={{ lineHeight: 1.1 }}
-                >
-                  Video version coming soon.
-                </p>
-                <p className="mt-3 text-fg-muted font-serif-body text-lg">
-                  We're producing video cuts of every episode. Be the first to know.
-                </p>
-                <Link
-                  href="/watch"
-                  className="mt-4 inline-flex items-center gap-2 text-sm text-accent editorial-link"
-                >
-                  <span className="underline underline-offset-4 hover:[text-underline-offset:8px] transition-all">
-                    Get on the list
-                  </span>
-                  <span aria-hidden="true">→</span>
-                </Link>
-              </div>
             </div>
           </Container>
         </section>

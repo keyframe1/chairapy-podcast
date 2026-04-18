@@ -106,7 +106,7 @@ export default function EpisodesPage() {
         {/* Empty state — unreachable in practice but kept for safety */}
         {all.length === 0 && (
           <p className="mt-16 text-center font-serif-body italic text-xl text-fg-muted">
-            No episodes yet. Check back soon.
+            No episodes published yet.
           </p>
         )}
       </div>

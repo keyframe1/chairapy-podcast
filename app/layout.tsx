@@ -4,7 +4,6 @@ import { Fraunces, Inter, Newsreader } from "next/font/google";
 import "../styles/globals.css";
 import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
-import FleuronOrnament from "../components/podcast/FleuronOrnament";
 import { SITE_URL } from "../lib/site";
 
 const inter = Inter({
@@ -106,9 +105,6 @@ export default function RootLayout({
         <main id="main-content" className="flex-1 page-fade">
           {children}
         </main>
-        <div className="pt-20 md:pt-28 pb-8 md:pb-10">
-          <FleuronOrnament maxWidth={180} />
-        </div>
         <Footer />
         {plausibleDomain && (
           <Script

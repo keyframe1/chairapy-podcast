@@ -5,8 +5,8 @@ import SpotifyPlayer from "../components/podcast/SpotifyPlayer";
 import AudioPlayer from "../components/podcast/AudioPlayer";
 import EmailSignup from "../components/podcast/EmailSignup";
 import EmailSignupBlock from "../components/podcast/EmailSignupBlock";
-import VideoPlaceholder from "../components/podcast/VideoPlaceholder";
 import ContinueExploring from "../components/podcast/ContinueExploring";
+import SignupCard from "../components/podcast/SignupCard";
 import GuestCard from "../components/podcast/GuestCard";
 import PlatformButton from "../components/podcast/PlatformButton";
 import EpisodeBackplate from "../components/podcast/EpisodeBackplate";
@@ -210,42 +210,6 @@ export default function HomePage() {
         </>
       )}
 
-      <SectionDivider />
-
-      {/* Video — coming soon */}
-      <section className="py-16 md:py-20">
-        <Container>
-          <div className="grid grid-cols-1 md:grid-cols-[5fr_7fr] gap-10 md:gap-16 items-start">
-            <div>
-              <p className="eyebrow eyebrow--amber">Coming to video</p>
-              <h2
-                className="mt-3 font-display text-3xl md:text-4xl text-fg"
-                style={{ lineHeight: 1.05 }}
-              >
-                Full episodes, watchable soon.
-              </h2>
-              <p className="mt-4 text-base text-fg-muted max-w-content" style={{ lineHeight: 1.6 }}>
-                Video versions of Eric's ADHD Experience are coming to YouTube and the
-                site. Get on the list to know when they drop.
-              </p>
-              <div className="mt-8">
-                <EmailSignup
-                  variant="compact"
-                  headline="Notify me when video is live."
-                  subheadline="One email, no spam."
-                />
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 reveal-stagger">
-              <VideoPlaceholder />
-              <VideoPlaceholder />
-              <VideoPlaceholder />
-            </div>
-          </div>
-        </Container>
-      </section>
-
       {/* About strip — portrait + restrained positioning */}
       <section className="py-20 md:py-24 border-t border-border">
         <Container>
@@ -352,6 +316,8 @@ export default function HomePage() {
           </div>
         </Container>
       </section>
+
+      <SignupCard />
     </>
   );
 }

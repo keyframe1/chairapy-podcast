@@ -51,6 +51,15 @@ export default function EmailSignup({
       }
 
       if (typeof window !== "undefined") {
+        try {
+          window.localStorage.setItem("chairapy:subscribed", "true");
+          window.localStorage.setItem(
+            "chairapy:signup-card-dismissed",
+            String(Date.now()),
+          );
+        } catch {
+          /* no-op */
+        }
         const plausible = (
           window as unknown as {
             plausible?: (event: string, opts?: { props?: Record<string, string> }) => void;

@@ -35,19 +35,6 @@ export default function Header() {
                 {link.label}
               </Link>
             ))}
-            <Link
-              href="/watch"
-              className="group inline-flex items-center gap-2 text-sm text-fg hover:text-accent transition-colors"
-            >
-              <span>Watch</span>
-              <span
-                aria-hidden="true"
-                className="text-border text-xs"
-              >
-                •
-              </span>
-              <span className="eyebrow eyebrow--amber">Soon</span>
-            </Link>
           </nav>
 
           <MobileNavToggle />

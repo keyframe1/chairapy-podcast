@@ -434,7 +434,6 @@ input[type="range"]::-moz-range-thumb {
 @media print {
   [role="separator"],
   .asterism-divider,
-  .fleuron-ornament,
   .atmosphere-base {
     display: none !important;
   }

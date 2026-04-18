@@ -82,7 +82,7 @@ export default function GuestDetailPage({
             </ul>
           ) : (
             <p className="font-serif-body italic text-lg text-fg-muted">
-              Episode links are being added. Check back soon.
+              Episode mapping in progress.
             </p>
           )}
         </section>

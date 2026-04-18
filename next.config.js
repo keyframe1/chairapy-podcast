@@ -10,6 +10,18 @@ const nextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        // /watch currently has no published content; route back to Subscribe
+        // where video will eventually get its own section. 302 keeps it
+        // reversible when video actually launches.
+        source: "/watch",
+        destination: "/subscribe",
+        permanent: false,
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;

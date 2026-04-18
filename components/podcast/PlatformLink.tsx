@@ -8,6 +8,7 @@ import {
   SiFacebook,
   SiRumble,
   SiRss,
+  SiPatreon,
 } from "react-icons/si";
 
 type Platform =
@@ -19,7 +20,8 @@ type Platform =
   | "tiktok"
   | "facebook"
   | "rumble"
-  | "rss";
+  | "rss"
+  | "patreon";
 
 type IconProps = {
   size?: number;
@@ -55,6 +57,7 @@ const BRANDS: Record<
   facebook: { label: "Facebook", color: "#0866FF", Icon: SiFacebook as ComponentType<IconProps> },
   rumble: { label: "Rumble", color: "#85C742", Icon: SiRumble as ComponentType<IconProps> },
   rss: { label: "RSS", color: "#FF8800", Icon: SiRss as ComponentType<IconProps> },
+  patreon: { label: "Patreon", color: "#FF424D", Icon: SiPatreon as ComponentType<IconProps> },
 };
 
 function isHttp(url: string | null | undefined): url is string {
@@ -63,31 +66,44 @@ function isHttp(url: string | null | undefined): url is string {
 
 type PlatformLinkProps = {
   platform: Platform;
-  href: string | null | undefined;
+  href?: string | null;
+  /**
+   * When true, renders the link as non-clickable with an amber SOON badge —
+   * signals "coming, not gone" for near-term additions (YouTube, Patreon).
+   */
+  soon?: boolean;
   iconSize?: number;
 };
 
 /**
- * Minimal icon + label row. No box, no arrow. Used in the footer Listen /
- * Follow columns where the footer should quietly reference platforms, not
- * sell them. For boxed CTAs use PlatformButton.
+ * Minimal icon + label row. No box, no arrow. Used in the footer and the
+ * Subscribe page Listen/Follow columns where the reference should sit
+ * quiet rather than sell.
  */
 export default function PlatformLink({
   platform,
   href,
+  soon = false,
   iconSize = 14,
 }: PlatformLinkProps) {
   const brand = BRANDS[platform];
   const { Icon } = brand;
-  const linkable = isHttp(href);
+  const linkable = !soon && isHttp(href);
 
-  const common = (
+  const iconColor = soon || linkable ? brand.color : "currentColor";
+
+  const body = (
     <>
-      <Icon
-        size={iconSize}
-        color={linkable ? brand.color : "currentColor"}
-      />
+      <Icon size={iconSize} color={iconColor} />
       <span className="text-sm">{brand.label}</span>
+      {soon && (
+        <span
+          className="eyebrow eyebrow--amber ml-2"
+          style={{ fontSize: "0.625rem" }}
+        >
+          Soon
+        </span>
+      )}
     </>
   );
 
@@ -95,9 +111,11 @@ export default function PlatformLink({
     return (
       <span
         aria-disabled="true"
-        className="inline-flex items-center gap-2 text-fg-muted opacity-60 cursor-not-allowed"
+        className={`inline-flex items-center gap-2 cursor-default ${
+          soon ? "text-fg" : "text-fg-muted opacity-60"
+        }`}
       >
-        {common}
+        {body}
       </span>
     );
   }
@@ -109,7 +127,7 @@ export default function PlatformLink({
       rel="noopener noreferrer"
       className="inline-flex items-center gap-2 text-fg hover:text-accent transition-colors group"
     >
-      {common}
+      {body}
     </a>
   );
 }

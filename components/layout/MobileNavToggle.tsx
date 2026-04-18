@@ -8,7 +8,6 @@ const navLinks: { href: string; label: string; badge?: string }[] = [
   { href: "/episodes", label: "Episodes" },
   { href: "/guests", label: "Guests" },
   { href: "/about", label: "About" },
-  { href: "/watch", label: "Watch", badge: "Soon" },
   { href: "/subscribe", label: "Subscribe" },
 ];
 
