@@ -167,7 +167,7 @@ export default function HomePage() {
                 {featuredEpisode.thumbnailUrl ? (
                   <Image
                     src={featuredEpisode.thumbnailUrl}
-                    alt={`${featuredEpisode.title} — episode artwork`}
+                    alt={`${featuredEpisode.title}, episode artwork`}
                     fill
                     priority
                     sizes="(max-width: 768px) 100vw, 480px"

@@ -1,15 +1,13 @@
 {
   "showName": "Eric's ADHD Experience",
-  "showNamePhase1": "Eric's ADHD Experience",
-  "showNamePhase3Candidate": "TBD — rename decision deferred to Phase 3",
   "productionLabel": "Chairapy Media",
   "showTagline": "Conversations with people whose stories changed mine.",
   "hostName": "Eric Falgout",
   "hostLocation": "Metairie, Louisiana",
-  "hostShortBio": "Master barber, recovery advocate, and long-form conversation host. 25 years behind the chair, reformed from addiction, drawn to the kind of talks that actually move people.",
-  "hostLongBio": "Eric Falgout is a master barber based in Metairie, Louisiana with over 25 years behind the chair. A native of the Greater New Orleans area, Eric started the show after his own recovery from addiction — crediting long-form conversation, Joe Rogan's podcast guests, and the hard work of getting honest with himself as the things that saved his life. The show is built on the conviction that the most important stories don't come from celebrities. They come from paramedics, musicians, fighters, fishermen, comedians, and the person next to you at the counter. Eric records in the Greater New Orleans area and interviews guests whose experiences have shaped him or someone he knows.",
-  "showDescription": "On this podcast I interview people from different walks of life whose life stories have made an impact on myself or someone else. Each episode is designed to take people on a journey through their most vulnerable truths — their emotions, thoughts, and behaviors — in a non-judgmental way.",
-  "showDescriptionLong": "Every guest on this show has a story worth hearing. Paramedics who've seen the worst of humanity and still show up. Musicians chasing the sound that got away. Comedians building jokes out of the hardest years of their lives. People who've been to the bottom and back, and people who just kept going. The conversations are long, unrushed, and honest. If you like Rogan-style long-form but wish there was more of the real human underneath, you'll find a home here.",
+  "hostShortBio": "Barber in Metairie, 25 years behind the chair. Got sober, and the long talks that helped him get there turned into this show.",
+  "hostLongBio": "Eric Falgout has cut hair in Metairie for more than 25 years. He grew up around New Orleans, got clean after years of addiction, and credits a lot of his recovery to long, honest conversations. The kind where nobody's performing. He started the show because the best of those talks weren't happening with famous people. They were happening in his chair, with regular people who had been through something real. He still records close to home and mostly talks to people whose stories have stuck with him, or with someone he loves.",
+  "showDescription": "I sit down with people whose stories have stuck with me, or with someone I know, and let them talk it out. The whole story, the hard parts included, no judgment.",
+  "showDescriptionLong": "This started as conversations I was already having in my chair. People sit down, and somewhere between the first cut and the last, they start telling you things. Real things. What they've been through, what they're working on, what almost broke them. The show is the same thing without the haircut: long talks with people who've lived something worth talking about. No script, no rush, nobody pretending they've got it all figured out. If you like long-form but want less performance and more honesty, this one's for you.",
   "distributionLinks": {
     "spotify": "https://open.spotify.com/show/7js9w3OGKcx153xlh9rBId",
     "apple": "https://podcasts.apple.com/us/podcast/erics-adhd-experience/id1606793460",
@@ -25,6 +23,6 @@
   },
   "contactEmail": null,
   "episodeCount": "55+",
-  "recordingLocation": "Greater New Orleans / Metairie, LA",
-  "brandPositioning": "Real conversations. Real people. Recorded in New Orleans."
+  "recordingLocation": "Metairie, Louisiana",
+  "brandPositioning": "Long, honest conversations. Recorded in Metairie, Louisiana."
 }

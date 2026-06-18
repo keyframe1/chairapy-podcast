@@ -43,8 +43,6 @@ export interface Guest {
 
 export interface ShowInfo {
   showName: string;
-  showNamePhase1: string;
-  showNamePhase3Candidate: string;
   productionLabel: string;
   showTagline: string;
   hostName: string;

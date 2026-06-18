@@ -103,7 +103,7 @@ export default function AudioPlayer({
           {thumbnailUrl ? (
             <Image
               src={thumbnailUrl}
-              alt={`${title} — episode artwork`}
+              alt={`${title}, episode artwork`}
               fill
               sizes="(max-width: 640px) 100vw, 160px"
               className="object-cover"

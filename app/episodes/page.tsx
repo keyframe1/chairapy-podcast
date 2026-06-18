@@ -9,7 +9,7 @@ import type { Episode } from "../../lib/types";
 export const metadata = {
   title: "Every Episode",
   description:
-    "Every episode of Eric's ADHD Experience — long-form conversations with people whose stories are worth hearing.",
+    "Every episode of Eric's ADHD Experience. Long conversations with people who've lived something worth talking about.",
 };
 
 function groupByMonth(episodes: Episode[]): [string, Episode[]][] {

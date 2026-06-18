@@ -12,7 +12,7 @@ const showInfo = showInfoData as ShowInfo;
 export const metadata = {
   title: "About",
   description:
-    "About Eric's ADHD Experience — a podcast produced by Chairapy Media in New Orleans.",
+    "About Eric's ADHD Experience. Long conversations with people who've lived something worth talking about. Recorded in Metairie, Louisiana.",
 };
 
 export default function AboutPage() {
@@ -88,8 +88,7 @@ export default function AboutPage() {
           </div>
 
           <p className="mt-10 text-sm text-fg-muted font-serif-body italic border-l-2 border-border pl-4">
-            Recorded on professional broadcast equipment including Blackmagic
-            6K cameras at studio-grade quality.
+            Shot on Blackmagic 6K cameras.
           </p>
         </Container>
       </section>
@@ -147,17 +146,8 @@ export default function AboutPage() {
             style={{ maxWidth: "62ch" }}
           >
             <p>{showInfo.showDescriptionLong}</p>
-            <p>
-              The show is produced by {showInfo.productionLabel} in{" "}
-              {showInfo.recordingLocation}.
-            </p>
+            <p>Recorded in Metairie, Louisiana.</p>
           </div>
-
-          {/* 6. Phase 1 callout */}
-          <p className="mt-10 text-sm text-fg-muted font-serif-body italic border-l-2 border-accent pl-4">
-            Phase 1 branding — we're keeping the show name during the current
-            engagement. Full rebrand coming later.
-          </p>
         </Container>
       </section>
 
@@ -168,10 +158,9 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 md:grid-cols-[1fr_220px] gap-10 items-start mt-5">
             <div className="prose-serif text-fg" style={{ maxWidth: "56ch" }}>
               <p>
-                This podcast is produced under the Chairapy brand, which also
-                includes a full-service salon in Metairie. Same voice, same
-                sensibility — people first, conversation over transaction, no
-                polish where honesty will do.
+                Chairapy is also a salon in Metairie. Same chair these
+                conversations started in. If the show sounds like people talking
+                honestly without much polish, that's the whole idea.
               </p>
               <p>
                 <a

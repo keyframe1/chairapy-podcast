@@ -35,7 +35,7 @@ export default function LatestEpisodeHero({
         {episode.thumbnailUrl ? (
           <Image
             src={episode.thumbnailUrl}
-            alt={`${episode.title} — episode artwork`}
+            alt={`${episode.title}, episode artwork`}
             fill
             sizes="(max-width: 768px) 100vw, 55vw"
             priority

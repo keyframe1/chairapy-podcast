@@ -37,11 +37,11 @@ const plausibleDomain = process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN;
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Eric's ADHD Experience — A Chairapy Media podcast",
+    default: "Eric's ADHD Experience, a Chairapy Media podcast",
     template: "%s · Eric's ADHD Experience",
   },
   description:
-    "Long-form conversations with paramedics, musicians, fighters, and working people. Hosted by Eric Falgout. Recorded in New Orleans.",
+    "Long conversations with people who've lived something worth talking about. Hosted by Eric Falgout, recorded in Metairie, Louisiana.",
   keywords: [
     "podcast",
     "new orleans",
@@ -57,14 +57,14 @@ export const metadata: Metadata = {
     siteName: "Eric's ADHD Experience",
     title: "Eric's ADHD Experience",
     description:
-      "Long-form conversations with paramedics, musicians, fighters, and working people.",
+      "Long conversations with people who've lived something worth talking about.",
     url: SITE_URL,
     // og:image is supplied by app/opengraph-image.tsx (dynamic neon card).
   },
   twitter: {
     card: "summary_large_image",
     title: "Eric's ADHD Experience",
-    description: "Long-form conversations, recorded in New Orleans.",
+    description: "Long conversations, recorded in Metairie, Louisiana.",
     // twitter:image resolves from the same opengraph-image route.
   },
   robots: {

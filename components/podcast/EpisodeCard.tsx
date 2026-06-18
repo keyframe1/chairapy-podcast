@@ -42,7 +42,7 @@ export default function EpisodeCard({
           {hasRealThumb ? (
             <Image
               src={episode.thumbnailUrl!}
-              alt={`${episode.title} — episode artwork`}
+              alt={`${episode.title}, episode artwork`}
               fill
               sizes={
                 isFeature

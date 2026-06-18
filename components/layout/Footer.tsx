@@ -94,7 +94,7 @@ export default function Footer() {
 
         <div className="border-t border-border pt-6 pb-10">
           <p className="text-center text-xs text-fg-muted">
-            A Chairapy production. New Orleans, Louisiana.
+            Recorded in Metairie, Louisiana.
           </p>
         </div>
       </Container>

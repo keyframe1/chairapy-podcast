@@ -8,7 +8,7 @@ const guests = guestsData as Guest[];
 export const metadata = {
   title: "Guests",
   description:
-    "The guests who've joined Eric's ADHD Experience — paramedics, musicians, fighters, comedians, working people.",
+    "The people who've come on Eric's ADHD Experience to talk about what they've lived through.",
 };
 
 export default function GuestsPage() {
@@ -24,9 +24,8 @@ export default function GuestsPage() {
             Guests
           </h1>
           <p className="mt-6 font-serif-body text-lg md:text-xl text-fg-muted max-w-content" style={{ lineHeight: 1.55 }}>
-            Every guest here has a story worth hearing. Paramedics, musicians,
-            fighters, comedians, working people — the kind of people whose
-            stories don't usually make it onto a microphone.
+            People who came and sat down to talk. Most of them don't usually
+            get a microphone.
           </p>
         </header>
 
