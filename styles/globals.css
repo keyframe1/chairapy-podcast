@@ -361,6 +361,59 @@ a.editorial-link:hover,
   transform: scaleX(1);
 }
 
+/* =====================================================================
+ * Header share button — copies the current page URL (desktop) or opens
+ * the native share sheet (mobile). Electric-purple outline, acid-green
+ * glow on hover. Icon-only on small screens. Keyboard focus uses the
+ * global cyan :focus-visible ring.
+ * ===================================================================== */
+.share-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: transparent;
+  border: 1px solid rgba(139, 47, 230, 0.5); /* electric purple outline */
+  border-radius: 6px;
+  color: var(--text-bright);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.share-btn:hover {
+  border-color: var(--acid-green);
+  color: var(--acid-green);
+  box-shadow: 0 0 16px rgba(57, 255, 20, 0.3); /* green glow on hover */
+}
+
+.share-btn:active {
+  transform: translateY(1px);
+}
+
+.share-btn__copied {
+  color: var(--acid-green);
+  font-weight: 600;
+}
+
+/* Mobile: icon only — hide the label on small screens */
+@media (max-width: 640px) {
+  .share-btn {
+    padding: 8px;
+  }
+  .share-btn__label {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .share-btn {
+    transition: none;
+  }
+}
+
 /* Glitch / chromatic-aberration on hover for hero display text.
    Text-shadow approach (not data-text pseudo-elements) so it works with the
    line-broken hero h1 and never duplicates/mis-aligns content. The chromatic

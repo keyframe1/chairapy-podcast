@@ -5,6 +5,7 @@ import Link from "next/link";
 import Container from "../ui/Container";
 import MobileNavToggle from "./MobileNavToggle";
 import NavLinks from "./NavLinks";
+import ShareButton from "./ShareButton";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -34,9 +35,11 @@ export default function Header() {
             Chairapy
           </Link>
 
-          <NavLinks />
-
-          <MobileNavToggle />
+          <div className="flex items-center gap-4 md:gap-8">
+            <NavLinks />
+            <ShareButton />
+            <MobileNavToggle />
+          </div>
         </div>
       </Container>
     </header>
