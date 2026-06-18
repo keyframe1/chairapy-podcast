@@ -1,14 +1,12 @@
-import Image from "next/image";
-
 type SectionDividerProps = {
   className?: string;
   maxWidth?: number;
 };
 
 /**
- * Decorative asterism divider. Reserved for genuine section shifts —
- * target cadence is 1 per tonal transition, max 2–3 per long page.
- * 140px max keeps it punctuation-scale rather than announcement-scale.
+ * Decorative divider — a glowing neon hairline with a centered acid-green
+ * node. Reserved for genuine section shifts; punctuation-scale, not
+ * announcement-scale.
  */
 export default function SectionDivider({
   className = "",
@@ -18,21 +16,31 @@ export default function SectionDivider({
     <div
       role="separator"
       aria-hidden="true"
-      className={`asterism-divider flex justify-center my-16 md:my-20 ${className}`}
+      className={`asterism-divider flex items-center justify-center gap-3 my-16 md:my-20 ${className}`}
     >
-      <div
-        className="relative w-full"
-        style={{ maxWidth: `${maxWidth}px`, aspectRatio: "3 / 1" }}
-      >
-        <Image
-          src="/images/brand/divider-asterism.png"
-          alt=""
-          fill
-          sizes={`${maxWidth}px`}
-          className="object-contain"
-          loading="lazy"
-        />
-      </div>
+      <span
+        className="h-px flex-1"
+        style={{
+          maxWidth: `${maxWidth}px`,
+          background:
+            "linear-gradient(to right, transparent, rgba(139,47,230,0.6))",
+        }}
+      />
+      <span
+        className="block h-1.5 w-1.5 rounded-full"
+        style={{
+          background: "var(--acid-green)",
+          boxShadow: "var(--glow-green)",
+        }}
+      />
+      <span
+        className="h-px flex-1"
+        style={{
+          maxWidth: `${maxWidth}px`,
+          background:
+            "linear-gradient(to left, transparent, rgba(139,47,230,0.6))",
+        }}
+      />
     </div>
   );
 }

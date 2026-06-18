@@ -55,15 +55,14 @@ export default function HomePage() {
         <Container className="relative h-full">
           <div className="grid grid-cols-1 md:grid-cols-[2fr_3fr] gap-10 md:gap-16 items-end pt-16 md:pt-24 pb-12 md:pb-20 min-h-[70vh] md:min-h-[78vh]">
             <div className="hidden md:block" aria-hidden="true" />
-            <div className="reveal">
-              <p className="eyebrow mb-6">A Chairapy Media podcast · New Orleans</p>
+            <div className="reveal reveal-stagger">
+              <p className="eyebrow eyebrow--accent mb-6">A Chairapy Media podcast · New Orleans</p>
               <h1
-                className="font-display text-fg"
+                className="glitch-text font-display font-bold text-fg"
                 style={{
                   fontSize: "var(--text-display)",
                   lineHeight: 0.98,
-                  letterSpacing: "-0.035em",
-                  fontVariationSettings: '"opsz" 144, "SOFT" 100, "WONK" 1',
+                  letterSpacing: "-0.04em",
                 }}
               >
                 Eric's
@@ -74,7 +73,7 @@ export default function HomePage() {
               </h1>
               <div
                 aria-hidden="true"
-                className="mt-8 h-px w-20 bg-accent"
+                className="mt-8 h-0.5 w-20 bg-acid shadow-glow-green"
               />
               <p
                 className="mt-8 font-serif-body italic text-2xl md:text-3xl text-fg-muted max-w-content"
@@ -114,9 +113,9 @@ export default function HomePage() {
             <div
               className="relative w-[120px] h-[120px] md:w-[150px] md:h-[150px] flex-none overflow-hidden"
               style={{
-                borderRadius: 2,
+                borderRadius: 4,
                 boxShadow:
-                  "0 4px 12px rgba(44, 36, 24, 0.06), 0 12px 32px rgba(193, 113, 68, 0.12)",
+                  "0 0 0 1px rgba(139, 47, 230, 0.4), 0 0 28px rgba(139, 47, 230, 0.35), 0 16px 40px rgba(0, 0, 0, 0.5)",
               }}
             >
               <EricPhoto
@@ -129,11 +128,10 @@ export default function HomePage() {
             <div>
               <p className="eyebrow eyebrow--accent">Your host</p>
               <p
-                className="mt-3 font-display text-2xl md:text-3xl text-fg"
+                className="mt-3 font-display font-bold text-2xl md:text-3xl text-fg"
                 style={{
                   lineHeight: 1.05,
                   letterSpacing: "-0.02em",
-                  fontVariationSettings: '"opsz" 96, "SOFT" 80, "WONK" 1',
                 }}
               >
                 {showInfo.hostName}
@@ -155,7 +153,11 @@ export default function HomePage() {
               Featured · start here if you're new
             </p>
             <article className="grid grid-cols-1 md:grid-cols-[4fr_6fr] gap-10 md:gap-16 items-start">
-              <div className="relative aspect-square bg-bg-elevated border border-border overflow-hidden">
+              <div
+                className="neon-frame float relative aspect-square bg-bg-elevated overflow-hidden"
+                style={{ borderRadius: 6 }}
+                data-reveal
+              >
                 {featuredEpisode.thumbnailUrl ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
@@ -188,7 +190,7 @@ export default function HomePage() {
 
                 {featuredEpisode.thumbnailUrl && (
                   <h2
-                    className="mt-4 font-display text-4xl md:text-5xl text-fg"
+                    className="mt-4 font-display font-bold text-4xl md:text-5xl text-fg"
                     style={{ lineHeight: 1.02, letterSpacing: "-0.03em" }}
                   >
                     {featuredEpisode.title}
@@ -207,16 +209,14 @@ export default function HomePage() {
                 <div className="mt-10 flex flex-wrap items-center gap-6">
                   <Link
                     href={`/episodes/${featuredEpisode.slug}`}
-                    className="group inline-flex items-center gap-3 text-accent editorial-link"
+                    className="cta-pulse group inline-flex items-center gap-3 rounded-md bg-acid px-6 py-3 text-base font-bold text-bg transition-transform hover:scale-[1.03]"
                   >
-                    <span aria-hidden="true" className="text-xl">▶</span>
-                    <span className="text-lg underline underline-offset-4 group-hover:[text-underline-offset:8px] transition-all">
-                      Listen now
-                    </span>
+                    <span aria-hidden="true">▶</span>
+                    <span>Listen now</span>
                   </Link>
                   <Link
                     href="/episodes"
-                    className="text-sm text-fg-muted hover:text-accent transition-colors"
+                    className="text-sm text-fg-muted hover:text-acid transition-colors"
                   >
                     View all episodes →
                   </Link>
@@ -260,7 +260,7 @@ export default function HomePage() {
             <div className="md:col-span-2">
               <p className="eyebrow">About the host</p>
               <p
-                className="mt-4 font-display text-4xl md:text-5xl text-fg"
+                className="mt-4 font-display font-bold text-4xl md:text-5xl text-fg"
                 style={{ lineHeight: 1.02, letterSpacing: "-0.03em" }}
               >
                 {showInfo.hostName}

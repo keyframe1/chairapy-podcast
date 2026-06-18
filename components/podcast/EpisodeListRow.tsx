@@ -16,9 +16,10 @@ export default function EpisodeListRow({ episode }: EpisodeListRowProps) {
   return (
     <Link
       href={`/episodes/${episode.slug}`}
+      data-reveal
       className="group grid grid-cols-[auto_56px_1fr_auto] items-center gap-4 md:gap-6 border-b border-border py-4 md:py-5 transition-colors hover:bg-bg-elevated/60"
     >
-      <span className="font-mono text-sm tabular text-fg-muted w-10 text-right">
+      <span className="font-mono text-sm tabular text-acid w-10 text-right">
         {String(episode.episodeNumber).padStart(2, "0")}
       </span>
 
@@ -43,7 +44,7 @@ export default function EpisodeListRow({ episode }: EpisodeListRowProps) {
       <div className="min-w-0">
         <div className="flex items-center gap-3 flex-wrap">
           <h3
-            className="font-display text-xl text-fg group-hover:text-accent transition-colors truncate"
+            className="font-display font-bold text-xl text-fg group-hover:text-acid transition-colors truncate"
             style={{ lineHeight: 1.15 }}
           >
             {episode.title}

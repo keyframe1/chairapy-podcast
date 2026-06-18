@@ -14,10 +14,11 @@ export default function GuestCard({ guest }: GuestCardProps) {
   return (
     <Link
       href={`/guests/${guest.slug}`}
+      data-reveal
       className="group block py-2"
     >
       <h3
-        className="font-display text-3xl md:text-4xl text-fg transition-all"
+        className="font-display font-bold text-3xl md:text-4xl text-fg transition-all"
         style={{
           lineHeight: 1.05,
           letterSpacing: "-0.025em",

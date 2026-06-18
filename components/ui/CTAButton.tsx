@@ -19,12 +19,13 @@ export default function CTAButton({
   className = "",
 }: CTAButtonProps) {
   const base =
-    "inline-flex items-center justify-center rounded-md px-6 py-3 text-base font-medium tracking-wide transition-colors";
+    "inline-flex items-center justify-center rounded-md px-6 py-3 text-base font-bold tracking-wide transition-[background-color,box-shadow,border-color,color]";
 
   const variants: Record<string, string> = {
-    primary: "bg-accent text-bg hover:bg-accent-hover",
+    primary:
+      "bg-acid text-bg shadow-glow-green hover:bg-accent-hover hover:shadow-glow-green-strong",
     secondary:
-      "border border-border text-fg hover:border-accent hover:text-accent",
+      "border border-cyan/60 text-cyan hover:bg-cyan/10 hover:border-cyan",
   };
 
   if (disabled) {

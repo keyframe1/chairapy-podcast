@@ -144,7 +144,7 @@ export default function AudioPlayer({
               type="button"
               onClick={toggle}
               aria-label={playing ? "Pause" : "Play"}
-              className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-accent text-bg hover:bg-accent-hover transition-colors"
+              className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-acid text-bg shadow-glow-green hover:bg-accent-hover hover:shadow-glow-green-strong transition-[background-color,box-shadow]"
             >
               {loading ? (
                 <svg width="20" height="20" viewBox="0 0 24 24" className="animate-spin" aria-hidden="true">

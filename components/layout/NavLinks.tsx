@@ -34,20 +34,10 @@ export default function NavLinks() {
             key={item.href}
             href={item.href}
             aria-current={active ? "page" : undefined}
-            className={`text-sm transition-colors ${
-              active
-                ? "text-accent"
-                : "text-fg hover:text-accent"
+            data-active={active ? "true" : undefined}
+            className={`nav-link text-sm transition-colors ${
+              active ? "text-acid" : "text-fg-muted hover:text-acid"
             }`}
-            style={
-              active
-                ? {
-                    textDecoration: "underline",
-                    textDecorationThickness: "1.5px",
-                    textUnderlineOffset: "4px",
-                  }
-                : undefined
-            }
           >
             {item.label}
           </Link>

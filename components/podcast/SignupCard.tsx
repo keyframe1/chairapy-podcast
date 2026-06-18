@@ -150,10 +150,11 @@ export default function SignupCard() {
       className="signup-card fixed right-6 bottom-6 z-40 hidden md:block"
       style={{
         width: 360,
-        backgroundColor: "var(--cream)",
-        borderRadius: 2,
-        border: "1px solid var(--charcoal-soft)",
-        boxShadow: "0 12px 40px rgba(193, 113, 68, 0.18)",
+        backgroundColor: "var(--bg-card)",
+        borderRadius: 6,
+        border: "1px solid rgba(139, 47, 230, 0.45)",
+        boxShadow:
+          "0 0 28px rgba(139, 47, 230, 0.35), 0 18px 50px rgba(0, 0, 0, 0.6)",
       }}
     >
       <button
@@ -169,12 +170,11 @@ export default function SignupCard() {
       <div className="p-6 pr-10">
         <h3
           id={headingId}
-          className="font-display text-fg"
+          className="font-display font-bold text-fg"
           style={{
             fontSize: "1.5rem",
             lineHeight: 1.1,
             letterSpacing: "-0.02em",
-            fontVariationSettings: '"opsz" 96, "SOFT" 80, "WONK" 1',
           }}
         >
           New here?
@@ -209,7 +209,7 @@ export default function SignupCard() {
               <button
                 type="submit"
                 disabled={status === "loading"}
-                className="w-full rounded-md bg-accent text-bg px-4 py-2.5 text-sm font-medium hover:bg-accent-hover active:opacity-85 disabled:opacity-70 transition-colors"
+                className="w-full rounded-md bg-acid text-bg px-4 py-2.5 text-sm font-bold shadow-glow-green hover:bg-accent-hover hover:shadow-glow-green-strong active:opacity-85 disabled:opacity-70 transition-[background-color,box-shadow,opacity]"
               >
                 {status === "loading" ? "Subscribing…" : "Subscribe"}
               </button>
@@ -219,7 +219,7 @@ export default function SignupCard() {
               <p
                 role={status === "error" ? "alert" : "status"}
                 className={`mt-2 text-xs ${
-                  status === "error" ? "text-accent" : "text-fg-muted"
+                  status === "error" ? "text-magenta" : "text-fg-muted"
                 }`}
               >
                 {message}

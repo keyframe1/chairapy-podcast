@@ -167,7 +167,6 @@ export default function GuestDetailPage({
                 fontSize: "clamp(3rem, 8vw, 6rem)",
                 lineHeight: 0.95,
                 letterSpacing: "-0.04em",
-                fontVariationSettings: '"opsz" 144, "SOFT" 100, "WONK" 1',
               }}
             >
               {guest.name}
@@ -233,9 +232,9 @@ export default function GuestDetailPage({
                     <div
                       className="relative aspect-[4/5] overflow-hidden bg-bg-elevated"
                       style={{
-                        borderRadius: 2,
+                        borderRadius: 4,
                         boxShadow:
-                          "0 8px 24px rgba(193, 113, 68, 0.12)",
+                          "0 0 0 1px rgba(139, 47, 230, 0.35), 0 12px 36px rgba(0, 0, 0, 0.5)",
                       }}
                     >
                       <Image

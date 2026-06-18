@@ -25,11 +25,8 @@ export default function LatestEpisodeHero({
       <Link
         href={href}
         aria-label={`Listen to episode ${episode.episodeNumber}: ${episode.title}`}
-        className="group relative aspect-square block overflow-hidden bg-bg-elevated"
-        style={{
-          boxShadow: "0 20px 60px rgba(193, 113, 68, 0.18)",
-          borderRadius: 4,
-        }}
+        className="neon-frame group relative aspect-square block overflow-hidden bg-bg-elevated"
+        style={{ borderRadius: 6 }}
       >
         {episode.thumbnailUrl ? (
           <Image
@@ -71,7 +68,7 @@ export default function LatestEpisodeHero({
 
         <Link href={href} className="block">
           <h2
-            className="mt-5 font-display text-fg hover:text-accent transition-colors"
+            className="mt-5 font-display font-bold text-fg hover:text-acid transition-colors"
             style={{
               fontSize: "clamp(2.5rem, 5vw, 3.75rem)",
               lineHeight: 1,

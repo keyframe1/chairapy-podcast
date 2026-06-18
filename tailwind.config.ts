@@ -7,6 +7,8 @@ const config: Config = {
       colors: {
         bg: "var(--color-bg)",
         "bg-elevated": "var(--color-bg-elevated)",
+        "bg-dark": "var(--bg-dark)",
+        "bg-card": "var(--bg-card)",
         fg: "var(--color-fg)",
         "fg-muted": "var(--color-fg-muted)",
         accent: "var(--color-accent)",
@@ -14,6 +16,19 @@ const config: Config = {
         sage: "var(--color-sage)",
         amber: "var(--color-amber)",
         border: "var(--color-border)",
+        // Direct neon references for one-off accents
+        acid: "var(--acid-green)",
+        purple: "var(--electric-purple)",
+        violet: "var(--deep-violet)",
+        cyan: "var(--cyan)",
+        magenta: "var(--hot-magenta)",
+      },
+      boxShadow: {
+        "glow-green": "var(--glow-green)",
+        "glow-green-strong": "var(--glow-green-strong)",
+        "glow-purple": "var(--glow-purple)",
+        "glow-cyan": "var(--glow-cyan)",
+        "glow-magenta": "var(--glow-magenta)",
       },
       fontFamily: {
         display: "var(--font-display)",

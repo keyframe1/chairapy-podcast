@@ -7,16 +7,16 @@ const showInfo = showInfoData as ShowInfo;
 
 export default function Footer() {
   return (
-    <footer className="bg-bg pt-20 md:pt-28">
+    <footer className="bg-bg-dark border-t border-purple/30 pt-20 md:pt-28">
       <Container>
         <div className="grid grid-cols-1 md:grid-cols-[3fr_3.5fr_3.5fr] gap-12 md:gap-10 pb-14">
           {/* Chairapy signature column */}
           <div>
             <div
-              className="font-display text-2xl text-fg"
+              className="font-display text-2xl font-bold text-acid"
               style={{
-                fontVariationSettings: '"opsz" 144, "SOFT" 100, "WONK" 1',
                 letterSpacing: "-0.02em",
+                textShadow: "0 0 18px rgba(57, 255, 20, 0.4)",
               }}
             >
               Chairapy

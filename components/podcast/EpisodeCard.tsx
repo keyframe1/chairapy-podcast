@@ -28,10 +28,10 @@ export default function EpisodeCard({
   return (
     <Link
       href={`/episodes/${episode.slug}`}
-      className={`group block border border-border bg-bg-elevated transition-colors hover:bg-bg hover:border-accent ${
+      data-reveal
+      className={`neon-card group block overflow-hidden ${
         isFeature ? "md:grid md:grid-cols-[4fr_6fr] md:items-stretch" : ""
       }`}
-      style={{ borderRadius: 4 }}
     >
       {showArt && (
         <div
@@ -86,7 +86,7 @@ export default function EpisodeCard({
 
         {!titleOnArt && (
           <h3
-            className={`mt-3 font-display text-fg group-hover:text-accent transition-colors ${
+            className={`mt-3 font-display font-bold text-fg group-hover:text-acid transition-colors ${
               isFeature
                 ? "text-4xl md:text-5xl"
                 : isCompact

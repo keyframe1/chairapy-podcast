@@ -96,10 +96,10 @@ export default function EmailSignup({
         <div className="flex items-start gap-4">
           <span
             aria-hidden="true"
-            className="font-display text-3xl mt-1"
+            className="font-display font-bold text-3xl mt-1"
             style={{
-              color: "var(--terracotta)",
-              fontVariationSettings: '"opsz" 144, "SOFT" 80, "WONK" 1',
+              color: "var(--acid-green)",
+              textShadow: "0 0 16px rgba(57, 255, 20, 0.5)",
             }}
           >
             ✓
@@ -175,7 +175,7 @@ export default function EmailSignup({
         <button
           type="submit"
           disabled={status === "loading"}
-          className="inline-flex items-center justify-center rounded-md bg-accent px-5 py-3 text-base font-medium text-bg hover:bg-accent-hover focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-bg disabled:opacity-70 disabled:cursor-not-allowed active:opacity-80 transition-[background-color,opacity] duration-150"
+          className="inline-flex items-center justify-center rounded-md bg-acid px-5 py-3 text-base font-bold text-bg shadow-glow-green hover:bg-accent-hover hover:shadow-glow-green-strong focus:outline-none focus:ring-2 focus:ring-cyan focus:ring-offset-2 focus:ring-offset-bg disabled:opacity-70 disabled:cursor-not-allowed active:opacity-80 transition-[background-color,box-shadow,opacity] duration-200"
         >
           {status === "loading" ? "Subscribing…" : "Subscribe"}
         </button>
@@ -186,7 +186,7 @@ export default function EmailSignup({
           id={messageId}
           role={status === "error" ? "alert" : "status"}
           className={`mt-3 text-sm ${
-            status === "error" ? "text-accent" : "text-fg-muted"
+            status === "error" ? "text-magenta" : "text-fg-muted"
           }`}
         >
           {message}

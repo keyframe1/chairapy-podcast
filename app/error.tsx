@@ -18,10 +18,8 @@ export default function Error({
   return (
     <Container>
       <div className="min-h-[60vh] flex flex-col items-center justify-center text-center py-24">
-        <p className="text-sm uppercase tracking-widest text-accent mb-4">
-          Something went wrong
-        </p>
-        <h1 className="font-display text-4xl sm:text-5xl mb-6">
+        <p className="eyebrow eyebrow--amber mb-4">Something went wrong</p>
+        <h1 className="glitch-text font-display font-bold text-4xl sm:text-5xl mb-6">
           That didn't work.
         </h1>
         <p className="text-fg-muted max-w-md mb-10">
@@ -30,13 +28,13 @@ export default function Error({
         <div className="flex flex-col sm:flex-row gap-4">
           <button
             onClick={reset}
-            className="px-6 py-3 bg-accent text-bg rounded-lg hover:bg-accent-hover transition font-medium"
+            className="px-6 py-3 bg-acid text-bg rounded-md font-bold shadow-glow-green hover:bg-accent-hover hover:shadow-glow-green-strong transition-[background-color,box-shadow]"
           >
             Try again
           </button>
           <Link
             href="/"
-            className="px-6 py-3 border border-border rounded-lg hover:bg-bg-elevated transition"
+            className="px-6 py-3 border border-cyan/60 text-cyan rounded-md hover:bg-cyan/10 transition-colors"
           >
             Back to home
           </Link>

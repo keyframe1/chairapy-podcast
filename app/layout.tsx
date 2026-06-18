@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import Script from "next/script";
-import { Fraunces, Inter, Newsreader } from "next/font/google";
+import { Inter, Space_Grotesk, Space_Mono } from "next/font/google";
 import "../styles/globals.css";
 import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
+import ScrollReveal from "../components/layout/ScrollReveal";
 import { SITE_URL } from "../lib/site";
 
 const inter = Inter({
@@ -12,17 +13,20 @@ const inter = Inter({
   display: "swap",
 });
 
-const fraunces = Fraunces({
+// Loud, slightly condensed geometric sans for display — matches the show's
+// kinetic, electric energy where the old serif read as calm/editorial.
+const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
+  weight: ["400", "500", "700"],
   variable: "--font-display",
-  axes: ["SOFT", "WONK", "opsz"],
   display: "swap",
 });
 
-const newsreader = Newsreader({
+// Monospace for technical/glitchy accent labels (EPISODE 15, dates).
+const spaceMono = Space_Mono({
   subsets: ["latin"],
-  variable: "--font-serif-body",
-  style: ["normal", "italic"],
+  weight: ["400", "700"],
+  variable: "--font-mono",
   display: "swap",
 });
 
@@ -82,8 +86,8 @@ export const metadata: Metadata = {
 };
 
 export const viewport = {
-  themeColor: "#C17144",
-  colorScheme: "light" as const,
+  themeColor: "#0A0612",
+  colorScheme: "dark" as const,
 };
 
 export default function RootLayout({
@@ -94,10 +98,11 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${fraunces.variable} ${newsreader.variable}`}
+      className={`${inter.variable} ${spaceGrotesk.variable} ${spaceMono.variable}`}
     >
       <body className="min-h-screen flex flex-col bg-bg text-fg">
         <div className="atmosphere-base" aria-hidden="true" />
+        <ScrollReveal />
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-accent focus:px-4 focus:py-2 focus:text-bg focus:outline-none"

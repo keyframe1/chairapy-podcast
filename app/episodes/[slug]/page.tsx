@@ -255,7 +255,7 @@ export default function EpisodeDetailPage({
           </Container>
         </section>
 
-        {/* Show notes — Newsreader body with drop cap */}
+        {/* Show notes — body copy with neon drop cap */}
         <section className="pb-16 md:pb-20">
           <Container>
             <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-14">

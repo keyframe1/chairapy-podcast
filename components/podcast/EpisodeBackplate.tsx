@@ -1,47 +1,45 @@
-import Image from "next/image";
-
 type EpisodeBackplateProps = {
   title: string;
   /** card = square fallback thumbnail; feature = homepage featured art area */
   variant?: "card" | "feature";
-  /** Episode number or any int — used for alternating object-position crop rhythm */
+  /** Episode number or any int — used for alternating gradient rhythm */
   index?: number;
   priority?: boolean;
 };
 
-const BACKPLATE_SRC = "/images/brand/episode-backplate-warm.png";
-
+/**
+ * Fallback art for episodes with no real thumbnail. Pure-CSS neon backplate
+ * — a dark violet field with a drifting glow and the title overlaid — so it
+ * sits naturally alongside the show's electric artwork instead of a cream
+ * painterly texture.
+ */
 export default function EpisodeBackplate({
   title,
   variant = "card",
   index = 0,
-  priority = false,
 }: EpisodeBackplateProps) {
   const isFeature = variant === "feature";
-  // Alternating crop so repeated backplates read as intentional variation
-  const objectPosition = index % 2 === 0 ? "70% 30%" : "30% 70%";
+  // Alternate the glow anchor so repeated backplates read as intentional
+  const glow =
+    index % 2 === 0
+      ? "radial-gradient(circle at 28% 26%, rgba(139,47,230,0.55), transparent 55%), radial-gradient(circle at 80% 80%, rgba(0,229,255,0.28), transparent 55%)"
+      : "radial-gradient(circle at 75% 25%, rgba(255,45,149,0.4), transparent 55%), radial-gradient(circle at 25% 78%, rgba(139,47,230,0.55), transparent 55%)";
 
   return (
-    <div className="relative w-full h-full overflow-hidden bg-bg-elevated">
-      <Image
-        src={BACKPLATE_SRC}
-        alt=""
-        fill
-        sizes={
-          isFeature
-            ? "(max-width: 768px) 100vw, 480px"
-            : "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-        }
-        style={{ objectFit: "cover", objectPosition }}
-        priority={priority}
-      />
-      {/* Generous bottom-up charcoal gradient — painterly textures need real coverage */}
+    <div
+      className="relative w-full h-full overflow-hidden"
+      style={{
+        background: `${glow}, linear-gradient(160deg, var(--bg-card) 0%, var(--bg-black) 100%)`,
+      }}
+    >
+      {/* Scanline texture */}
       <div
         aria-hidden="true"
         className="absolute inset-0"
         style={{
-          background:
-            "linear-gradient(to top, rgba(44, 36, 24, 0.85) 0%, rgba(44, 36, 24, 0.55) 50%, rgba(44, 36, 24, 0.2) 100%)",
+          backgroundImage:
+            "repeating-linear-gradient(to bottom, transparent 0, transparent 2px, rgba(0,0,0,0.25) 3px)",
+          opacity: 0.4,
         }}
       />
       <div
@@ -50,15 +48,14 @@ export default function EpisodeBackplate({
         }`}
       >
         <h3
-          className={`font-display text-left ${
+          className={`font-display font-bold text-left ${
             isFeature ? "text-4xl md:text-5xl" : "text-xl"
           }`}
           style={{
-            color: "rgba(250, 247, 242, 0.95)",
+            color: "var(--text-bright)",
             lineHeight: 1.02,
             letterSpacing: "-0.02em",
-            fontVariationSettings: '"opsz" 144, "SOFT" 80, "WONK" 1',
-            textShadow: "0 1px 8px rgba(44, 36, 24, 0.4)",
+            textShadow: "0 0 18px rgba(139, 47, 230, 0.7)",
           }}
         >
           {title}

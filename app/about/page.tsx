@@ -1,5 +1,4 @@
 import Link from "next/link";
-import Image from "next/image";
 import Container from "../../components/ui/Container";
 import EricPhoto from "../../components/podcast/EricPhoto";
 import EmailSignup from "../../components/podcast/EmailSignup";
@@ -115,21 +114,20 @@ export default function AboutPage() {
         </Container>
       </section>
 
-      {/* 4. Full-width atmospheric transition band — the ex-sidebar accent */}
+      {/* 4. Full-width atmospheric transition band — neon glow strip */}
       <div className="relative w-full h-40 md:h-56 overflow-hidden" aria-hidden="true">
-        <Image
-          src="/images/brand/sidebar-accent-vertical.png"
-          alt=""
-          fill
-          sizes="100vw"
-          className="object-cover object-center"
-          style={{ opacity: 0.25, mixBlendMode: "multiply" }}
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(ellipse 60% 120% at 30% 50%, rgba(139,47,230,0.4), transparent 60%), radial-gradient(ellipse 50% 120% at 75% 50%, rgba(0,229,255,0.22), transparent 60%)",
+          }}
         />
         <div
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(to bottom, var(--cream) 0%, transparent 30%, transparent 70%, var(--cream) 100%)",
+              "linear-gradient(to bottom, var(--bg-black) 0%, transparent 35%, transparent 65%, var(--bg-black) 100%)",
           }}
         />
       </div>
