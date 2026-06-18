@@ -10,3 +10,6 @@ dist
 next-env.d.ts
 .vercel
 audit-findings.md
+
+# Raw, unoptimized brand media — optimized outputs live in public/brand/
+public/cc/
