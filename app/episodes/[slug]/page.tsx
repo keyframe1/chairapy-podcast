@@ -10,6 +10,7 @@ import EmailSignup from "../../../components/podcast/EmailSignup";
 import EmailSignupBlock from "../../../components/podcast/EmailSignupBlock";
 import EpisodeListRow from "../../../components/podcast/EpisodeListRow";
 import MarkAsListened from "../../../components/podcast/MarkAsListened";
+import EpisodeShareMenu from "../../../components/podcast/EpisodeShareMenu";
 
 import {
   getAllEpisodes,
@@ -131,13 +132,20 @@ export default function EpisodeDetailPage({
         {/* Editorial article header */}
         <section className="pt-12 md:pt-16 pb-10 md:pb-14">
           <Container width="content">
-            <Link
-              href="/episodes"
-              className="inline-flex items-center gap-2 text-sm text-fg-muted hover:text-accent transition-colors"
-            >
-              <span aria-hidden="true">←</span>
-              <span>All episodes</span>
-            </Link>
+            <div className="flex items-center justify-between gap-4">
+              <Link
+                href="/episodes"
+                className="inline-flex items-center gap-2 text-sm text-fg-muted hover:text-accent transition-colors"
+              >
+                <span aria-hidden="true">←</span>
+                <span>All episodes</span>
+              </Link>
+              <EpisodeShareMenu
+                slug={episode.slug}
+                title={episode.title}
+                episodeNumber={episode.episodeNumber}
+              />
+            </div>
 
             <p className="mt-10 eyebrow tabular">
               <span className="text-accent">Episode {episode.episodeNumber}</span>

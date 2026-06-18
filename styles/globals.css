@@ -414,6 +414,193 @@ a.editorial-link:hover,
   }
 }
 
+/* =====================================================================
+ * Episode share menu — the per-episode dropdown offering Copy link plus
+ * the designed Story (9:16) and Feed (1:1) graphics. Trigger matches the
+ * header share button; the panel is a dark neon card with acid-green hover
+ * on each option and a fade + slight-slide open.
+ * ===================================================================== */
+.share-menu {
+  position: relative;
+  display: inline-flex;
+}
+
+.share-menu__trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: transparent;
+  border: 1px solid rgba(139, 47, 230, 0.5); /* electric purple outline */
+  border-radius: 6px;
+  color: var(--text-bright);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+.share-menu__trigger:hover,
+.share-menu__trigger[aria-expanded="true"] {
+  border-color: var(--acid-green);
+  color: var(--acid-green);
+  box-shadow: 0 0 16px rgba(57, 255, 20, 0.3);
+}
+.share-menu__trigger:active {
+  transform: translateY(1px);
+}
+
+.share-menu__panel {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 40;
+  min-width: 220px;
+  display: flex;
+  flex-direction: column;
+  padding: 6px;
+  background: var(--bg-card);
+  border: 1px solid rgba(139, 47, 230, 0.5);
+  border-radius: 8px;
+  box-shadow:
+    0 0 22px rgba(139, 47, 230, 0.28),
+    0 18px 40px rgba(0, 0, 0, 0.6);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .share-menu__panel {
+    animation: share-menu-in 180ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+}
+@keyframes share-menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.share-menu__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  padding: 10px 12px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  color: var(--text-bright);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+.share-menu__item:hover,
+.share-menu__item:focus-visible {
+  background: rgba(57, 255, 20, 0.1);
+  border-color: rgba(57, 255, 20, 0.5);
+  color: var(--acid-green);
+}
+.share-menu__item:disabled {
+  opacity: 0.55;
+  cursor: progress;
+}
+.share-menu__hint {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+.share-menu__item:hover .share-menu__hint,
+.share-menu__item:focus-visible .share-menu__hint {
+  color: var(--acid-green);
+}
+
+@media (max-width: 640px) {
+  .share-menu__trigger {
+    padding: 8px;
+  }
+  .share-menu__label {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .share-menu__trigger,
+  .share-menu__item {
+    transition: none;
+  }
+}
+
+/* =====================================================================
+ * Share-kit page (/share) — Eric's quiet one-stop list. Neon rows that
+ * light up on hover; each row offers Link / Story / Feed actions.
+ * ===================================================================== */
+.share-kit__row {
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--bg-card);
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    background-color 0.25s ease;
+}
+.share-kit__row:hover {
+  border-color: rgba(57, 255, 20, 0.5);
+  background: var(--bg-card-hover);
+  box-shadow: 0 0 20px rgba(57, 255, 20, 0.18);
+}
+
+.share-kit__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  background: transparent;
+  border: 1px solid rgba(139, 47, 230, 0.5);
+  border-radius: 6px;
+  color: var(--text-bright);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+.share-kit__link:hover,
+.share-kit__link:focus-visible {
+  border-color: var(--acid-green);
+  color: var(--acid-green);
+  box-shadow: 0 0 14px rgba(57, 255, 20, 0.28);
+}
+.share-kit__dim {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--text-dim);
+}
+.share-kit__link:hover .share-kit__dim,
+.share-kit__link:focus-visible .share-kit__dim {
+  color: var(--acid-green);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .share-kit__row,
+  .share-kit__link {
+    transition: none;
+  }
+}
+
 /* Glitch / chromatic-aberration on hover for hero display text.
    Text-shadow approach (not data-text pseudo-elements) so it works with the
    line-broken hero h1 and never duplicates/mis-aligns content. The chromatic

@@ -1,36 +1,32 @@
 import { ImageResponse } from "next/og";
-import { getAllEpisodes, getEpisodeBySlug } from "../../../lib/episodes";
+import { getEpisodeBySlug } from "../../../../lib/episodes";
 import {
   COLORS,
   GLOW,
   HeroBackdrop,
   EqualizerBars,
+  WaveformAccent,
   loadOgFonts,
   ogFontConfig,
-} from "../../../lib/og";
+} from "../../../../lib/og";
 
 export const runtime = "edge";
-export const alt = "Eric's ADHD Experience episode";
-export const size = { width: 1200, height: 630 };
-export const contentType = "image/png";
 
-// Pre-render one share card per episode at build time.
-export function generateStaticParams() {
-  return getAllEpisodes().map((ep) => ({ slug: ep.slug }));
-}
-
-// Per-episode link-preview card (iMessage, Facebook, Twitter, etc.) — the
-// episode title set in the real hero fonts over the hero gradient mesh.
-export default async function Image({ params }: { params: { slug: string } }) {
+// 1:1 feed graphic (Instagram posts / carousels). Same on-demand generation
+// pattern as the Story route — built per request, cached at the CDN.
+export async function GET(
+  _req: Request,
+  { params }: { params: { slug: string } },
+) {
   const episode = getEpisodeBySlug(params.slug);
-  const title = episode?.title ?? "Eric's ADHD Experience";
-  const episodeNumber = episode?.episodeNumber;
-  const guestName = episode?.guestName ?? null;
-  const fonts = await loadOgFonts();
-  const { width, height } = size;
+  if (!episode) return new Response("Not found", { status: 404 });
 
-  // Scale the title down for long names so it never overflows the card.
-  const titleSize = title.length > 38 ? 64 : title.length > 22 ? 80 : 96;
+  const fonts = await loadOgFonts();
+  const width = 1080;
+  const height = 1080;
+  const title = episode.title;
+  const titleSize =
+    title.length > 40 ? 64 : title.length > 24 ? 84 : 104;
 
   return new ImageResponse(
     (
@@ -40,9 +36,11 @@ export default async function Image({ params }: { params: { slug: string } }) {
           height: "100%",
           display: "flex",
           flexDirection: "column",
+          alignItems: "center",
           justifyContent: "center",
+          textAlign: "center",
           position: "relative",
-          padding: "0 80px",
+          padding: "0 92px",
           background: COLORS.base,
           fontFamily: "Space Grotesk",
         }}
@@ -55,67 +53,68 @@ export default async function Image({ params }: { params: { slug: string } }) {
             position: "relative",
             display: "flex",
             fontFamily: "Space Mono",
-            fontSize: 30,
-            letterSpacing: "6px",
+            fontSize: 32,
+            letterSpacing: "7px",
             textTransform: "uppercase",
             color: COLORS.acid,
             textShadow: GLOW.acid,
           }}
         >
-          {episodeNumber != null
-            ? `Episode ${episodeNumber}`
-            : "A Chairapy Media Podcast"}
+          Episode {episode.episodeNumber}
         </div>
 
-        {/* Title */}
+        {/* Title — centred, balanced */}
         <div
           style={{
             position: "relative",
             display: "flex",
-            marginTop: 22,
+            flexDirection: "column",
+            alignItems: "center",
+            marginTop: 30,
             fontSize: titleSize,
             fontWeight: 700,
             letterSpacing: "-2px",
             lineHeight: 1.0,
             color: COLORS.textBright,
             textShadow: GLOW.title,
+            textAlign: "center",
           }}
         >
           {title}
         </div>
 
         {/* Guest line */}
-        {guestName && (
+        {episode.guestName && (
           <div
             style={{
               position: "relative",
               display: "flex",
-              marginTop: 22,
-              fontSize: 30,
+              marginTop: 26,
+              fontSize: 34,
               color: COLORS.textMuted,
               textShadow: GLOW.lavender,
             }}
           >
-            with {guestName}
+            with {episode.guestName}
           </div>
         )}
 
-        {/* Accent row — equalizer + show line */}
+        {/* Waveform accent */}
+        <div style={{ position: "relative", display: "flex", marginTop: 40 }}>
+          <WaveformAccent width={280} height={64} />
+        </div>
+
+        {/* Footer brand line */}
         <div
           style={{
-            position: "relative",
+            position: "absolute",
             display: "flex",
             alignItems: "center",
             gap: 16,
-            marginTop: 44,
+            bottom: 64,
           }}
         >
-          <EqualizerBars
-            heights={[14, 26, 10, 28, 18]}
-            barWidth={6}
-            gap={5}
-            radius={2}
-          />
+          <EqualizerBars heights={[14, 26, 10, 28, 18]} barWidth={6} gap={5} radius={2} />
           <div
             style={{
               display: "flex",
@@ -131,6 +130,14 @@ export default async function Image({ params }: { params: { slug: string } }) {
         </div>
       </div>
     ),
-    { ...size, fonts: ogFontConfig(fonts) },
+    {
+      width,
+      height,
+      fonts: ogFontConfig(fonts),
+      headers: {
+        "Cache-Control":
+          "public, max-age=3600, s-maxage=604800, stale-while-revalidate=86400",
+      },
+    },
   );
 }
