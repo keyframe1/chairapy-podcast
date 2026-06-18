@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import Container from "../components/ui/Container";
 import EricPhoto from "../components/podcast/EricPhoto";
 import SpotifyPlayer from "../components/podcast/SpotifyPlayer";
@@ -10,6 +11,7 @@ import SignupCard from "../components/podcast/SignupCard";
 import GuestCard from "../components/podcast/GuestCard";
 import EpisodeBackplate from "../components/podcast/EpisodeBackplate";
 import HeroDiagonal from "../components/podcast/HeroDiagonal";
+import Waveform from "../components/podcast/Waveform";
 
 import showInfoData from "../content/show-info.json";
 import guestsData from "../content/guests.json";
@@ -37,9 +39,12 @@ export default function HomePage() {
     publisher: { "@type": "Organization", name: showInfo.productionLabel },
     sameAs: [
       showInfo.distributionLinks.spotify,
+      showInfo.distributionLinks.apple,
+      showInfo.distributionLinks.amazon,
       showInfo.socialLinks.instagram,
       showInfo.socialLinks.tiktok,
       showInfo.socialLinks.facebook,
+      showInfo.socialLinks.rumble,
     ].filter((url) => url && url.startsWith("http")),
   };
 
@@ -149,9 +154,10 @@ export default function HomePage() {
         <>
           <section className="pb-16 md:pb-24 border-t border-border pt-16 md:pt-20">
             <Container>
-            <p className="eyebrow mb-8">
-              Featured · start here if you're new
-            </p>
+            <div className="flex items-center gap-3 mb-8">
+              <p className="eyebrow">Featured · start here if you're new</p>
+              <Waveform width={48} height={16} />
+            </div>
             <article className="grid grid-cols-1 md:grid-cols-[4fr_6fr] gap-10 md:gap-16 items-start">
               <div
                 className="neon-frame float relative aspect-square bg-bg-elevated overflow-hidden"
@@ -159,11 +165,13 @@ export default function HomePage() {
                 data-reveal
               >
                 {featuredEpisode.thumbnailUrl ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
+                  <Image
                     src={featuredEpisode.thumbnailUrl}
                     alt={`${featuredEpisode.title} — episode artwork`}
-                    className="absolute inset-0 w-full h-full object-cover"
+                    fill
+                    priority
+                    sizes="(max-width: 768px) 100vw, 480px"
+                    className="object-cover"
                   />
                 ) : (
                   <EpisodeBackplate

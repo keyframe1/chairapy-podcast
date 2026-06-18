@@ -1,11 +1,15 @@
 import Container from "../ui/Container";
 import PlatformLink from "../podcast/PlatformLink";
+import Waveform from "../podcast/Waveform";
 import showInfoData from "../../content/show-info.json";
 import type { ShowInfo } from "../../lib/types";
 
 const showInfo = showInfoData as ShowInfo;
+const SALON_URL = "https://chairapy.org";
 
 export default function Footer() {
+  const year = new Date().getFullYear();
+
   return (
     <footer className="bg-bg-dark border-t border-purple/30 pt-20 md:pt-28">
       <Container>
@@ -21,10 +25,23 @@ export default function Footer() {
             >
               Chairapy
             </div>
-            <p className="mt-3 text-sm text-fg-muted">© 2026 Chairapy Media</p>
-            <p className="mt-1 text-sm text-fg-muted font-serif-body italic">
-              A Chairapy Media podcast.
+            <Waveform width={64} height={18} className="mt-3" />
+            <p className="mt-4 text-sm text-fg">
+              {showInfo.showName} ·{" "}
+              <span className="text-fg-muted">{showInfo.productionLabel}</span>
             </p>
+            <p className="mt-1 text-sm text-fg-muted">
+              © {year} {showInfo.productionLabel}
+            </p>
+            <a
+              href={SALON_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 inline-flex items-center gap-1.5 text-sm text-fg-muted hover:text-acid transition-colors"
+            >
+              <span>Chairapy Salon</span>
+              <span aria-hidden="true">→</span>
+            </a>
           </div>
 
           {/* Listen */}

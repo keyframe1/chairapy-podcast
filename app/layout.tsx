@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import { Inter, Space_Grotesk, Space_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "../styles/globals.css";
 import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
@@ -57,20 +59,13 @@ export const metadata: Metadata = {
     description:
       "Long-form conversations with paramedics, musicians, fighters, and working people.",
     url: SITE_URL,
-    images: [
-      {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Eric's ADHD Experience — A Chairapy Media podcast",
-      },
-    ],
+    // og:image is supplied by app/opengraph-image.tsx (dynamic neon card).
   },
   twitter: {
     card: "summary_large_image",
     title: "Eric's ADHD Experience",
     description: "Long-form conversations, recorded in New Orleans.",
-    images: ["/og-image.png"],
+    // twitter:image resolves from the same opengraph-image route.
   },
   robots: {
     index: true,
@@ -122,6 +117,8 @@ export default function RootLayout({
             src="https://plausible.io/js/script.js"
           />
         )}
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );

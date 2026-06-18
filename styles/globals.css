@@ -361,7 +361,10 @@ a.editorial-link:hover,
   transform: scaleX(1);
 }
 
-/* Glitch / chromatic-aberration on hover for hero display text */
+/* Glitch / chromatic-aberration on hover for hero display text.
+   Text-shadow approach (not data-text pseudo-elements) so it works with the
+   line-broken hero h1 and never duplicates/mis-aligns content. The chromatic
+   split is gated off under prefers-reduced-motion (see the reduce block). */
 .glitch-text {
   text-shadow: 0 0 18px rgba(245, 240, 255, 0.25);
   transition: text-shadow 0.2s ease;
@@ -371,6 +374,174 @@ a.editorial-link:hover,
     -2px 0 rgba(0, 229, 255, 0.75),
     2px 0 rgba(255, 45, 149, 0.75),
     0 0 22px rgba(245, 240, 255, 0.3);
+}
+
+/* =====================================================================
+ * Waveform accent — the "mWv" squiggle from the show artwork.
+ * Draws itself in via stroke-dashoffset, then breathes with a soft pulse.
+ * Recurring brand mark near section headers / the Listen CTA / footer.
+ * ===================================================================== */
+.waveform polyline {
+  stroke-dasharray: 240;
+  stroke-dashoffset: 240;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .waveform polyline {
+    animation:
+      waveform-draw 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards,
+      waveform-pulse 2.4s ease-in-out 1.2s infinite;
+  }
+}
+@keyframes waveform-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes waveform-pulse {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* =====================================================================
+ * Equalizer bars — 4 bars bouncing to signal "new / audio".
+ * Sits inside the LATEST badge.
+ * ===================================================================== */
+.eq {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 16px;
+}
+.eq-bar {
+  width: 3px;
+  height: 6px;
+  border-radius: 1px;
+  background: currentColor;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .eq-bar {
+    animation: eq-bounce 0.85s ease-in-out infinite;
+  }
+  .eq-bar:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+  .eq-bar:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+  .eq-bar:nth-child(4) {
+    animation-delay: 0.6s;
+  }
+}
+@keyframes eq-bounce {
+  0%,
+  100% {
+    height: 6px;
+  }
+  50% {
+    height: 16px;
+  }
+}
+
+/* =====================================================================
+ * LATEST badge — acid-green pill with glow + live equalizer bars.
+ * Marks the newest episode unmistakably.
+ * ===================================================================== */
+.latest-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid rgba(57, 255, 20, 0.55);
+  background: rgba(57, 255, 20, 0.1);
+  color: var(--acid-green);
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  box-shadow: 0 0 16px rgba(57, 255, 20, 0.4);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .latest-badge {
+    animation: latest-glow 2.4s ease-in-out infinite;
+  }
+}
+@keyframes latest-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 12px rgba(57, 255, 20, 0.35);
+  }
+  50% {
+    box-shadow: 0 0 24px rgba(57, 255, 20, 0.7);
+  }
+}
+
+/* =====================================================================
+ * Skeleton shimmer — dark, never white. For episode-card loading states.
+ * ===================================================================== */
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: var(--bg-card);
+}
+.skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(139, 47, 230, 0.12) 50%,
+    transparent 100%
+  );
+}
+@media (prefers-reduced-motion: no-preference) {
+  .skeleton::after {
+    animation: skeleton-shimmer 1.6s ease-in-out infinite;
+  }
+}
+@keyframes skeleton-shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* =====================================================================
+ * Platform card — dark card button that lights up in the platform's own
+ * brand colour on hover. Used on the Subscribe page; the footer keeps the
+ * quieter row variant. `--brand` is set inline per platform.
+ * ===================================================================== */
+.platform-card {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.9rem 1.1rem;
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+  background: var(--bg-card);
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    background-color 0.25s ease,
+    transform 0.25s ease;
+}
+.platform-card:hover,
+.platform-card:focus-visible {
+  border-color: var(--brand, var(--acid-green));
+  background: var(--bg-card-hover);
+  box-shadow: 0 0 22px
+    color-mix(in srgb, var(--brand, #39ff14) 45%, transparent);
+  transform: translateY(-2px);
+}
+.platform-card--soon {
+  opacity: 0.6;
 }
 
 /* =====================================================================
@@ -516,19 +687,21 @@ input[type="range"]::-moz-range-thumb {
   }
 }
 
-/* Page transition — fades main content in on each navigation. */
+/* Page transition — fades + slides main content in on each navigation. */
 @media (prefers-reduced-motion: no-preference) {
   main.page-fade {
-    animation: page-fade-in 180ms ease-in;
+    animation: page-fade-in 240ms cubic-bezier(0.22, 1, 0.36, 1);
   }
 }
 
 @keyframes page-fade-in {
   from {
     opacity: 0;
+    transform: translateY(8px);
   }
   to {
     opacity: 1;
+    transform: none;
   }
 }
 
@@ -549,8 +722,20 @@ input[type="range"]::-moz-range-thumb {
   }
   .hero-substrate::before,
   .float,
-  .cta-pulse {
+  .cta-pulse,
+  .waveform polyline,
+  .eq-bar,
+  .latest-badge,
+  .skeleton::after {
     animation: none !important;
+  }
+  /* Draw the waveform fully in (no animation) and kill the chromatic
+     glitch split — keep only the soft static glow. */
+  .waveform polyline {
+    stroke-dashoffset: 0 !important;
+  }
+  .glitch-text:hover {
+    text-shadow: 0 0 18px rgba(245, 240, 255, 0.25) !important;
   }
 }
 

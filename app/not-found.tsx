@@ -31,15 +31,23 @@ export default function NotFound() {
             This page isn't here.
           </h1>
 
-          <Link
-            href="/episodes"
-            className="mt-10 inline-flex items-center gap-2 text-acid editorial-link"
-          >
-            <span className="text-lg underline underline-offset-4 hover:[text-underline-offset:8px] transition-all">
-              Try the episodes archive
-            </span>
-            <span aria-hidden="true">→</span>
-          </Link>
+          <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4">
+            <Link
+              href="/episodes"
+              className="inline-flex items-center gap-2 text-acid editorial-link"
+            >
+              <span className="text-lg underline underline-offset-4 hover:[text-underline-offset:8px] transition-all">
+                Try the episodes archive
+              </span>
+              <span aria-hidden="true">→</span>
+            </Link>
+            <Link
+              href="/"
+              className="text-sm text-fg-muted hover:text-accent transition-colors"
+            >
+              Back to home
+            </Link>
+          </div>
         </div>
       </Container>
     </div>

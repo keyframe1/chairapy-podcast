@@ -174,12 +174,14 @@ export default function AboutPage() {
                 polish where honesty will do.
               </p>
               <p>
-                <Link
-                  href="#"
+                <a
+                  href="https://chairapy.org"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="text-accent editorial-link underline underline-offset-4"
                 >
                   Visit chairapy.org →
-                </Link>
+                </a>
               </p>
             </div>
             <EricPhoto

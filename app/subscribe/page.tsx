@@ -1,6 +1,7 @@
 import Container from "../../components/ui/Container";
 import PlatformLink from "../../components/podcast/PlatformLink";
 import HeroDiagonal from "../../components/podcast/HeroDiagonal";
+import Waveform from "../../components/podcast/Waveform";
 import showInfoData from "../../content/show-info.json";
 import type { ShowInfo } from "../../lib/types";
 
@@ -38,67 +39,81 @@ export default function SubscribePage() {
       <Container width="content">
         <div className="py-16 md:py-24 grid grid-cols-1 md:grid-cols-2 gap-14 md:gap-20">
           <section>
-            <h2 className="eyebrow eyebrow--accent m-0">Listen</h2>
+            <div className="flex items-center gap-3">
+              <h2 className="eyebrow eyebrow--accent m-0">Listen</h2>
+              <Waveform width={44} height={14} />
+            </div>
             <p
               className="mt-4 font-serif-body italic text-fg-muted"
               style={{ lineHeight: 1.55 }}
             >
               Audio versions ship to every major podcast platform.
             </p>
-            <div className="mt-8 flex flex-col space-y-4">
+            <div className="mt-8 flex flex-col gap-3">
               <PlatformLink
                 platform="spotify"
                 href={showInfo.distributionLinks.spotify}
-                iconSize={16}
+                iconSize={18}
+                variant="card"
               />
               <PlatformLink
                 platform="apple"
                 href={showInfo.distributionLinks.apple}
-                iconSize={16}
+                iconSize={18}
+                variant="card"
               />
               <PlatformLink
                 platform="amazon"
                 href={showInfo.distributionLinks.amazon}
-                iconSize={16}
+                iconSize={18}
+                variant="card"
               />
               <PlatformLink
                 platform="rss"
                 href={showInfo.distributionLinks.rss}
-                iconSize={16}
+                iconSize={18}
+                variant="card"
               />
-              <PlatformLink platform="youtube" soon iconSize={16} />
-              <PlatformLink platform="patreon" soon iconSize={16} />
+              <PlatformLink platform="youtube" soon iconSize={18} variant="card" />
+              <PlatformLink platform="patreon" soon iconSize={18} variant="card" />
             </div>
           </section>
 
           <section>
-            <h2 className="eyebrow eyebrow--accent m-0">Follow</h2>
+            <div className="flex items-center gap-3">
+              <h2 className="eyebrow eyebrow--accent m-0">Follow</h2>
+              <Waveform width={44} height={14} color="var(--hot-magenta)" />
+            </div>
             <p
               className="mt-4 font-serif-body italic text-fg-muted"
               style={{ lineHeight: 1.55 }}
             >
               Between episodes, we're on social.
             </p>
-            <div className="mt-8 flex flex-col space-y-4">
+            <div className="mt-8 flex flex-col gap-3">
               <PlatformLink
                 platform="instagram"
                 href={showInfo.socialLinks.instagram}
-                iconSize={16}
+                iconSize={18}
+                variant="card"
               />
               <PlatformLink
                 platform="tiktok"
                 href={showInfo.socialLinks.tiktok}
-                iconSize={16}
+                iconSize={18}
+                variant="card"
               />
               <PlatformLink
                 platform="facebook"
                 href={showInfo.socialLinks.facebook}
-                iconSize={16}
+                iconSize={18}
+                variant="card"
               />
               <PlatformLink
                 platform="rumble"
                 href={showInfo.socialLinks.rumble}
-                iconSize={16}
+                iconSize={18}
+                variant="card"
               />
             </div>
           </section>

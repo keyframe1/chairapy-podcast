@@ -56,6 +56,33 @@ npm run suggest-guest-links
 
 Suggestions print to console. The script does NOT modify `content/guests.json` — update it by hand to avoid false positives.
 
+### Spotify embeds (reactivating the in-page player)
+
+Every episode currently uses the `anchor.fm` audio fallback (the neon-themed
+`AudioPlayer`) because none have a `spotifyEmbedUrl`. The `SpotifyPlayer`
+component is intact — it just needs the data. When Spotify episode URLs become
+available:
+
+1. For each episode in `content/episodes.json`, set `spotifyEmbedUrl` to
+   `https://open.spotify.com/embed/episode/<SPOTIFY_EPISODE_ID>`.
+   - Bulk option: `npm run fetch-episodes-spotify` derives the embed URL from
+     the Spotify episode id automatically (requires Spotify API credentials).
+2. Episode pages and the homepage featured slot then render the Spotify iframe
+   instead of the audio fallback — no code change needed.
+
+The RSS refresh (`npm run fetch-episodes`) preserves any `spotifyEmbedUrl` you
+hand-populate, so it won't be wiped on the next pull.
+
+## Brand assets
+
+- **Favicon** — `public/favicon.svg`, the neon-green smiley from the show
+  artwork. The 180×180 `apple-touch-icon` is generated at `app/apple-icon.tsx`.
+- **Social share images** — generated on the fly in the neon palette:
+  `app/opengraph-image.tsx` (site-wide default) and
+  `app/episodes/[slug]/opengraph-image.tsx` (per-episode, with the episode
+  title + number). These auto-populate `og:image` / `twitter:image`; there is
+  no static `og-image.png` anymore.
+
 ## Deployment
 
 Deployed to Vercel. Production URL: `https://podcast.chairapy.org`.

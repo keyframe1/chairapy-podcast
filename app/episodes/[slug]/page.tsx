@@ -44,17 +44,10 @@ export function generateMetadata({
     160,
   );
 
-  const ogImages = episode.thumbnailUrl
-    ? [
-        {
-          url: episode.thumbnailUrl,
-          width: 1400,
-          height: 1400,
-          alt: `${episode.title} — episode artwork`,
-        },
-      ]
-    : undefined;
-
+  // og:image / twitter:image are supplied by the per-episode
+  // app/episodes/[slug]/opengraph-image.tsx (branded neon card with the
+  // episode's title). The raw thumbnail is the same generic show artwork on
+  // every episode, so the dynamic card previews far better when shared.
   return {
     title: `${episode.title} · Episode ${episode.episodeNumber}`,
     description,
@@ -63,13 +56,11 @@ export function generateMetadata({
       description,
       type: "music.song",
       url: `${SITE_URL}/episodes/${episode.slug}`,
-      images: ogImages,
     },
     twitter: {
       card: "summary_large_image",
       title: `${episode.title} · Episode ${episode.episodeNumber}`,
       description,
-      images: episode.thumbnailUrl ? [episode.thumbnailUrl] : undefined,
     },
   };
 }

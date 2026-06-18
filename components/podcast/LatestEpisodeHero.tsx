@@ -5,16 +5,20 @@ import { formatPublishedDate } from "../../lib/episodes";
 import { formatDurationLabel } from "../../lib/duration";
 import EpisodeBackplate from "./EpisodeBackplate";
 import ListenedIndicator from "./ListenedIndicator";
+import LatestBadge from "./LatestBadge";
 
 type LatestEpisodeHeroProps = {
   episode: Episode;
   /** Anchor id to link to from the "See all episodes below" CTA */
   seeAllAnchor?: string;
+  /** Show the glowing LATEST badge — true for the newest episode. */
+  markLatest?: boolean;
 };
 
 export default function LatestEpisodeHero({
   episode,
   seeAllAnchor = "recent",
+  markLatest = true,
 }: LatestEpisodeHeroProps) {
   const published = formatPublishedDate(episode.publishedDate);
   const duration = formatDurationLabel(episode.duration);
@@ -47,7 +51,8 @@ export default function LatestEpisodeHero({
       </Link>
 
       <div className="md:pt-6">
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+          {markLatest && <LatestBadge />}
           <span className="eyebrow eyebrow--accent tabular">
             Ep {episode.episodeNumber}
           </span>

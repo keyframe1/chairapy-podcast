@@ -73,18 +73,25 @@ type PlatformLinkProps = {
    */
   soon?: boolean;
   iconSize?: number;
+  /**
+   * "row" (default) — minimal icon + label, no box. Used in the footer.
+   * "card" — dark card button that glows in the platform's brand colour on
+   * hover. Used on the Subscribe page.
+   */
+  variant?: "row" | "card";
 };
 
 /**
- * Minimal icon + label row. No box, no arrow. Used in the footer and the
- * Subscribe page Listen/Follow columns where the reference should sit
- * quiet rather than sell.
+ * Platform reference, two ways. The quiet "row" sits in the footer; the
+ * "card" variant gives the Subscribe page a tappable button that lights up
+ * in each platform's own colour on hover.
  */
 export default function PlatformLink({
   platform,
   href,
   soon = false,
   iconSize = 14,
+  variant = "row",
 }: PlatformLinkProps) {
   const brand = BRANDS[platform];
   const { Icon } = brand;
@@ -107,6 +114,37 @@ export default function PlatformLink({
     </>
   );
 
+  // --- Card variant -------------------------------------------------------
+  if (variant === "card") {
+    const brandVar = { ["--brand" as string]: brand.color } as CSSProperties;
+    if (!linkable) {
+      return (
+        <span
+          aria-disabled="true"
+          className="platform-card platform-card--soon cursor-default text-fg"
+          style={brandVar}
+        >
+          {body}
+        </span>
+      );
+    }
+    return (
+      <a
+        href={href!}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="platform-card text-fg"
+        style={brandVar}
+      >
+        {body}
+        <span aria-hidden="true" className="ml-auto text-fg-muted">
+          ↗
+        </span>
+      </a>
+    );
+  }
+
+  // --- Row variant (default) ---------------------------------------------
   if (!linkable) {
     return (
       <span

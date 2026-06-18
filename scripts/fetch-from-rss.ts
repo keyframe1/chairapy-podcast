@@ -147,6 +147,11 @@ function transformToEpisodes(items: RssItem[]): Episode[] {
       title: cleaned || item.title,
       guestName: null,
       publishedDate: iso,
+      // RSS carries no Spotify episode id, so this stays null and the site
+      // renders the anchor.fm audio fallback. To light up the in-page Spotify
+      // player, populate `spotifyEmbedUrl` per episode in content/episodes.json
+      // (format: https://open.spotify.com/embed/episode/<id>) — a prior value
+      // is preserved across re-fetches below. See README "Spotify embeds".
       spotifyEmbedUrl: null,
       applePodcastsUrl: null,
       amazonMusicUrl: null,
