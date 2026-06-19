@@ -436,136 +436,9 @@ a.editorial-link:hover,
 }
 
 /* =====================================================================
- * Episode share menu — the per-episode dropdown offering Copy link plus
- * the designed Story (9:16) and Feed (1:1) graphics. Trigger matches the
- * header share button; the panel is a dark neon card with acid-green hover
- * on each option and a fade + slight-slide open.
- * ===================================================================== */
-.share-menu {
-  position: relative;
-  display: inline-flex;
-}
-
-.share-menu__trigger {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
-  background: rgba(139, 47, 230, 0.14); /* faint purple fill — reads as an action */
-  border: 1px solid rgba(139, 47, 230, 0.5); /* electric purple outline */
-  border-radius: var(--radius);
-  color: var(--text-bright);
-  font-family: inherit;
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.25s ease;
-}
-.share-menu__trigger:hover,
-.share-menu__trigger[aria-expanded="true"] {
-  background: rgba(139, 47, 230, 0.2);
-  border-color: var(--acid-green);
-  color: var(--acid-green);
-  box-shadow: 0 0 16px rgba(57, 255, 20, 0.3);
-}
-.share-menu__trigger:active {
-  transform: translateY(1px);
-}
-
-.share-menu__panel {
-  position: absolute;
-  top: calc(100% + 8px);
-  right: 0;
-  z-index: 40;
-  min-width: 220px;
-  display: flex;
-  flex-direction: column;
-  padding: 6px;
-  background: var(--bg-card);
-  border: 1px solid rgba(139, 47, 230, 0.5);
-  border-radius: 8px;
-  box-shadow:
-    0 0 22px rgba(139, 47, 230, 0.28),
-    0 18px 40px rgba(0, 0, 0, 0.6);
-}
-@media (prefers-reduced-motion: no-preference) {
-  .share-menu__panel {
-    animation: share-menu-in 180ms cubic-bezier(0.22, 1, 0.36, 1);
-  }
-}
-@keyframes share-menu-in {
-  from {
-    opacity: 0;
-    transform: translateY(-6px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-.share-menu__item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  width: 100%;
-  padding: 10px 12px;
-  background: transparent;
-  border: 1px solid transparent;
-  border-radius: 6px;
-  color: var(--text-bright);
-  font-family: inherit;
-  font-size: 14px;
-  font-weight: 500;
-  text-align: left;
-  cursor: pointer;
-  transition:
-    background-color 0.2s ease,
-    border-color 0.2s ease,
-    color 0.2s ease;
-}
-.share-menu__item:hover,
-.share-menu__item:focus-visible {
-  background: rgba(57, 255, 20, 0.1);
-  border-color: rgba(57, 255, 20, 0.5);
-  color: var(--acid-green);
-}
-.share-menu__item:disabled {
-  opacity: 0.55;
-  cursor: progress;
-}
-.share-menu__hint {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--text-dim);
-}
-.share-menu__item:hover .share-menu__hint,
-.share-menu__item:focus-visible .share-menu__hint {
-  color: var(--acid-green);
-}
-
-@media (max-width: 640px) {
-  .share-menu__trigger {
-    padding: 8px;
-  }
-  .share-menu__label {
-    display: none;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .share-menu__trigger,
-  .share-menu__item {
-    transition: none;
-  }
-}
-
-/* =====================================================================
- * Episode top action row — the primary "Listen now" CTA paired with the
- * prominent Share menu, sitting above the fold beside the episode title.
+ * Episode top action row — the single primary "Listen now" CTA, above the
+ * fold beside the episode title. Sharing lives in the global header and the
+ * post-player nudge, so this row stays focused on one action.
  * ===================================================================== */
 .episode-actions {
   display: flex;
@@ -656,31 +529,62 @@ a.editorial-link:hover,
 .share-nudge__actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 10px;
   margin-left: auto;
 }
+/* Matched set: every button shares size, radius, and padding. A primary
+   label sits over a tiny monospace format hint (URL / 9:16 / square). */
 .share-nudge__btn {
-  padding: 6px 14px;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  min-width: 88px;
+  padding: 7px 16px;
   font-family: inherit;
-  font-size: 13px;
-  font-weight: 500;
   color: var(--text-bright);
   background: transparent;
-  border: 1px solid rgba(139, 47, 230, 0.5);
-  border-radius: 999px;
+  border: 1px solid rgba(139, 47, 230, 0.4);
+  border-radius: 10px;
   cursor: pointer;
   transition:
-    color 0.2s ease,
-    border-color 0.2s ease,
-    background-color 0.2s ease,
-    box-shadow 0.2s ease;
+    color 0.25s ease,
+    border-color 0.25s ease,
+    background-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+.share-nudge__btn-text {
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.2;
+}
+.share-nudge__hint {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  transition: color 0.25s ease;
+}
+/* "Post" carries the one subtle accent — a faint acid wash that marks it as
+   the suggested format without breaking the matched set. */
+.share-nudge__btn--accent {
+  border-color: rgba(57, 255, 20, 0.4);
+  background: rgba(57, 255, 20, 0.05);
 }
 .share-nudge__btn:hover,
 .share-nudge__btn:focus-visible {
   color: var(--acid-green);
   border-color: var(--acid-green);
-  background: rgba(57, 255, 20, 0.08);
-  box-shadow: 0 0 12px rgba(57, 255, 20, 0.25);
+  background: rgba(57, 255, 20, 0.1);
+  box-shadow: 0 0 14px rgba(57, 255, 20, 0.25);
+}
+.share-nudge__btn:hover .share-nudge__hint,
+.share-nudge__btn:focus-visible .share-nudge__hint {
+  color: var(--acid-green);
+}
+.share-nudge__btn:active {
+  transform: translateY(1px);
 }
 .share-nudge__btn:disabled {
   opacity: 0.55;

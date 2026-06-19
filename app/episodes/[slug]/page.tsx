@@ -10,7 +10,6 @@ import EmailSignup from "../../../components/podcast/EmailSignup";
 import EmailSignupBlock from "../../../components/podcast/EmailSignupBlock";
 import EpisodeListRow from "../../../components/podcast/EpisodeListRow";
 import MarkAsListened from "../../../components/podcast/MarkAsListened";
-import EpisodeShareMenu from "../../../components/podcast/EpisodeShareMenu";
 import ShareNudge from "../../../components/podcast/ShareNudge";
 import CTAButton from "../../../components/ui/CTAButton";
 
@@ -185,17 +184,13 @@ export default function EpisodeDetailPage({
               </blockquote>
             )}
 
-            {/* Prominent action row — Listen + Share, above the fold */}
+            {/* Prominent action row — the single primary CTA, above the fold.
+                Sharing lives in the global header and the post-player nudge. */}
             <div className="episode-actions">
               <CTAButton href="#player" className="episode-actions__listen">
                 <span aria-hidden="true" className="mr-2">▶</span>
                 Listen now
               </CTAButton>
-              <EpisodeShareMenu
-                slug={episode.slug}
-                title={episode.title}
-                episodeNumber={episode.episodeNumber}
-              />
             </div>
           </Container>
         </section>
