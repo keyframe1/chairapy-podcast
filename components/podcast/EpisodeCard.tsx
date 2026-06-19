@@ -5,6 +5,7 @@ import { formatPublishedDate } from "../../lib/episodes";
 import { formatDurationLabel } from "../../lib/duration";
 import ListenedIndicator from "./ListenedIndicator";
 import EpisodeBackplate from "./EpisodeBackplate";
+import CardShareButton from "./CardShareButton";
 
 type EpisodeCardProps = {
   episode: Episode;
@@ -26,13 +27,14 @@ export default function EpisodeCard({
   const titleOnArt = showArt && !hasRealThumb;
 
   return (
-    <Link
-      href={`/episodes/${episode.slug}`}
-      data-reveal
-      className={`neon-card group block overflow-hidden ${
-        isFeature ? "md:grid md:grid-cols-[4fr_6fr] md:items-stretch" : ""
-      }`}
-    >
+    <div className="episode-card relative">
+      <Link
+        href={`/episodes/${episode.slug}`}
+        data-reveal
+        className={`neon-card group block overflow-hidden ${
+          isFeature ? "md:grid md:grid-cols-[4fr_6fr] md:items-stretch" : ""
+        }`}
+      >
       {showArt && (
         <div
           className={`relative bg-bg aspect-square overflow-hidden ${
@@ -127,6 +129,12 @@ export default function EpisodeCard({
           </span>
         </div>
       </div>
-    </Link>
+      </Link>
+      <CardShareButton
+        slug={episode.slug}
+        title={episode.title}
+        episodeNumber={episode.episodeNumber}
+      />
+    </div>
   );
 }

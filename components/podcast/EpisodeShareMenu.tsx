@@ -1,9 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { SITE_URL } from "../../lib/site";
-
-type ShareFormat = "story" | "square";
+import { useEpisodeShare } from "../../lib/useEpisodeShare";
 
 type Props = {
   slug: string;
@@ -14,21 +12,18 @@ type Props = {
 /**
  * Per-episode share menu. The header keeps the casual "share this page as a
  * link" button; this gives the full set on the episode itself — copy link
- * plus the designed Story (9:16) and Feed (1:1) graphics. On mobile the
- * graphics open the native share sheet as a PNG file; on desktop they open
- * in a new tab to save.
+ * plus the designed Story (9:16) and Feed (1:1) graphics. Shared behavior
+ * lives in useEpisodeShare so the post-player nudge and card icon stay in sync.
  */
 export default function EpisodeShareMenu({ slug, title, episodeNumber }: Props) {
   const [open, setOpen] = useState(false);
-  const [copied, setCopied] = useState(false);
-  const [busy, setBusy] = useState<ShareFormat | null>(null);
   const rootRef = useRef<HTMLDivElement>(null);
-
-  // Prefer the live origin (works in dev + prod); fall back to the canonical.
-  const base =
-    typeof window !== "undefined"
-      ? `${window.location.origin}/episodes/${slug}`
-      : `${SITE_URL}/episodes/${slug}`;
+  const { copied, busy, shareLink, shareImage } = useEpisodeShare({
+    slug,
+    title,
+    episodeNumber,
+    onShared: () => setOpen(false),
+  });
 
   // Close on outside click / Escape.
   useEffect(() => {
@@ -48,53 +43,6 @@ export default function EpisodeShareMenu({ slug, title, episodeNumber }: Props) 
       document.removeEventListener("keydown", onKey);
     };
   }, [open]);
-
-  async function shareLink() {
-    const shareTitle = `Episode ${episodeNumber} · ${title}`;
-    if (typeof navigator !== "undefined" && navigator.share) {
-      try {
-        await navigator.share({ title: shareTitle, url: base });
-        setOpen(false);
-        return;
-      } catch {
-        // user cancelled — fall through to copy
-      }
-    }
-    try {
-      await navigator.clipboard.writeText(base);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch {
-      window.prompt("Copy this link:", base);
-    }
-  }
-
-  async function shareImage(format: ShareFormat) {
-    const imgUrl = `${base}/${format}`;
-    setBusy(format);
-    try {
-      if (typeof navigator !== "undefined" && navigator.share) {
-        try {
-          const res = await fetch(imgUrl);
-          const blob = await res.blob();
-          const file = new File([blob], `${slug}-${format}.png`, {
-            type: "image/png",
-          });
-          if (navigator.canShare && navigator.canShare({ files: [file] })) {
-            await navigator.share({ files: [file], title });
-            setOpen(false);
-            return;
-          }
-        } catch {
-          // fetch/share failed or was cancelled — fall through to open
-        }
-      }
-      // Desktop (or no file-share support): open the image to save.
-      window.open(imgUrl, "_blank", "noopener,noreferrer");
-    } finally {
-      setBusy(null);
-    }
-  }
 
   return (
     <div className="share-menu" ref={rootRef}>

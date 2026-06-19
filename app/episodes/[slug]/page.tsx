@@ -11,6 +11,8 @@ import EmailSignupBlock from "../../../components/podcast/EmailSignupBlock";
 import EpisodeListRow from "../../../components/podcast/EpisodeListRow";
 import MarkAsListened from "../../../components/podcast/MarkAsListened";
 import EpisodeShareMenu from "../../../components/podcast/EpisodeShareMenu";
+import ShareNudge from "../../../components/podcast/ShareNudge";
+import CTAButton from "../../../components/ui/CTAButton";
 
 import {
   getAllEpisodes,
@@ -132,20 +134,13 @@ export default function EpisodeDetailPage({
         {/* Editorial article header */}
         <section className="pt-12 md:pt-16 pb-10 md:pb-14">
           <Container width="content">
-            <div className="flex items-center justify-between gap-4">
-              <Link
-                href="/episodes"
-                className="inline-flex items-center gap-2 text-sm text-fg-muted hover:text-accent transition-colors"
-              >
-                <span aria-hidden="true">←</span>
-                <span>All episodes</span>
-              </Link>
-              <EpisodeShareMenu
-                slug={episode.slug}
-                title={episode.title}
-                episodeNumber={episode.episodeNumber}
-              />
-            </div>
+            <Link
+              href="/episodes"
+              className="inline-flex items-center gap-2 text-sm text-fg-muted hover:text-accent transition-colors"
+            >
+              <span aria-hidden="true">←</span>
+              <span>All episodes</span>
+            </Link>
 
             <p className="mt-10 eyebrow tabular">
               <span className="text-accent">Episode {episode.episodeNumber}</span>
@@ -189,11 +184,24 @@ export default function EpisodeDetailPage({
                 "{pullQuote}"
               </blockquote>
             )}
+
+            {/* Prominent action row — Listen + Share, above the fold */}
+            <div className="episode-actions">
+              <CTAButton href="#player" className="episode-actions__listen">
+                <span aria-hidden="true" className="mr-2">▶</span>
+                Listen now
+              </CTAButton>
+              <EpisodeShareMenu
+                slug={episode.slug}
+                title={episode.title}
+                episodeNumber={episode.episodeNumber}
+              />
+            </div>
           </Container>
         </section>
 
         {/* Player — zero-chrome, sits directly on the page */}
-        <section className="pb-16">
+        <section id="player" className="pb-16 scroll-mt-24">
           <Container width="content">
             {episode.spotifyEmbedUrl ? (
               <SpotifyPlayer embedUrl={episode.spotifyEmbedUrl} lazy={false} bare />
@@ -251,6 +259,13 @@ export default function EpisodeDetailPage({
                 </a>
               )}
             </div>
+
+            {/* Post-player nudge — catches the highest-intent share moment */}
+            <ShareNudge
+              slug={episode.slug}
+              title={episode.title}
+              episodeNumber={episode.episodeNumber}
+            />
           </Container>
         </section>
 

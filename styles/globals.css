@@ -378,7 +378,7 @@ a.editorial-link:hover,
   align-items: center;
   gap: 8px;
   padding: 8px 16px;
-  background: transparent;
+  background: rgba(139, 47, 230, 0.14); /* faint purple fill — reads as an action */
   border: 1px solid rgba(139, 47, 230, 0.5); /* electric purple outline */
   border-radius: var(--radius);
   color: var(--text-bright);
@@ -390,6 +390,7 @@ a.editorial-link:hover,
 }
 
 .share-btn:hover {
+  background: rgba(139, 47, 230, 0.2);
   border-color: var(--acid-green);
   color: var(--acid-green);
   box-shadow: 0 0 16px rgba(57, 255, 20, 0.3); /* green glow on hover */
@@ -450,7 +451,7 @@ a.editorial-link:hover,
   align-items: center;
   gap: 8px;
   padding: 8px 16px;
-  background: transparent;
+  background: rgba(139, 47, 230, 0.14); /* faint purple fill — reads as an action */
   border: 1px solid rgba(139, 47, 230, 0.5); /* electric purple outline */
   border-radius: var(--radius);
   color: var(--text-bright);
@@ -462,6 +463,7 @@ a.editorial-link:hover,
 }
 .share-menu__trigger:hover,
 .share-menu__trigger[aria-expanded="true"] {
+  background: rgba(139, 47, 230, 0.2);
   border-color: var(--acid-green);
   color: var(--acid-green);
   box-shadow: 0 0 16px rgba(57, 255, 20, 0.3);
@@ -557,6 +559,141 @@ a.editorial-link:hover,
 @media (prefers-reduced-motion: reduce) {
   .share-menu__trigger,
   .share-menu__item {
+    transition: none;
+  }
+}
+
+/* =====================================================================
+ * Episode top action row — the primary "Listen now" CTA paired with the
+ * prominent Share menu, sitting above the fold beside the episode title.
+ * ===================================================================== */
+.episode-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+  margin-top: 2.5rem;
+}
+
+/* =====================================================================
+ * Card share icon — a small circular share button in the corner of each
+ * episode card. Hidden until hover on desktop; always faintly visible on
+ * mobile. Fires the native share / clipboard copy for that episode.
+ * ===================================================================== */
+.card-share {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  background: rgba(10, 6, 18, 0.6);
+  border: 1px solid rgba(139, 47, 230, 0.5);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  color: var(--text-bright);
+  cursor: pointer;
+  opacity: 0;
+  transition:
+    opacity 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.15s ease;
+}
+/* Reveal on card hover, or whenever the button itself takes keyboard focus */
+.episode-card:hover .card-share,
+.card-share:focus-visible {
+  opacity: 1;
+}
+.card-share:hover {
+  color: var(--acid-green);
+  border-color: var(--acid-green);
+  box-shadow: 0 0 14px rgba(57, 255, 20, 0.3);
+}
+.card-share:active {
+  transform: scale(0.94);
+}
+/* Mobile: no hover, so keep it discoverable at all times */
+@media (max-width: 640px) {
+  .card-share {
+    opacity: 0.85;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .card-share {
+    transition: opacity 0.2s ease;
+  }
+}
+
+/* =====================================================================
+ * Post-player share nudge — the understated "Liked this one? Share it"
+ * row directly below the player, the highest-intent share moment.
+ * ===================================================================== */
+.share-nudge {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 16px;
+  margin-top: 1.75rem;
+  padding: 14px 18px;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  background: rgba(139, 47, 230, 0.06);
+}
+.share-nudge__label {
+  font-size: 15px;
+  color: var(--text-muted);
+}
+.share-nudge__accent {
+  color: var(--acid-green);
+  font-style: italic;
+}
+.share-nudge__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-left: auto;
+}
+.share-nudge__btn {
+  padding: 6px 14px;
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-bright);
+  background: transparent;
+  border: 1px solid rgba(139, 47, 230, 0.5);
+  border-radius: 999px;
+  cursor: pointer;
+  transition:
+    color 0.2s ease,
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+.share-nudge__btn:hover,
+.share-nudge__btn:focus-visible {
+  color: var(--acid-green);
+  border-color: var(--acid-green);
+  background: rgba(57, 255, 20, 0.08);
+  box-shadow: 0 0 12px rgba(57, 255, 20, 0.25);
+}
+.share-nudge__btn:disabled {
+  opacity: 0.55;
+  cursor: progress;
+}
+@media (max-width: 640px) {
+  .share-nudge__actions {
+    margin-left: 0;
+    width: 100%;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .share-nudge__btn {
     transition: none;
   }
 }
