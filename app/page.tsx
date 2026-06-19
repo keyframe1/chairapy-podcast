@@ -10,8 +10,9 @@ import ContinueExploring from "../components/podcast/ContinueExploring";
 import SignupCard from "../components/podcast/SignupCard";
 import GuestCard from "../components/podcast/GuestCard";
 import EpisodeBackplate from "../components/podcast/EpisodeBackplate";
-import HeroDiagonal from "../components/podcast/HeroDiagonal";
 import Waveform from "../components/podcast/Waveform";
+import SizzleHero from "../components/brand/SizzleHero";
+import WatchStrip from "../components/brand/WatchStrip";
 
 import showInfoData from "../content/show-info.json";
 import guestsData from "../content/guests.json";
@@ -55,12 +56,11 @@ export default function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      {/* Editorial hero — hero-diagonal backdrop with typographic masthead on the cream (right) side */}
-      <HeroDiagonal scale="full">
-        <Container className="relative h-full">
-          <div className="grid grid-cols-1 md:grid-cols-[2fr_3fr] gap-10 md:gap-16 items-end pt-16 md:pt-24 pb-12 md:pb-20 min-h-[70vh] md:min-h-[78vh]">
-            <div className="hidden md:block" aria-hidden="true" />
-            <div className="reveal reveal-stagger">
+      {/* Hero — fried-VHS sizzle reel behind the typographic masthead */}
+      <SizzleHero>
+        <Container className="relative">
+          <div className="flex flex-col justify-end min-h-[72vh] md:min-h-[78vh] pt-28 pb-14 md:pb-20">
+            <div className="reveal reveal-stagger max-w-2xl">
               <p className="eyebrow eyebrow--accent mb-6">A Chairapy Media podcast · New Orleans</p>
               <h1
                 className="glitch-text font-display font-bold text-fg"
@@ -81,8 +81,8 @@ export default function HomePage() {
                 className="mt-8 h-0.5 w-20 bg-acid shadow-glow-green"
               />
               <p
-                className="mt-8 font-serif-body italic text-2xl md:text-3xl text-fg-muted max-w-content"
-                style={{ lineHeight: 1.3 }}
+                className="mt-8 font-serif-body italic text-2xl md:text-3xl text-fg max-w-content"
+                style={{ lineHeight: 1.3, textShadow: "0 2px 18px rgba(0,0,0,0.55)" }}
               >
                 {showInfo.showTagline}
               </p>
@@ -109,7 +109,7 @@ export default function HomePage() {
             </div>
           </div>
         </Container>
-      </HeroDiagonal>
+      </SizzleHero>
 
       {/* Host byline — small editorial strip between hero and featured */}
       <section className="py-16 md:py-20">
@@ -253,6 +253,9 @@ export default function HomePage() {
           </section>
         </>
       )}
+
+      {/* Watch — the three vertical promo reels (brand promos, not bound to episodes) */}
+      <WatchStrip />
 
       {/* About strip — portrait + restrained positioning */}
       <section className="py-20 md:py-24 border-t border-border">

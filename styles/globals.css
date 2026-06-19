@@ -990,3 +990,207 @@ input[type="range"]::-moz-range-thumb {
     color: black !important;
   }
 }
+
+/* =====================================================================
+ * Brand media — sizzle-reel hero, site-wide fried-VHS texture, spinning
+ * smiley loader, promo players + Watch strip, logo art.
+ * Assets live in /public/brand/ (see the brand-media pipeline).
+ * ===================================================================== */
+
+/* --- Sizzle-reel hero -------------------------------------------------- *
+ * The reel plays muted/looping behind the masthead. .hero-substrate (the
+ * loved gradient mesh) sits behind it as the reduced-motion fallback. */
+.sizzle-hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 78vh;
+}
+.sizzle-hero__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+/* Stronger scanlines on the hero than the rest of the site */
+.sizzle-hero__vhs {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0) 0px,
+    rgba(0, 0, 0, 0) 2px,
+    rgba(0, 0, 0, 0.22) 3px,
+    rgba(0, 0, 0, 0) 4px
+  );
+  opacity: 0.5;
+  mix-blend-mode: multiply;
+}
+/* Dark purple wash so the headline stays legible over any frame */
+.sizzle-hero__tint {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      ellipse 85% 60% at 50% 0%,
+      rgba(139, 47, 230, 0.26),
+      transparent 70%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(10, 6, 18, 0.5) 0%,
+      rgba(10, 6, 18, 0.82) 100%
+    );
+}
+.sizzle-hero__content {
+  position: relative;
+  z-index: 3;
+}
+@media (prefers-reduced-motion: reduce) {
+  /* Hide the video so the gradient-mesh substrate behind it shows instead */
+  .sizzle-hero__video {
+    display: none;
+  }
+}
+
+/* --- Site-wide fried-VHS texture overlay ------------------------------- */
+.vhs-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  pointer-events: none;
+}
+.vhs-overlay__scanlines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0) 0px,
+    rgba(0, 0, 0, 0) 2px,
+    rgba(0, 0, 0, 0.18) 3px,
+    rgba(0, 0, 0, 0) 4px
+  );
+  opacity: 0.22;
+}
+.vhs-overlay__grain {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.05;
+  mix-blend-mode: screen;
+}
+/* Perf: drop the moving grain on mobile (keep static scanlines) */
+@media (max-width: 767px) {
+  .vhs-overlay__grain {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .vhs-overlay__grain {
+    display: none;
+  }
+}
+
+/* --- Spinning-smiley loader / accent ----------------------------------- */
+.smiley-loader {
+  display: inline-block;
+  line-height: 0;
+  filter: drop-shadow(0 0 16px rgba(57, 255, 20, 0.4));
+}
+.smiley-loader__video,
+.smiley-loader__static {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.smiley-loader__static {
+  display: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .smiley-loader__video {
+    display: none;
+  }
+  .smiley-loader__static {
+    display: block;
+  }
+}
+
+/* --- Promo reels (vertical 9:16 players) ------------------------------- */
+.promo-player {
+  margin: 0;
+  max-width: 340px;
+}
+.promo-player__label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: 0.6rem;
+}
+.promo-player video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 9 / 16;
+  object-fit: cover;
+  background: var(--bg-card);
+  border-radius: 8px;
+  border: 1px solid rgba(139, 47, 230, 0.4);
+  box-shadow: 0 0 24px rgba(139, 47, 230, 0.25);
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.25s ease;
+}
+.promo-player video:hover {
+  border-color: rgba(57, 255, 20, 0.5);
+  box-shadow: 0 0 28px rgba(57, 255, 20, 0.28);
+}
+
+/* --- Homepage Watch strip (horizontal scroll of promos) ---------------- */
+.watch-strip {
+  display: flex;
+  gap: 1.25rem;
+  overflow-x: auto;
+  padding-bottom: 1rem;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+.watch-strip__card {
+  flex: 0 0 auto;
+  width: min(72vw, 280px);
+  scroll-snap-align: start;
+}
+.watch-strip__kicker {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  text-shadow: 0 0 12px rgba(57, 255, 20, 0.45);
+}
+
+/* --- Logo art (nav mark + footer lockup) ------------------------------- */
+.nav-logo {
+  display: block;
+  height: 36px;
+  width: auto;
+  filter: drop-shadow(0 0 8px rgba(139, 47, 230, 0.5));
+}
+.footer-logo {
+  display: block;
+  width: 200px;
+  max-width: 62%;
+  height: auto;
+  margin: 0 auto;
+  filter: drop-shadow(0 0 22px rgba(139, 47, 230, 0.45));
+}

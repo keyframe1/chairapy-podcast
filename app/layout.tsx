@@ -7,6 +7,7 @@ import "../styles/globals.css";
 import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
 import ScrollReveal from "../components/layout/ScrollReveal";
+import VhsOverlay from "../components/brand/VhsOverlay";
 import { SITE_URL } from "../lib/site";
 
 const inter = Inter({
@@ -109,6 +110,7 @@ export default function RootLayout({
           {children}
         </main>
         <Footer />
+        <VhsOverlay />
         {plausibleDomain && (
           <Script
             strategy="afterInteractive"

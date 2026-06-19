@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Container from "@/components/ui/Container";
+import SmileyLoader from "@/components/brand/SmileyLoader";
 
 export const metadata = {
   title: "Off-script",
@@ -19,7 +20,8 @@ export default function NotFound() {
 
       <Container width="content">
         <div className="min-h-[70vh] flex flex-col items-start justify-center py-24">
-          <p className="eyebrow eyebrow--accent tabular">Off the trail · 404</p>
+          <SmileyLoader size={132} className="mb-8" />
+          <p className="eyebrow eyebrow--accent tabular">Lost the signal · 404</p>
           <h1
             className="glitch-text mt-6 font-display font-bold text-fg"
             style={{
@@ -30,6 +32,9 @@ export default function NotFound() {
           >
             This page isn't here.
           </h1>
+          <p className="mt-6 font-serif-body italic text-xl text-fg-muted max-w-content">
+            The tape skipped. This one&apos;s just static — let&apos;s get you back to a signal.
+          </p>
 
           <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4">
             <Link

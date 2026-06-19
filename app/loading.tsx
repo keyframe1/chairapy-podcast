@@ -1,11 +1,9 @@
-import Waveform from "../components/podcast/Waveform";
-import EqualizerBars from "../components/podcast/EqualizerBars";
+import SmileyLoader from "../components/brand/SmileyLoader";
 
 /**
  * Branded route-transition loader. Static pages resolve instantly so this is
- * rarely seen, but when a navigation does suspend it shows the show's audio
- * language — a drawing-in waveform over bouncing equalizer bars — instead of
- * a blank screen.
+ * rarely seen, but when a navigation does suspend it shows the show's spinning
+ * smiley mascot instead of a blank screen.
  */
 export default function Loading() {
   return (
@@ -14,10 +12,7 @@ export default function Loading() {
       role="status"
       aria-label="Loading"
     >
-      <Waveform width={120} height={40} />
-      <span className="text-acid">
-        <EqualizerBars />
-      </span>
+      <SmileyLoader size={120} />
       <p className="eyebrow eyebrow--accent">Loading</p>
     </div>
   );

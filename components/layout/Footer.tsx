@@ -92,8 +92,17 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-border pt-6 pb-10">
-          <p className="text-center text-xs text-fg-muted">
+        <div className="border-t border-border pt-12 pb-10">
+          <img
+            src="/brand/logo-full.webp"
+            alt="Eric's ADHD Experience"
+            width={200}
+            height={150}
+            loading="lazy"
+            decoding="async"
+            className="footer-logo"
+          />
+          <p className="mt-8 text-center text-xs text-fg-muted">
             Recorded in Metairie, Louisiana.
           </p>
         </div>
