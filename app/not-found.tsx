@@ -44,7 +44,6 @@ export default function NotFound() {
               <span className="text-lg underline underline-offset-4 hover:[text-underline-offset:8px] transition-all">
                 Try the episodes archive
               </span>
-              <span aria-hidden="true">→</span>
             </Link>
             <Link
               href="/"

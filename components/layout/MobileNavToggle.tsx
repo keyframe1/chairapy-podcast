@@ -124,9 +124,6 @@ export default function MobileNavToggle() {
                         </span>
                       )}
                     </span>
-                    <span aria-hidden="true" className="text-accent">
-                      →
-                    </span>
                   </Link>
                 );
               })}

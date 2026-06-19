@@ -102,6 +102,9 @@ body {
   background-color: var(--color-bg);
   color: var(--color-fg);
   font-family: var(--font-body);
+  /* Body sits at 450 (not 400) for a confident, uniform weight across the
+     site — headers stay 700, eyebrows stay Space Mono 400. */
+  font-weight: 450;
   font-feature-settings: "cv11", "ss01", "ss03";
   font-variant-ligatures: common-ligatures;
   letter-spacing: -0.01em;
@@ -849,29 +852,39 @@ a.editorial-link:hover,
   opacity: 0.6;
 }
 
-/* External-link arrow — quiet at rest, slides toward where it points and
- * lights acid-green on hover/focus. Replaces the old ↗ glyph. */
-.link-arrow {
-  flex: none;
-  color: var(--text-dim);
-  opacity: 0.6;
+/* =====================================================================
+ * Platform pill — compact branded button for the episode-page "open in …"
+ * row. No arrow; the brand icon carries the colour and the whole pill lights
+ * up in that colour on hover. `--brand` is set inline per platform.
+ * ===================================================================== */
+.platform-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: var(--radius);
+  background: var(--bg-card);
+  border: 1px solid rgba(139, 47, 230, 0.3);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--text-bright);
   transition:
-    transform 0.25s ease,
-    color 0.25s ease,
-    opacity 0.25s ease;
+    border-color 0.25s ease,
+    background-color 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.25s ease;
 }
-.platform-card:hover .link-arrow,
-.platform-card:focus-visible .link-arrow {
-  color: var(--acid-green);
-  transform: translate(2px, -2px);
-  opacity: 1;
+.platform-btn:hover,
+.platform-btn:focus-visible {
+  border-color: var(--brand, var(--acid-green));
+  background: var(--bg-card-hover);
+  box-shadow: 0 0 18px
+    color-mix(in srgb, var(--brand, #39ff14) 35%, transparent);
+  transform: translateY(-1px);
 }
 @media (prefers-reduced-motion: reduce) {
-  .link-arrow {
-    transition: color 0.25s ease;
-  }
-  .platform-card:hover .link-arrow,
-  .platform-card:focus-visible .link-arrow {
+  .platform-btn:hover,
+  .platform-btn:focus-visible {
     transform: none;
   }
 }
@@ -1374,4 +1387,38 @@ input[type="range"]::-moz-range-thumb {
   height: auto;
   margin: 0 auto;
   filter: drop-shadow(0 0 22px rgba(139, 47, 230, 0.45));
+}
+
+/* Salon link — small outlined pill that lights acid-green on hover. No arrow;
+ * the pill itself reads as the affordance. */
+.footer-salon {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 1.25rem;
+  padding: 6px 14px;
+  border: 1px solid rgba(139, 47, 230, 0.45);
+  border-radius: 999px;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--text-muted);
+  transition:
+    color 0.25s ease,
+    border-color 0.25s ease,
+    background-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+.footer-salon:hover,
+.footer-salon:focus-visible {
+  color: var(--acid-green);
+  border-color: var(--acid-green);
+  background: rgba(57, 255, 20, 0.06);
+  box-shadow: 0 0 14px rgba(57, 255, 20, 0.25);
+}
+
+/* Footer credit — quiet Space Mono line (recording / production credit). */
+.footer-credit {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
 }

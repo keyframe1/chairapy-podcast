@@ -89,7 +89,7 @@ export default function HomePage() {
 
               <div className="mt-10 flex flex-wrap items-baseline gap-x-6 gap-y-3">
                 <p className="eyebrow eyebrow--sage tabular">
-                  {allEpisodes.length} episodes · new drops monthly
+                  {allEpisodes.length} episodes
                 </p>
                 {latestEpisode && (
                   <Link
@@ -99,10 +99,9 @@ export default function HomePage() {
                     <span className="eyebrow eyebrow--accent tabular mr-2">
                       Latest
                     </span>
-                    <span className="font-serif-body italic">
+                    <span className="font-serif-body italic underline-offset-4 group-hover:underline">
                       Ep {latestEpisode.episodeNumber} · {latestEpisode.title}
                     </span>
-                    <span aria-hidden="true" className="text-accent ml-1">→</span>
                   </Link>
                 )}
               </div>
@@ -224,9 +223,9 @@ export default function HomePage() {
                   </Link>
                   <Link
                     href="/episodes"
-                    className="text-sm text-fg-muted hover:text-acid transition-colors"
+                    className="text-sm text-fg-muted hover:text-acid transition-colors editorial-link"
                   >
-                    View all episodes →
+                    View all episodes
                   </Link>
                 </div>
 
@@ -292,7 +291,6 @@ export default function HomePage() {
                 <span className="underline underline-offset-4 hover:[text-underline-offset:8px] transition-all">
                   Read the full story
                 </span>
-                <span aria-hidden="true">→</span>
               </Link>
             </div>
           </div>
@@ -334,7 +332,6 @@ export default function HomePage() {
               <span className="underline underline-offset-4 hover:[text-underline-offset:8px] transition-all">
                 See all
               </span>
-              <span aria-hidden="true">→</span>
             </Link>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">

@@ -11,6 +11,7 @@ import EmailSignupBlock from "../../../components/podcast/EmailSignupBlock";
 import EpisodeListRow from "../../../components/podcast/EpisodeListRow";
 import MarkAsListened from "../../../components/podcast/MarkAsListened";
 import ShareNudge from "../../../components/podcast/ShareNudge";
+import PlatformLink from "../../../components/podcast/PlatformLink";
 import CTAButton from "../../../components/ui/CTAButton";
 
 import {
@@ -69,10 +70,6 @@ export function generateMetadata({
 
 function findGuestsForEpisode(episodeSlug: string): Guest[] {
   return guests.filter((g) => g.episodes.includes(episodeSlug));
-}
-
-function isHttp(url: string | null | undefined): url is string {
-  return !!url && (url.startsWith("http://") || url.startsWith("https://"));
 }
 
 function extractPullQuote(
@@ -135,10 +132,9 @@ export default function EpisodeDetailPage({
           <Container width="content">
             <Link
               href="/episodes"
-              className="inline-flex items-center gap-2 text-sm text-fg-muted hover:text-accent transition-colors"
+              className="text-sm text-fg-muted hover:text-accent transition-colors editorial-link"
             >
-              <span aria-hidden="true">←</span>
-              <span>All episodes</span>
+              All episodes
             </Link>
 
             <p className="mt-10 eyebrow tabular">
@@ -222,37 +218,25 @@ export default function EpisodeDetailPage({
               </p>
             )}
 
-            <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-sm text-fg-muted">
-              {isHttp(showInfo.distributionLinks.spotify) && (
-                <a
-                  href={showInfo.distributionLinks.spotify}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-accent transition-colors"
-                >
-                  Open in Spotify ↗
-                </a>
-              )}
-              {isHttp(showInfo.distributionLinks.apple) && (
-                <a
-                  href={showInfo.distributionLinks.apple}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-accent transition-colors"
-                >
-                  Apple Podcasts ↗
-                </a>
-              )}
-              {isHttp(showInfo.distributionLinks.amazon) && (
-                <a
-                  href={showInfo.distributionLinks.amazon}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-accent transition-colors"
-                >
-                  Amazon Music ↗
-                </a>
-              )}
+            <div className="mt-6 flex flex-wrap gap-3">
+              <PlatformLink
+                platform="spotify"
+                href={showInfo.distributionLinks.spotify}
+                variant="pill"
+                iconSize={16}
+              />
+              <PlatformLink
+                platform="apple"
+                href={showInfo.distributionLinks.apple}
+                variant="pill"
+                iconSize={16}
+              />
+              <PlatformLink
+                platform="amazon"
+                href={showInfo.distributionLinks.amazon}
+                variant="pill"
+                iconSize={16}
+              />
             </div>
 
             {/* Post-player nudge — catches the highest-intent share moment */}

@@ -24,8 +24,7 @@ export default function GuestsPage() {
             Guests
           </h1>
           <p className="mt-6 font-serif-body text-lg md:text-xl text-fg-muted max-w-content" style={{ lineHeight: 1.55 }}>
-            People who came and sat down to talk. Most of them don't usually
-            get a microphone.
+            People who came and sat down to talk.
           </p>
         </header>
 

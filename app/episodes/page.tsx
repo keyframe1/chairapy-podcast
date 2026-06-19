@@ -50,7 +50,7 @@ export default function EpisodesPage() {
               Every Episode
             </h1>
             <p className="mt-4 text-fg-muted tabular">
-              {all.length} {all.length === 1 ? "episode" : "episodes"} · new drops monthly
+              {all.length} {all.length === 1 ? "episode" : "episodes"}
             </p>
           </div>
           <RandomEpisodeButton slugs={allSlugs} />

@@ -88,7 +88,7 @@ export default function AboutPage() {
           </div>
 
           <p className="mt-10 text-sm text-fg-muted font-serif-body italic border-l-2 border-border pl-4">
-            Shot on Blackmagic 6K cameras.
+            Shot on 6 Blackmagic cameras.
           </p>
         </Container>
       </section>
@@ -169,7 +169,7 @@ export default function AboutPage() {
                   rel="noopener noreferrer"
                   className="text-accent editorial-link underline underline-offset-4"
                 >
-                  Visit chairapy.org →
+                  Visit chairapy.org
                 </a>
               </p>
             </div>

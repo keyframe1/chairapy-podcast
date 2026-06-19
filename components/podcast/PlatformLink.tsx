@@ -30,32 +30,6 @@ type IconProps = {
   style?: CSSProperties;
 };
 
-/**
- * Clean external-link arrow. Sits quietly at rest (dim, slightly faded) and
- * comes alive on hover — sliding up-right toward where it points and lighting
- * acid-green. Animation lives in `.link-arrow` (globals.css).
- */
-function LinkArrow({ className = "" }: { className?: string }) {
-  return (
-    <svg
-      className={`link-arrow ${className}`}
-      width="14"
-      height="14"
-      viewBox="0 0 14 14"
-      fill="none"
-      aria-hidden="true"
-    >
-      <path
-        d="M3.5 10.5L10.5 3.5M10.5 3.5H5M10.5 3.5V9"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
 function AmazonMusicIcon({ size = 14, color = "currentColor" }: IconProps) {
   return (
     <svg
@@ -103,8 +77,10 @@ type PlatformLinkProps = {
    * "row" (default) — minimal icon + label, no box. Used in the footer.
    * "card" — dark card button that glows in the platform's brand colour on
    * hover. Used on the Subscribe page.
+   * "pill" — compact rounded button (brand icon + name). Used on episode
+   * pages for the "open in …" row. Renders nothing when not linkable.
    */
-  variant?: "row" | "card";
+  variant?: "row" | "card" | "pill";
 };
 
 /**
@@ -156,7 +132,26 @@ export default function PlatformLink({
         style={brandVar}
       >
         {body}
-        <LinkArrow className="ml-auto" />
+      </a>
+    );
+  }
+
+  // --- Pill variant -------------------------------------------------------
+  // Compact branded button for the episode-page "open in …" row. The brand
+  // icon carries the colour; the whole pill lights up in that colour on hover.
+  if (variant === "pill") {
+    if (!linkable) return null;
+    const brandVar = { ["--brand" as string]: brand.color } as CSSProperties;
+    return (
+      <a
+        href={href!}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="platform-btn"
+        style={brandVar}
+      >
+        <Icon size={iconSize} color={brand.color} />
+        <span>{brand.label}</span>
       </a>
     );
   }

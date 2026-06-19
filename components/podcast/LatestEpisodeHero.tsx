@@ -111,9 +111,9 @@ export default function LatestEpisodeHero({
           </Link>
           <a
             href={`#${seeAllAnchor}`}
-            className="text-sm text-fg-muted hover:text-accent transition-colors"
+            className="text-sm text-fg-muted hover:text-accent transition-colors editorial-link"
           >
-            See all episodes below →
+            See all episodes below
           </a>
         </div>
       </div>

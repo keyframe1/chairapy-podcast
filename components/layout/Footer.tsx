@@ -26,9 +26,8 @@ export default function Footer() {
               Chairapy
             </div>
             <Waveform width={64} height={18} className="mt-3" />
-            <p className="mt-4 text-sm text-fg">
-              {showInfo.showName} ·{" "}
-              <span className="text-fg-muted">{showInfo.productionLabel}</span>
+            <p className="mt-4 text-sm font-medium text-fg">
+              {showInfo.showName}
             </p>
             <p className="mt-1 text-sm text-fg-muted">
               © {year} {showInfo.productionLabel}
@@ -37,10 +36,9 @@ export default function Footer() {
               href={SALON_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-4 inline-flex items-center gap-1.5 text-sm text-fg-muted hover:text-acid transition-colors"
+              className="footer-salon"
             >
-              <span>Chairapy Salon</span>
-              <span aria-hidden="true">→</span>
+              Chairapy Salon
             </a>
           </div>
 
@@ -64,7 +62,6 @@ export default function Footer() {
                 platform="rss"
                 href={showInfo.distributionLinks.rss}
               />
-              <PlatformLink platform="patreon" soon />
             </div>
           </div>
 
@@ -102,8 +99,8 @@ export default function Footer() {
             decoding="async"
             className="footer-logo"
           />
-          <p className="mt-8 text-center text-xs text-fg-muted">
-            Recorded in Metairie, Louisiana.
+          <p className="footer-credit mt-8 text-center">
+            Recorded in Metairie, Louisiana · Shot on 6 Blackmagic cameras
           </p>
         </div>
       </Container>

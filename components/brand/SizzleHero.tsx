@@ -7,7 +7,7 @@ type SizzleHeroProps = {
 
 /**
  * Homepage hero with the fried-VHS supercut sizzle reel as a muted, looping,
- * autoplaying background. Layer order (back → front):
+ * autoplaying background. Layer order (back to front):
  *   1. .hero-substrate — the loved neon gradient-mesh, kept as the
  *      reduced-motion / pre-load fallback (its drift animation is already
  *      killed under prefers-reduced-motion in globals.css).

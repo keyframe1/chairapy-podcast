@@ -114,10 +114,9 @@ export default function GuestDetailPage({
             <div className="flex flex-col justify-center p-10 md:p-16">
               <Link
                 href="/guests"
-                className="inline-flex items-center gap-2 text-sm text-fg-muted hover:text-accent transition-colors mb-10"
+                className="inline-block text-sm text-fg-muted hover:text-accent transition-colors editorial-link mb-10"
               >
-                <span aria-hidden="true">←</span>
-                <span>All guests</span>
+                All guests
               </Link>
               <p className="eyebrow eyebrow--accent">Guest</p>
               <h1
@@ -154,10 +153,9 @@ export default function GuestDetailPage({
           <Container width="content">
             <Link
               href="/guests"
-              className="inline-flex items-center gap-2 text-sm text-fg-muted hover:text-accent transition-colors"
+              className="text-sm text-fg-muted hover:text-accent transition-colors editorial-link"
             >
-              <span aria-hidden="true">←</span>
-              <span>All guests</span>
+              All guests
             </Link>
 
             <p className="mt-12 eyebrow eyebrow--accent">Guest</p>

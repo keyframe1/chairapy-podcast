@@ -43,12 +43,6 @@ export default function SubscribePage() {
               <h2 className="eyebrow eyebrow--accent m-0">Listen</h2>
               <Waveform width={48} height={16} />
             </div>
-            <p
-              className="mt-4 font-serif-body italic text-fg-muted"
-              style={{ lineHeight: 1.55 }}
-            >
-              Audio versions ship to every major podcast platform.
-            </p>
             <div className="mt-8 flex flex-col gap-3 platform-stagger" data-reveal>
               <PlatformLink
                 platform="spotify"
@@ -75,7 +69,6 @@ export default function SubscribePage() {
                 variant="card"
               />
               <PlatformLink platform="youtube" soon iconSize={18} variant="card" />
-              <PlatformLink platform="patreon" soon iconSize={18} variant="card" />
             </div>
           </section>
 
@@ -84,12 +77,6 @@ export default function SubscribePage() {
               <h2 className="eyebrow eyebrow--accent m-0">Follow</h2>
               <Waveform width={48} height={16} color="var(--hot-magenta)" />
             </div>
-            <p
-              className="mt-4 font-serif-body italic text-fg-muted"
-              style={{ lineHeight: 1.55 }}
-            >
-              Between episodes, we're on social.
-            </p>
             <div className="mt-8 flex flex-col gap-3 platform-stagger" data-reveal>
               <PlatformLink
                 platform="instagram"

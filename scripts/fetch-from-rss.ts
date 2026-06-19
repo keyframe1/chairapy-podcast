@@ -13,6 +13,7 @@ import path from "node:path";
 import * as cheerio from "cheerio";
 
 import type { Episode } from "../lib/types";
+import { cleanShowNotes } from "../lib/show-notes";
 
 const RSS_URL = "https://anchor.fm/s/7b5fead0/podcast/rss";
 const OUTPUT_PATH = path.resolve(process.cwd(), "content", "episodes.json");
@@ -132,7 +133,7 @@ function transformToEpisodes(items: RssItem[]): Episode[] {
     const cleaned = cleanTitle(item.title);
     const titleForSlug = cleaned || item.title;
     const slug = `ep-${episodeNumber}-${slugify(titleForSlug)}`;
-    const longDescription = stripHtml(item.description);
+    const longDescription = cleanShowNotes(stripHtml(item.description));
     const shortDescription = longDescription.slice(0, 200);
 
     // Publish date -> ISO
