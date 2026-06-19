@@ -217,7 +217,7 @@ export default function HomePage() {
                 <div className="mt-10 flex flex-wrap items-center gap-6">
                   <Link
                     href={`/episodes/${featuredEpisode.slug}`}
-                    className="cta-pulse group inline-flex items-center gap-3 rounded-md bg-acid px-6 py-3 text-base font-bold text-bg transition-transform hover:scale-[1.03]"
+                    className="cta-pulse group inline-flex items-center gap-3 rounded-lg bg-acid px-6 py-3 text-base font-bold text-bg transition-transform hover:scale-[1.03] active:scale-[0.98]"
                   >
                     <span aria-hidden="true">▶</span>
                     <span>Listen now</span>

@@ -40,7 +40,7 @@ export default function Header() {
               aria-hidden="true"
               width={27}
               height={36}
-              className="nav-logo"
+              className="nav-logo transition-transform duration-300 group-hover:scale-105"
             />
             <span
               className="font-display text-2xl font-bold tracking-tight text-acid"

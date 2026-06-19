@@ -80,6 +80,10 @@
   --max-width: 1280px;
   --content-width: 680px;
 
+  /* --- Corner radius (one consistent system across cards + buttons) ------ */
+  --radius: 8px; /* cards, buttons */
+  --radius-sm: 6px; /* small chips / inline links */
+
   color-scheme: dark;
 }
 
@@ -106,13 +110,13 @@ body {
 }
 
 ::selection {
-  background: var(--acid-green);
-  color: var(--bg-black);
+  background: rgba(57, 255, 20, 0.25);
+  color: var(--text-bright);
 }
 
 ::-moz-selection {
-  background: var(--acid-green);
-  color: var(--bg-black);
+  background: rgba(57, 255, 20, 0.25);
+  color: var(--text-bright);
 }
 
 h1,
@@ -146,6 +150,8 @@ a.editorial-link,
 a.editorial-link:hover,
 .editorial-link a:hover {
   text-underline-offset: 8px;
+  color: var(--acid-green);
+  text-decoration-color: var(--acid-green);
 }
 
 * {
@@ -307,7 +313,7 @@ a.editorial-link:hover,
 .neon-card {
   background: var(--bg-card);
   border: 1px solid var(--color-border);
-  border-radius: 6px;
+  border-radius: var(--radius);
   transition:
     transform 0.3s ease,
     border-color 0.3s ease,
@@ -324,9 +330,9 @@ a.editorial-link:hover,
     0 18px 40px rgba(0, 0, 0, 0.55);
 }
 
-/* Pulsing glow for the primary CTA */
+/* Pulsing glow for the primary CTA — slow, breathing loop (not a flash) */
 .cta-pulse {
-  animation: cta-pulse 2s ease-in-out infinite;
+  animation: cta-pulse 2.8s ease-in-out infinite;
 }
 @keyframes cta-pulse {
   0%,
@@ -374,7 +380,7 @@ a.editorial-link:hover,
   padding: 8px 16px;
   background: transparent;
   border: 1px solid rgba(139, 47, 230, 0.5); /* electric purple outline */
-  border-radius: 6px;
+  border-radius: var(--radius);
   color: var(--text-bright);
   font-family: inherit;
   font-size: 14px;
@@ -390,12 +396,26 @@ a.editorial-link:hover,
 }
 
 .share-btn:active {
-  transform: translateY(1px);
+  transform: translateY(1px) scale(0.98); /* tactile press */
 }
 
 .share-btn__copied {
   color: var(--acid-green);
   font-weight: 600;
+}
+/* "Link copied" fades in rather than popping */
+@media (prefers-reduced-motion: no-preference) {
+  .share-btn__copied {
+    animation: copied-fade 0.25s ease;
+  }
+}
+@keyframes copied-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 /* Mobile: icon only — hide the label on small screens */
@@ -432,7 +452,7 @@ a.editorial-link:hover,
   padding: 8px 16px;
   background: transparent;
   border: 1px solid rgba(139, 47, 230, 0.5); /* electric purple outline */
-  border-radius: 6px;
+  border-radius: var(--radius);
   color: var(--text-bright);
   font-family: inherit;
   font-size: 14px;
@@ -763,8 +783,8 @@ a.editorial-link:hover,
   align-items: center;
   gap: 0.75rem;
   padding: 0.9rem 1.1rem;
-  border-radius: 8px;
-  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  border: 1px solid rgba(139, 47, 230, 0.25);
   background: var(--bg-card);
   transition:
     border-color 0.25s ease,
@@ -772,16 +792,100 @@ a.editorial-link:hover,
     background-color 0.25s ease,
     transform 0.25s ease;
 }
+/* Lift + a layered glow: the platform's own brand colour plus a purple drop
+ * and a faint green inner ring — reads richer than a flat border swap. */
 .platform-card:hover,
 .platform-card:focus-visible {
   border-color: var(--brand, var(--acid-green));
   background: var(--bg-card-hover);
-  box-shadow: 0 0 22px
-    color-mix(in srgb, var(--brand, #39ff14) 45%, transparent);
+  box-shadow:
+    0 6px 24px rgba(139, 47, 230, 0.25),
+    0 0 22px color-mix(in srgb, var(--brand, #39ff14) 40%, transparent),
+    inset 0 0 0 1px rgba(57, 255, 20, 0.15);
   transform: translateY(-2px);
 }
 .platform-card--soon {
   opacity: 0.6;
+}
+
+/* External-link arrow — quiet at rest, slides toward where it points and
+ * lights acid-green on hover/focus. Replaces the old ↗ glyph. */
+.link-arrow {
+  flex: none;
+  color: var(--text-dim);
+  opacity: 0.6;
+  transition:
+    transform 0.25s ease,
+    color 0.25s ease,
+    opacity 0.25s ease;
+}
+.platform-card:hover .link-arrow,
+.platform-card:focus-visible .link-arrow {
+  color: var(--acid-green);
+  transform: translate(2px, -2px);
+  opacity: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .link-arrow {
+    transition: color 0.25s ease;
+  }
+  .platform-card:hover .link-arrow,
+  .platform-card:focus-visible .link-arrow {
+    transform: none;
+  }
+}
+
+/* SOON pill — small uppercase Space Mono, muted-purple chip. No arrow. */
+.soon-pill {
+  display: inline-flex;
+  align-items: center;
+  margin-left: auto;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  background: rgba(139, 47, 230, 0.2);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  line-height: 1.4;
+}
+
+/* Platform cards reveal in a short stagger as the column scrolls in. The
+ * container itself stays put; only its cards sequence in. */
+@media (prefers-reduced-motion: no-preference) {
+  .platform-stagger[data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .platform-stagger > * {
+    opacity: 0;
+    transform: translateY(14px);
+    transition:
+      opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .platform-stagger.is-revealed > * {
+    opacity: 1;
+    transform: none;
+  }
+  .platform-stagger.is-revealed > *:nth-child(2) {
+    transition-delay: 70ms;
+  }
+  .platform-stagger.is-revealed > *:nth-child(3) {
+    transition-delay: 140ms;
+  }
+  .platform-stagger.is-revealed > *:nth-child(4) {
+    transition-delay: 210ms;
+  }
+  .platform-stagger.is-revealed > *:nth-child(5) {
+    transition-delay: 280ms;
+  }
+  .platform-stagger.is-revealed > *:nth-child(6) {
+    transition-delay: 350ms;
+  }
 }
 
 /* =====================================================================
@@ -1059,7 +1163,11 @@ input[type="range"]::-moz-range-thumb {
   }
 }
 
-/* --- Site-wide fried-VHS texture overlay ------------------------------- */
+/* --- Site-wide fried-VHS texture overlay ------------------------------- *
+ * Mobile (base) keeps its existing treatment. Desktop is toned down: finer,
+ * wider-gap scanlines + lighter grain so the texture reads as tape character,
+ * never as interference. Large viewports trade scanline density for a faint
+ * CRT vignette sheen instead. */
 .vhs-overlay {
   position: fixed;
   inset: 0;
@@ -1091,6 +1199,38 @@ input[type="range"]::-moz-range-thumb {
 @media (max-width: 767px) {
   .vhs-overlay__grain {
     display: none;
+  }
+}
+/* Desktop: softer than mobile — finer lines (repeat every 5px), lower
+ * opacity, lighter grain. Texture, not a broken signal. */
+@media (min-width: 768px) {
+  .vhs-overlay__scanlines {
+    background: repeating-linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0) 0px,
+      rgba(0, 0, 0, 0) 3px,
+      rgba(0, 0, 0, 0.18) 4px,
+      rgba(0, 0, 0, 0) 5px
+    );
+    opacity: 0.2;
+  }
+  .vhs-overlay__grain {
+    opacity: 0.03;
+  }
+}
+/* Large viewports: add a faint CRT vignette so the corners glow like a tube,
+ * letting the scanlines stay whisper-light in the centre. */
+@media (min-width: 1024px) {
+  .vhs-overlay::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(
+      ellipse 100% 100% at 50% 50%,
+      transparent 58%,
+      rgba(10, 6, 18, 0.45) 100%
+    );
   }
 }
 @media (prefers-reduced-motion: reduce) {

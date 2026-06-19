@@ -41,7 +41,7 @@ export default function SubscribePage() {
           <section>
             <div className="flex items-center gap-3">
               <h2 className="eyebrow eyebrow--accent m-0">Listen</h2>
-              <Waveform width={44} height={14} />
+              <Waveform width={48} height={16} />
             </div>
             <p
               className="mt-4 font-serif-body italic text-fg-muted"
@@ -49,7 +49,7 @@ export default function SubscribePage() {
             >
               Audio versions ship to every major podcast platform.
             </p>
-            <div className="mt-8 flex flex-col gap-3">
+            <div className="mt-8 flex flex-col gap-3 platform-stagger" data-reveal>
               <PlatformLink
                 platform="spotify"
                 href={showInfo.distributionLinks.spotify}
@@ -82,7 +82,7 @@ export default function SubscribePage() {
           <section>
             <div className="flex items-center gap-3">
               <h2 className="eyebrow eyebrow--accent m-0">Follow</h2>
-              <Waveform width={44} height={14} color="var(--hot-magenta)" />
+              <Waveform width={48} height={16} color="var(--hot-magenta)" />
             </div>
             <p
               className="mt-4 font-serif-body italic text-fg-muted"
@@ -90,7 +90,7 @@ export default function SubscribePage() {
             >
               Between episodes, we're on social.
             </p>
-            <div className="mt-8 flex flex-col gap-3">
+            <div className="mt-8 flex flex-col gap-3 platform-stagger" data-reveal>
               <PlatformLink
                 platform="instagram"
                 href={showInfo.socialLinks.instagram}

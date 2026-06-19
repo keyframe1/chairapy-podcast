@@ -30,6 +30,32 @@ type IconProps = {
   style?: CSSProperties;
 };
 
+/**
+ * Clean external-link arrow. Sits quietly at rest (dim, slightly faded) and
+ * comes alive on hover — sliding up-right toward where it points and lighting
+ * acid-green. Animation lives in `.link-arrow` (globals.css).
+ */
+function LinkArrow({ className = "" }: { className?: string }) {
+  return (
+    <svg
+      className={`link-arrow ${className}`}
+      width="14"
+      height="14"
+      viewBox="0 0 14 14"
+      fill="none"
+      aria-hidden="true"
+    >
+      <path
+        d="M3.5 10.5L10.5 3.5M10.5 3.5H5M10.5 3.5V9"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
 function AmazonMusicIcon({ size = 14, color = "currentColor" }: IconProps) {
   return (
     <svg
@@ -103,14 +129,7 @@ export default function PlatformLink({
     <>
       <Icon size={iconSize} color={iconColor} />
       <span className="text-sm">{brand.label}</span>
-      {soon && (
-        <span
-          className="eyebrow eyebrow--amber ml-2"
-          style={{ fontSize: "0.625rem" }}
-        >
-          Soon
-        </span>
-      )}
+      {soon && <span className="soon-pill">Soon</span>}
     </>
   );
 
@@ -137,9 +156,7 @@ export default function PlatformLink({
         style={brandVar}
       >
         {body}
-        <span aria-hidden="true" className="ml-auto text-fg-muted">
-          ↗
-        </span>
+        <LinkArrow className="ml-auto" />
       </a>
     );
   }
@@ -150,7 +167,7 @@ export default function PlatformLink({
       <span
         aria-disabled="true"
         className={`inline-flex items-center gap-2 cursor-default ${
-          soon ? "text-fg" : "text-fg-muted opacity-60"
+          soon ? "text-fg opacity-80" : "text-fg-muted opacity-60"
         }`}
       >
         {body}
