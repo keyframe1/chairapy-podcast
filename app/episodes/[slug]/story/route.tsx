@@ -38,7 +38,7 @@ export async function GET(
           position: "relative",
           padding: "96px 80px 110px",
           background: COLORS.base,
-          fontFamily: "Space Grotesk",
+          fontFamily: "Clash Display",
         }}
       >
         <HeroBackdrop width={width} height={height} />

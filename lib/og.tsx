@@ -29,31 +29,32 @@ export const COLORS = {
  * and on the edge at runtime — no dependency on the live site URL, which
  * may not exist yet on a first deploy.
  *
- * Space Grotesk's heaviest cut is 700 (there is no 800 instance); 700 is
- * exactly the weight the hero <h1> renders at, so the cards match it. */
-type OgFonts = { grotesk: ArrayBuffer; mono: ArrayBuffer };
+ * Satori cannot read woff2, so the display face ships as Clash Display's Bold
+ * OTF (its heaviest cut, weight 700) — the same family the site renders, so the
+ * cards match the live masthead. */
+type OgFonts = { display: ArrayBuffer; mono: ArrayBuffer };
 
 let fontCache: OgFonts | null = null;
 
 export async function loadOgFonts(): Promise<OgFonts> {
   if (fontCache) return fontCache;
-  const [grotesk, mono] = await Promise.all([
+  const [display, mono] = await Promise.all([
     fetch(
-      new URL("../public/fonts/SpaceGrotesk-Bold.ttf", import.meta.url),
+      new URL("../public/fonts/ClashDisplay-Bold.otf", import.meta.url),
     ).then((r) => r.arrayBuffer()),
     fetch(
       new URL("../public/fonts/SpaceMono-Regular.ttf", import.meta.url),
     ).then((r) => r.arrayBuffer()),
   ]);
-  fontCache = { grotesk, mono };
+  fontCache = { display, mono };
   return fontCache;
 }
 
 export function ogFontConfig(fonts: OgFonts) {
   return [
     {
-      name: "Space Grotesk",
-      data: fonts.grotesk,
+      name: "Clash Display",
+      data: fonts.display,
       weight: 700 as const,
       style: "normal" as const,
     },

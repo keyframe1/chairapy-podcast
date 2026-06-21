@@ -100,7 +100,7 @@ export default function Footer() {
             className="footer-logo"
           />
           <p className="footer-credit mt-8 text-center">
-            Recorded in Metairie, Louisiana · Shot on 6 Blackmagic cameras
+            Recorded in Metairie, Louisiana
           </p>
         </div>
       </Container>

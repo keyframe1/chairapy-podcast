@@ -31,7 +31,7 @@ export default async function Image() {
           justifyContent: "center",
           position: "relative",
           background: COLORS.base,
-          fontFamily: "Space Grotesk",
+          fontFamily: "Clash Display",
         }}
       >
         <HeroBackdrop width={width} height={height} />

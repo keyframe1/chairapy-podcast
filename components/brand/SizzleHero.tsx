@@ -12,12 +12,15 @@ type SizzleHeroProps = {
  *      reduced-motion / pre-load fallback (its drift animation is already
  *      killed under prefers-reduced-motion in globals.css).
  *   2. <video> — the sizzle reel, poster paints instantly so there's no CLS.
- *   3. .sizzle-hero__vhs — extra scanlines for a stronger fried look here than
+ *   3. .sizzle-hero__grain — the moving fried-VHS static. It used to live
+ *      site-wide; now its motion is confined here, where motion is expected.
+ *   4. .sizzle-hero__vhs — extra scanlines for a stronger fried look here than
  *      the rest of the site.
- *   4. .sizzle-hero__tint — dark purple wash so the headline stays legible.
- *   5. .sizzle-hero__content — the masthead, passed in as children.
+ *   5. .sizzle-hero__tint — dark purple wash so the headline stays legible.
+ *   6. .sizzle-hero__content — the masthead, passed in as children.
  *
- * Under prefers-reduced-motion the video is hidden and the gradient mesh shows.
+ * Under prefers-reduced-motion both videos are hidden and the gradient mesh
+ * shows (no motion at all).
  */
 export default function SizzleHero({ children, className = "" }: SizzleHeroProps) {
   return (
@@ -34,6 +37,17 @@ export default function SizzleHero({ children, className = "" }: SizzleHeroProps
       >
         <source src="/brand/sizzle-reel.webm" type="video/webm" />
         <source src="/brand/sizzle-reel.mp4" type="video/mp4" />
+      </video>
+      <video
+        className="sizzle-hero__grain"
+        autoPlay
+        muted
+        loop
+        playsInline
+        preload="metadata"
+        aria-hidden="true"
+      >
+        <source src="/brand/vhs-grain.mp4" type="video/mp4" />
       </video>
       <div className="sizzle-hero__vhs" aria-hidden="true" />
       <div className="sizzle-hero__tint" aria-hidden="true" />

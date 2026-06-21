@@ -44,7 +44,7 @@ export default async function Image({ params }: { params: { slug: string } }) {
           position: "relative",
           padding: "0 80px",
           background: COLORS.base,
-          fontFamily: "Space Grotesk",
+          fontFamily: "Clash Display",
         }}
       >
         <HeroBackdrop width={width} height={height} />

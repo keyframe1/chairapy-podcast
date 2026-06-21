@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Script from "next/script";
-import { Inter, Space_Grotesk, Space_Mono } from "next/font/google";
+import localFont from "next/font/local";
+import { Space_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "../styles/globals.css";
@@ -10,22 +11,42 @@ import ScrollReveal from "../components/layout/ScrollReveal";
 import VhsOverlay from "../components/brand/VhsOverlay";
 import { SITE_URL } from "../lib/site";
 
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-body",
-  display: "swap",
-});
-
-// Loud, slightly condensed geometric sans for display — matches the show's
-// kinetic, electric energy where the old serif read as calm/editorial.
-const spaceGrotesk = Space_Grotesk({
-  subsets: ["latin"],
-  weight: ["400", "500", "700"],
+// Display / wordmark / headings — Clash Display (Fontshare), self-hosted as a
+// single variable woff2 (200–700). A distinctive neo-grotesque display face;
+// nothing a default scaffold reaches for, so the site reads as designed.
+const clashDisplay = localFont({
+  src: "./fonts/ClashDisplay-Variable.woff2",
+  weight: "200 700",
   variable: "--font-display",
   display: "swap",
+  fallback: ["Archivo", "system-ui", "sans-serif"],
+  adjustFontFallback: "Arial",
 });
 
-// Monospace for technical/glitchy accent labels (EPISODE 15, dates).
+// Body / UI — General Sans (Fontshare), self-hosted. Two variable cuts: the
+// upright carries the UI, the italic carries the editorial "voice" (true
+// italics, not synthesized) used across the show's reflective copy.
+const generalSans = localFont({
+  src: [
+    {
+      path: "./fonts/GeneralSans-Variable.woff2",
+      weight: "200 700",
+      style: "normal",
+    },
+    {
+      path: "./fonts/GeneralSans-VariableItalic.woff2",
+      weight: "200 700",
+      style: "italic",
+    },
+  ],
+  variable: "--font-body",
+  display: "swap",
+  fallback: ["-apple-system", "BlinkMacSystemFont", "Segoe UI", "sans-serif"],
+  adjustFontFallback: "Arial",
+});
+
+// Monospace for technical/glitchy accent labels (EPISODE 15, dates, the
+// "Recorded in Metairie" credit) — leans into the analog-tape character.
 const spaceMono = Space_Mono({
   subsets: ["latin"],
   weight: ["400", "700"],
@@ -94,7 +115,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${spaceGrotesk.variable} ${spaceMono.variable}`}
+      className={`${clashDisplay.variable} ${generalSans.variable} ${spaceMono.variable}`}
     >
       <body className="min-h-screen flex flex-col bg-bg text-fg">
         <div className="atmosphere-base" aria-hidden="true" />
