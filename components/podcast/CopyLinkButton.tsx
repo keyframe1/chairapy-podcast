@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { isAbortError } from "../../lib/share";
 
 /**
  * Minimal copy-to-clipboard button used on the /share kit page so Eric can
@@ -11,12 +12,13 @@ export default function CopyLinkButton({ url }: { url: string }) {
   const [copied, setCopied] = useState(false);
 
   async function copy() {
-    if (typeof navigator !== "undefined" && navigator.share) {
+    if (typeof navigator !== "undefined" && typeof navigator.share === "function") {
       try {
         await navigator.share({ url });
         return;
-      } catch {
-        // cancelled — fall through to clipboard
+      } catch (err) {
+        if (isAbortError(err)) return; // user cancelled
+        // Real failure → fall through to clipboard.
       }
     }
     try {

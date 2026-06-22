@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { isAbortError } from "../../lib/share";
 
 export default function ShareButton() {
   const [copied, setCopied] = useState(false);
@@ -16,13 +17,15 @@ export default function ShareButton() {
         : "Eric's ADHD Experience";
 
     // Mobile / supporting browsers: native share sheet
-    if (navigator.share) {
+    if (typeof navigator !== "undefined" && typeof navigator.share === "function") {
       try {
         await navigator.share({ title, url });
-      } catch {
-        // user cancelled — do nothing
+        return;
+      } catch (err) {
+        // A user dismissing the sheet is a cancel, not a failure — stop here.
+        if (isAbortError(err)) return;
+        // Real failure (e.g. desktop Safari can't share) → fall through to copy.
       }
-      return;
     }
 
     // Desktop fallback: copy the link to the clipboard

@@ -84,7 +84,14 @@ function extractPullQuote(
     .replace(/Follow on [^.]*\./gi, "")
     .replace(/\s+/g, " ")
     .trim();
-  const firstSentence = cleaned.split(/(?<=[.!?])\s+/)[0] ?? cleaned;
+  // First sentence — split on terminal punctuation followed by whitespace,
+  // keeping the punctuation. Uses a capture group rather than a lookbehind
+  // (`(?<=…)`): regex lookbehind throws a SyntaxError on iOS Safari < 16.4 and
+  // takes the whole bundle down. The capture restores the trailing "." / "!" /
+  // "?" that the lookbehind kept attached to the sentence.
+  const parts = cleaned.split(/([.!?])\s+/);
+  const firstSentence =
+    parts.length > 1 ? `${parts[0]}${parts[1] ?? ""}` : cleaned;
   if (firstSentence.length <= 220) return firstSentence;
   return `${firstSentence.slice(0, 210).trim()}…`;
 }

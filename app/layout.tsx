@@ -9,6 +9,7 @@ import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
 import ScrollReveal from "../components/layout/ScrollReveal";
 import VhsOverlay from "../components/brand/VhsOverlay";
+import ClientErrorReporter from "../components/system/ClientErrorReporter";
 import { SITE_URL } from "../lib/site";
 
 // Display / wordmark / headings — Clash Display (Fontshare), self-hosted as a
@@ -118,6 +119,7 @@ export default function RootLayout({
       className={`${clashDisplay.variable} ${generalSans.variable} ${spaceMono.variable}`}
     >
       <body className="min-h-screen flex flex-col bg-bg text-fg">
+        <ClientErrorReporter />
         <div className="atmosphere-base" aria-hidden="true" />
         <ScrollReveal />
         <a

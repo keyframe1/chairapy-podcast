@@ -3,7 +3,7 @@ import EpisodeCard from "../../components/podcast/EpisodeCard";
 import EpisodeListRow from "../../components/podcast/EpisodeListRow";
 import LatestEpisodeHero from "../../components/podcast/LatestEpisodeHero";
 import RandomEpisodeButton from "../../components/podcast/RandomEpisodeButton";
-import { getAllEpisodes } from "../../lib/episodes";
+import { getAllEpisodes, parseIsoDate } from "../../lib/episodes";
 import type { Episode } from "../../lib/types";
 
 export const metadata = {
@@ -15,8 +15,8 @@ export const metadata = {
 function groupByMonth(episodes: Episode[]): [string, Episode[]][] {
   const groups = new Map<string, Episode[]>();
   for (const ep of episodes) {
-    const d = new Date(ep.publishedDate);
-    const key = Number.isNaN(d.getTime())
+    const d = parseIsoDate(ep.publishedDate);
+    const key = !d
       ? "Undated"
       : d.toLocaleDateString("en-US", { month: "long", year: "numeric" });
     const list = groups.get(key) ?? [];

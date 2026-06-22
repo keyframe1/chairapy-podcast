@@ -615,6 +615,85 @@ a.editorial-link:hover,
 }
 
 /* =====================================================================
+ * Share toast — branded confirmation that floats above the page after a
+ * share/copy/download (portaled to <body>). Also hosts the selectable-URL
+ * last resort when the clipboard API is unavailable.
+ * ===================================================================== */
+.share-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%);
+  z-index: 9999;
+  max-width: min(92vw, 460px);
+  padding: 12px 18px;
+  border: 1px solid rgba(57, 255, 20, 0.45);
+  border-radius: 10px;
+  background: rgba(10, 6, 18, 0.92);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 0 18px rgba(57, 255, 20, 0.25), 0 12px 40px rgba(0, 0, 0, 0.5);
+  color: var(--text-bright);
+  font-size: 14px;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .share-toast {
+    animation: share-toast-in 0.22s ease-out;
+  }
+}
+@keyframes share-toast-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 8px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+.share-toast__msg {
+  display: block;
+  text-align: center;
+}
+.share-toast__manual {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.share-toast__label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  white-space: nowrap;
+}
+.share-toast__field {
+  flex: 1;
+  min-width: 0;
+  padding: 6px 8px;
+  font-size: 13px;
+  color: var(--text-bright);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+}
+.share-toast__close {
+  flex: none;
+  width: 24px;
+  height: 24px;
+  line-height: 1;
+  font-size: 18px;
+  color: var(--text-muted);
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+.share-toast__close:hover {
+  color: var(--acid-green);
+}
+
+/* =====================================================================
  * Share-kit page (/share) — Eric's quiet one-stop list. Neon rows that
  * light up on hover; each row offers Link / Story / Feed actions.
  * ===================================================================== */
@@ -1171,7 +1250,10 @@ input[type="range"]::-moz-range-thumb {
   position: relative;
   isolation: isolate;
   overflow: hidden;
+  /* dvh excludes the iOS Safari toolbar (vh includes it and clips the hero);
+     the vh line is the fallback for browsers without dvh (Safari < 15.4). */
   min-height: 78vh;
+  min-height: 78dvh;
 }
 .sizzle-hero__video {
   position: absolute;

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEpisodeShare } from "../../lib/useEpisodeShare";
+import ShareToast from "./ShareToast";
 
 type Props = {
   slug: string;
@@ -14,11 +15,12 @@ type Props = {
  * buttons reusing the shared episode-share behavior.
  */
 export default function ShareNudge({ slug, title, episodeNumber }: Props) {
-  const { copied, busy, shareLink, shareImage } = useEpisodeShare({
-    slug,
-    title,
-    episodeNumber,
-  });
+  const { copied, busy, toast, manualUrl, dismissManual, shareLink, shareImage } =
+    useEpisodeShare({
+      slug,
+      title,
+      episodeNumber,
+    });
 
   return (
     <div className="share-nudge">
@@ -64,6 +66,11 @@ export default function ShareNudge({ slug, title, episodeNumber }: Props) {
           </span>
         </button>
       </div>
+      <ShareToast
+        message={toast}
+        manualUrl={manualUrl}
+        onDismissManual={dismissManual}
+      />
     </div>
   );
 }

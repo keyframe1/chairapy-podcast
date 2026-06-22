@@ -3,7 +3,15 @@
 import { useEffect } from "react";
 import Link from "next/link";
 import Container from "@/components/ui/Container";
+import SmileyLoader from "@/components/brand/SmileyLoader";
+import { reportClientError } from "@/lib/report-error";
 
+/**
+ * Root error boundary. Renders a branded fallback — never the raw white
+ * "Application error" screen — and reports the error (message, stack,
+ * userAgent) to the `client_error` analytics event so the next occurrence is
+ * logged with the exact cause and device.
+ */
 export default function Error({
   error,
   reset,
@@ -12,34 +20,58 @@ export default function Error({
   reset: () => void;
 }) {
   useEffect(() => {
-    console.error(error);
+    reportClientError(error, "error-boundary:root");
   }, [error]);
 
   return (
-    <Container>
-      <div className="min-h-[60vh] flex flex-col items-center justify-center text-center py-24">
-        <p className="eyebrow eyebrow--amber mb-4">Something went wrong</p>
-        <h1 className="glitch-text font-display font-bold text-4xl sm:text-5xl mb-6">
-          That didn't work.
-        </h1>
-        <p className="text-fg-muted max-w-md mb-10">
-          The page hit a snag. Try again, or head back to the episode list.
-        </p>
-        <div className="flex flex-col sm:flex-row gap-4">
-          <button
-            onClick={reset}
-            className="px-6 py-3 bg-acid text-bg rounded-md font-bold shadow-glow-green hover:bg-accent-hover hover:shadow-glow-green-strong transition-[background-color,box-shadow]"
+    <div className="relative overflow-hidden" style={{ isolation: "isolate" }}>
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 -z-10"
+        style={{
+          background:
+            "radial-gradient(circle at 25% 20%, rgba(139,47,230,0.3), transparent 50%), radial-gradient(circle at 80% 80%, rgba(255,45,149,0.22), transparent 50%)",
+        }}
+      />
+
+      <Container width="content">
+        <div className="min-h-[70vh] flex flex-col items-start justify-center py-24">
+          <SmileyLoader size={132} className="mb-8" />
+          <p className="eyebrow eyebrow--amber tabular">Lost the signal</p>
+          <h1
+            className="glitch-text mt-6 font-display font-bold text-fg"
+            style={{
+              fontSize: "var(--text-display)",
+              lineHeight: 0.95,
+              letterSpacing: "-0.04em",
+            }}
           >
-            Try again
-          </button>
-          <Link
-            href="/"
-            className="px-6 py-3 border border-cyan/60 text-cyan rounded-md hover:bg-cyan/10 transition-colors"
-          >
-            Back to home
-          </Link>
+            That didn&apos;t play.
+          </h1>
+          <p className="mt-6 font-serif-body italic text-xl text-fg-muted max-w-content">
+            The tape jammed for a second. Give it another spin, or head back to
+            the episodes.
+          </p>
+
+          <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4">
+            <button
+              type="button"
+              onClick={reset}
+              className="px-6 py-3 bg-acid text-bg rounded-md font-bold shadow-glow-green hover:bg-accent-hover hover:shadow-glow-green-strong transition-[background-color,box-shadow]"
+            >
+              Reload
+            </button>
+            <Link
+              href="/episodes"
+              className="inline-flex items-center gap-2 text-acid editorial-link"
+            >
+              <span className="text-lg underline underline-offset-4 hover:[text-underline-offset:8px] transition-all">
+                All episodes
+              </span>
+            </Link>
+          </div>
         </div>
-      </div>
-    </Container>
+      </Container>
+    </div>
   );
 }

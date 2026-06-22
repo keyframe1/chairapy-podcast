@@ -1,4 +1,6 @@
-import { ReactNode } from "react";
+"use client";
+
+import { ReactNode, useEffect, useRef } from "react";
 
 type SizzleHeroProps = {
   children: ReactNode;
@@ -11,7 +13,8 @@ type SizzleHeroProps = {
  *   1. .hero-substrate — the loved neon gradient-mesh, kept as the
  *      reduced-motion / pre-load fallback (its drift animation is already
  *      killed under prefers-reduced-motion in globals.css).
- *   2. <video> — the sizzle reel, poster paints instantly so there's no CLS.
+ *   2. <video> — the sizzle reel, poster paints instantly so there's no CLS
+ *      and so a blocked autoplay (iOS Low Power Mode) still shows a frame.
  *   3. .sizzle-hero__grain — the moving fried-VHS static. It used to live
  *      site-wide; now its motion is confined here, where motion is expected.
  *   4. .sizzle-hero__vhs — extra scanlines for a stronger fried look here than
@@ -20,18 +23,37 @@ type SizzleHeroProps = {
  *   6. .sizzle-hero__content — the masthead, passed in as children.
  *
  * Under prefers-reduced-motion both videos are hidden and the gradient mesh
- * shows (no motion at all).
+ * shows (no motion at all). We call .play() explicitly and swallow the
+ * rejection so a blocked autoplay never surfaces as a reported error.
  */
 export default function SizzleHero({ children, className = "" }: SizzleHeroProps) {
+  const reelRef = useRef<HTMLVideoElement>(null);
+  const grainRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    for (const ref of [reelRef, grainRef]) {
+      const video = ref.current;
+      if (!video) continue;
+      const result = video.play();
+      if (result && typeof result.then === "function") {
+        result.catch(() => {
+          // Autoplay blocked — poster / gradient-mesh fallback stays visible.
+        });
+      }
+    }
+  }, []);
+
   return (
     <section className={`sizzle-hero ${className}`}>
       <div className="hero-substrate" aria-hidden="true" />
       <video
+        ref={reelRef}
         className="sizzle-hero__video"
         autoPlay
         muted
         loop
         playsInline
+        preload="metadata"
         poster="/brand/sizzle-reel-poster.jpg"
         aria-hidden="true"
       >
@@ -39,12 +61,14 @@ export default function SizzleHero({ children, className = "" }: SizzleHeroProps
         <source src="/brand/sizzle-reel.mp4" type="video/mp4" />
       </video>
       <video
+        ref={grainRef}
         className="sizzle-hero__grain"
         autoPlay
         muted
         loop
         playsInline
         preload="metadata"
+        poster="/brand/sizzle-reel-poster.jpg"
         aria-hidden="true"
       >
         <source src="/brand/vhs-grain.mp4" type="video/mp4" />

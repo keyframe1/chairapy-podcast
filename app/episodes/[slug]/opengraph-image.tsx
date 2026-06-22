@@ -131,6 +131,15 @@ export default async function Image({ params }: { params: { slug: string } }) {
         </div>
       </div>
     ),
-    { ...size, fonts: ogFontConfig(fonts) },
+    {
+      ...size,
+      fonts: ogFontConfig(fonts),
+      headers: {
+        // Long CDN cache so Apple's strict (fast-timing-out) link crawler gets
+        // a warm cached PNG instead of a cold-start render on first share.
+        "Cache-Control":
+          "public, max-age=3600, s-maxage=604800, stale-while-revalidate=86400",
+      },
+    },
   );
 }

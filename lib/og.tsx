@@ -31,40 +31,106 @@ export const COLORS = {
  *
  * Satori cannot read woff2, so the display face ships as Clash Display's Bold
  * OTF (its heaviest cut, weight 700) — the same family the site renders, so the
- * cards match the live masthead. */
-type OgFonts = { display: ArrayBuffer; mono: ArrayBuffer };
+ * cards match the live masthead.
+ *
+ * Resilience: every fetch is wrapped so a failed load returns null instead of
+ * throwing. If even ONE brand font survives, the card renders (Satori uses any
+ * registered font as the fallback for unmatched families). If BOTH fail, we
+ * fetch a generic font from Google as a last resort so the image ALWAYS
+ * renders — next/og has no offline system font and throws on an empty font
+ * set, so the crawler would otherwise get a broken (500) preview. */
+type OgFonts = {
+  display: ArrayBuffer | null;
+  mono: ArrayBuffer | null;
+  fallback: ArrayBuffer | null;
+};
 
 let fontCache: OgFonts | null = null;
+
+// Edge-safe font fetch: returns null instead of throwing.
+async function tryLoadFont(path: string): Promise<ArrayBuffer | null> {
+  try {
+    const res = await fetch(new URL(path, import.meta.url));
+    if (!res.ok) return null;
+    return await res.arrayBuffer();
+  } catch {
+    return null;
+  }
+}
+
+// Last-resort generic font (TTF) fetched from Google Fonts. Edge-safe (fetch
+// only). The old-Android UA makes Google serve a TTF (Satori can't read woff2).
+async function loadFallbackFont(): Promise<ArrayBuffer | null> {
+  try {
+    const css = await fetch(
+      "https://fonts.googleapis.com/css2?family=Inter:wght@700",
+      {
+        headers: {
+          "User-Agent":
+            "Mozilla/5.0 (Linux; U; Android 2.3.7; en-us; Nexus One Build/FRF91) AppleWebKit/533.1",
+        },
+      },
+    ).then((r) => (r.ok ? r.text() : ""));
+    const match = css.match(/url\((https:\/\/[^)]+?\.ttf)\)/);
+    if (!match) return null;
+    const res = await fetch(match[1]);
+    if (!res.ok) return null;
+    return await res.arrayBuffer();
+  } catch {
+    return null;
+  }
+}
 
 export async function loadOgFonts(): Promise<OgFonts> {
   if (fontCache) return fontCache;
   const [display, mono] = await Promise.all([
-    fetch(
-      new URL("../public/fonts/ClashDisplay-Bold.otf", import.meta.url),
-    ).then((r) => r.arrayBuffer()),
-    fetch(
-      new URL("../public/fonts/SpaceMono-Regular.ttf", import.meta.url),
-    ).then((r) => r.arrayBuffer()),
+    tryLoadFont("../public/fonts/ClashDisplay-Bold.otf"),
+    tryLoadFont("../public/fonts/SpaceMono-Regular.ttf"),
   ]);
-  fontCache = { display, mono };
-  return fontCache;
+  // Only reach for the network fallback if neither brand font loaded.
+  const fallback = display || mono ? null : await loadFallbackFont();
+  const loaded = { display, mono, fallback };
+  // Only cache once at least one font resolved — a transient failure shouldn't
+  // permanently pin the image to a fallback for the life of the worker.
+  if (display || mono || fallback) fontCache = loaded;
+  return loaded;
 }
 
 export function ogFontConfig(fonts: OgFonts) {
-  return [
-    {
+  const config: {
+    name: string;
+    data: ArrayBuffer;
+    weight: 400 | 700;
+    style: "normal";
+  }[] = [];
+  if (fonts.display) {
+    config.push({
       name: "Clash Display",
       data: fonts.display,
-      weight: 700 as const,
-      style: "normal" as const,
-    },
-    {
+      weight: 700,
+      style: "normal",
+    });
+  }
+  if (fonts.mono) {
+    config.push({
       name: "Space Mono",
       data: fonts.mono,
-      weight: 400 as const,
-      style: "normal" as const,
-    },
-  ];
+      weight: 400,
+      style: "normal",
+    });
+  }
+  // Register the fallback under the display family so it becomes Satori's
+  // default font; every unmatched family then renders in it (generic, but the
+  // card exists) instead of crashing the route.
+  if (config.length === 0 && fonts.fallback) {
+    config.push({
+      name: "Clash Display",
+      data: fonts.fallback,
+      weight: 700,
+      style: "normal",
+    });
+  }
+  return config;
 }
 
 /* ---- Hero gradient mesh, rebuilt as a static frame ---------------------

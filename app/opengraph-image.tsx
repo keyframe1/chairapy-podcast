@@ -107,6 +107,14 @@ export default async function Image() {
         </div>
       </div>
     ),
-    { ...size, fonts: ogFontConfig(fonts) },
+    {
+      ...size,
+      fonts: ogFontConfig(fonts),
+      headers: {
+        // Long CDN cache so link crawlers get a warm cached PNG, not a cold render.
+        "Cache-Control":
+          "public, max-age=3600, s-maxage=604800, stale-while-revalidate=86400",
+      },
+    },
   );
 }

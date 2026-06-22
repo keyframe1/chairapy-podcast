@@ -69,7 +69,9 @@ export default function AudioPlayer({
     const audio = audioRef.current;
     if (!audio) return;
     if (audio.paused) {
-      void audio.play();
+      // Swallow the rejection (e.g. an interrupted/blocked play) so it never
+      // surfaces as an unhandled promise rejection / reported error.
+      audio.play().catch(() => {});
     } else {
       audio.pause();
     }

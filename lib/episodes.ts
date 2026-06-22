@@ -40,10 +40,30 @@ export function getRelatedEpisodes(current: Episode, count = 3): Episode[] {
   return out;
 }
 
-export function formatPublishedDate(iso: string): string {
-  if (!iso || iso === "TBD") return "";
+/**
+ * Parse a date string defensively. Safari throws "Invalid Date" on many
+ * non-ISO strings Chrome tolerates (e.g. "2025-03-04 12:00", "2025/03/04"),
+ * which would then crash any `.toLocaleDateString()` / getter call. So we
+ * trust only ISO 8601: a bare "YYYY-MM-DD" is pinned to UTC midnight, and the
+ * space- and slash-separated forms are rejected. Returns null when the input
+ * can't be trusted, so callers never compute on an Invalid Date.
+ */
+export function parseIsoDate(value: string | null | undefined): Date | null {
+  if (!value) return null;
+  const raw = value.trim();
+  if (!raw || raw === "TBD") return null;
+  // Bare calendar date → pin to UTC midnight so it parses identically in every
+  // engine (Safari treats "2025-03-04" as UTC but "2025-03-04 12:00" as Invalid).
+  const iso = /^\d{4}-\d{2}-\d{2}$/.test(raw) ? `${raw}T00:00:00Z` : raw;
+  // Require a real ISO shape (date, optionally followed by a "T" time part).
+  if (!/^\d{4}-\d{2}-\d{2}(T.*)?$/.test(iso)) return null;
   const date = new Date(iso);
-  if (Number.isNaN(date.getTime())) return iso;
+  return Number.isNaN(date.getTime()) ? null : date;
+}
+
+export function formatPublishedDate(iso: string): string {
+  const date = parseIsoDate(iso);
+  if (!date) return "";
   return date.toLocaleDateString("en-US", {
     year: "numeric",
     month: "long",

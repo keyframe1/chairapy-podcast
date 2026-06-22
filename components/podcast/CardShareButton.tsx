@@ -1,6 +1,7 @@
 "use client";
 
 import { useEpisodeShare } from "../../lib/useEpisodeShare";
+import ShareToast from "./ShareToast";
 
 type Props = {
   slug: string;
@@ -16,21 +17,24 @@ type Props = {
  * button inside an anchor.
  */
 export default function CardShareButton({ slug, title, episodeNumber }: Props) {
-  const { copied, shareLink } = useEpisodeShare({ slug, title, episodeNumber });
+  const { copied, toast, manualUrl, dismissManual, shareLink } = useEpisodeShare(
+    { slug, title, episodeNumber },
+  );
 
   return (
-    <button
-      type="button"
-      className="card-share"
-      onClick={(e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        shareLink();
-      }}
-      aria-label={`Share "${title}"`}
-      title="Share episode"
-    >
-      {copied ? (
+    <>
+      <button
+        type="button"
+        className="card-share"
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          shareLink();
+        }}
+        aria-label={`Share "${title}"`}
+        title="Share episode"
+      >
+        {copied ? (
         <svg
           width="16"
           height="16"
@@ -62,7 +66,13 @@ export default function CardShareButton({ slug, title, episodeNumber }: Props) {
           <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
           <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
         </svg>
-      )}
-    </button>
+        )}
+      </button>
+      <ShareToast
+        message={toast}
+        manualUrl={manualUrl}
+        onDismissManual={dismissManual}
+      />
+    </>
   );
 }
