@@ -661,6 +661,68 @@ a.editorial-link:hover,
 }
 
 /* =====================================================================
+ * Transcript — SSR'd, indexable episode text inside a native <details>. The
+ * body lives in the DOM even while collapsed (crawlable), no client JS needed.
+ * Speaker turns get an acid-green label; everything matches the show-notes type.
+ * ===================================================================== */
+.transcript {
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  background: rgba(139, 47, 230, 0.05);
+}
+.transcript__summary {
+  display: flex;
+  align-items: baseline;
+  gap: 0.9rem;
+  padding: 1.1rem 1.35rem;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+}
+/* Hide the native disclosure triangle (incl. Safari/WebKit). */
+.transcript__summary::-webkit-details-marker {
+  display: none;
+}
+/* Custom chevron that turns when the panel opens. */
+.transcript__summary::after {
+  content: "▸";
+  margin-left: auto;
+  color: var(--acid-green);
+  transition: transform 0.2s ease;
+}
+.transcript[open] .transcript__summary::after {
+  transform: rotate(90deg);
+}
+.transcript__summary:hover .transcript__hint,
+.transcript__summary:focus-visible .transcript__hint {
+  color: var(--text-bright);
+}
+.transcript__hint {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  transition: color 0.2s ease;
+}
+.transcript__body {
+  padding: 0 1.35rem 1.5rem;
+  max-width: 68ch;
+}
+.transcript__speaker {
+  color: var(--acid-green);
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+@media (prefers-reduced-motion: reduce) {
+  .transcript__summary::after {
+    transition: none;
+  }
+}
+
+/* =====================================================================
  * Share toast — branded confirmation that floats above the page after a
  * share/copy/download (portaled to <body>). Also hosts the selectable-URL
  * last resort when the clipboard API is unavailable.

@@ -13,6 +13,7 @@ import MarkAsListened from "../../../components/podcast/MarkAsListened";
 import ShareNudge from "../../../components/podcast/ShareNudge";
 import PlatformLink from "../../../components/podcast/PlatformLink";
 import FollowShow from "../../../components/podcast/FollowShow";
+import Transcript from "../../../components/podcast/Transcript";
 import CTAButton from "../../../components/ui/CTAButton";
 
 import {
@@ -110,6 +111,21 @@ export default function EpisodeDetailPage({
   const linkedGuests = findGuestsForEpisode(episode.slug);
   const pullQuote = extractPullQuote(episode.longDescription, episode.description);
 
+  // When a transcript exists, attach it to the episode's AudioObject via the
+  // schema.org `transcript` property (verified on schema.org: Text, on
+  // AudioObject/VideoObject). The SSR'd transcript body carries the value
+  // regardless; this is the structured-data bonus.
+  const audio =
+    episode.transcript
+      ? {
+          audio: {
+            "@type": "AudioObject",
+            ...(episode.audioUrl ? { contentUrl: episode.audioUrl } : {}),
+            transcript: episode.transcript,
+          },
+        }
+      : {};
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "PodcastEpisode",
@@ -118,6 +134,7 @@ export default function EpisodeDetailPage({
     description: episode.longDescription ?? episode.description,
     datePublished: episode.publishedDate,
     url: `${SITE_URL}/episodes/${episode.slug}`,
+    ...audio,
     partOfSeries: {
       "@type": "PodcastSeries",
       name: showInfo.showName,
@@ -324,6 +341,9 @@ export default function EpisodeDetailPage({
             </div>
           </Container>
         </section>
+
+        {/* Transcript — SSR'd, indexable text. Renders nothing when absent. */}
+        {episode.transcript && <Transcript transcript={episode.transcript} />}
 
         {/* Email signup */}
         <section className="py-14 border-t border-border">
