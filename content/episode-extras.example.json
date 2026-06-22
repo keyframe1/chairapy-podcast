@@ -1,0 +1,9 @@
+{
+  "_comment": "COPY entries into episode-extras.json (this .example file is just documentation and is never read at build time). Key each entry by the episode's slug (preferred — readable, e.g. \"ep-63-seeking-god\") or its id (the RSS guid). Every field is optional. The Spotify fetch never touches episode-extras.json, so anything you put there survives every re-fetch. spotifyUrl is NOT here — the fetch captures it automatically from the feed.",
+
+  "ep-63-seeking-god": {
+    "appleUrl": "https://podcasts.apple.com/us/podcast/seeking-god/id1606793460?i=1000000000000",
+    "amazonUrl": "https://music.amazon.com/podcasts/.../episodes/...",
+    "transcript": "Eric: Welcome back to the show. Today we're talking about finding your way back.\n\nGuest: Thanks for having me. It's been a long road.\n\nEric: Start wherever you want — the beginning, the middle, wherever it makes sense to you."
+  }
+}

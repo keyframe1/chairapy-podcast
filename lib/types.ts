@@ -15,6 +15,38 @@ export interface Episode {
   thumbnailUrl?: string | null;
   audioUrl?: string | null;
   duration?: string | null; // "hh:mm:ss" from RSS itunes:duration
+  /**
+   * Per-episode Spotify URL. Captured automatically by the fetch script from
+   * the feed's per-item link (an open.spotify.com / podcasters.spotify.com
+   * episode page), so it costs nothing to keep current. Null when the feed
+   * carried no usable link.
+   */
+  spotifyUrl?: string | null;
+  /**
+   * Per-episode deep links + transcript merged in from the durable extras
+   * layer (content/episode-extras.json). The fetch never writes these, so a
+   * hand-entered value survives every re-fetch. See {@link EpisodeExtras}.
+   */
+  appleUrl?: string | null;
+  amazonUrl?: string | null;
+  transcript?: string | null;
+}
+
+/**
+ * Hand-edited, fetch-proof additions for a single episode. Lives in
+ * content/episode-extras.json keyed by episode slug (preferred, human-readable)
+ * or id (the RSS guid). Every field is optional; an episode with no entry — or
+ * an entry with only some fields set — still builds and renders cleanly. The
+ * Spotify fetch NEVER touches this file, so anything here is durable.
+ */
+export interface EpisodeExtras {
+  /** Apple Podcasts URL for THIS episode (not the show). */
+  appleUrl?: string | null;
+  /** Amazon Music URL for THIS episode (not the show). */
+  amazonUrl?: string | null;
+  /** Full transcript, plain text. Blank lines separate paragraphs; a leading
+   *  "Speaker:" on a paragraph is rendered as a speaker label. */
+  transcript?: string | null;
 }
 
 export interface GuestImage {

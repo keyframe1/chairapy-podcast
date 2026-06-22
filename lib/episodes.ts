@@ -1,7 +1,11 @@
 import episodesData from "../content/episodes.json";
 import type { Episode } from "./types";
+import { mergeEpisodeExtras } from "./episode-extras";
 
-const raw = episodesData as Episode[];
+// Merge the durable extras layer (Apple/Amazon deep links, transcript) onto the
+// Spotify-derived records once, at module load. The fetch never writes those
+// fields, so this is where they enter the data the site renders.
+const raw = (episodesData as Episode[]).map(mergeEpisodeExtras);
 
 export function getAllEpisodes(): Episode[] {
   return [...raw].sort((a, b) => b.episodeNumber - a.episodeNumber);

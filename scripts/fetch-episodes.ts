@@ -33,6 +33,7 @@ type SpotifyEpisode = {
   description: string;
   release_date: string;
   duration_ms: number;
+  external_urls?: { spotify?: string };
 };
 
 type SpotifyEpisodesPage = {
@@ -167,6 +168,11 @@ function transformEpisode(
     guestName: null,
     publishedDate: spotifyEp.release_date,
     spotifyEmbedUrl: `https://open.spotify.com/embed/episode/${spotifyEp.id}`,
+    // Per-episode Spotify deep link, straight from the API. Falls back to the
+    // canonical open.spotify.com/episode/<id> form if the field is ever absent.
+    spotifyUrl:
+      spotifyEp.external_urls?.spotify ??
+      `https://open.spotify.com/episode/${spotifyEp.id}`,
     applePodcastsUrl: null,
     amazonMusicUrl: null,
     description: spotifyEp.description.slice(0, 200),

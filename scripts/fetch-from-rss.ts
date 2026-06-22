@@ -62,6 +62,27 @@ function parseEpisodeNumber(title: string, description: string): number | null {
   return null;
 }
 
+/**
+ * The feed's per-item <link> for this show is the episode's Spotify page
+ * (open.spotify.com / podcasters.spotify.com / anchor.fm episode URL). Capture
+ * it as the per-episode Spotify deep link when it points at a Spotify-family
+ * domain; otherwise leave it null and let the page fall back to the show link.
+ */
+function spotifyUrlFromLink(link: string): string | null {
+  if (!/^https?:\/\//.test(link)) return null;
+  try {
+    const host = new URL(link).hostname.replace(/^www\./, "");
+    const ok =
+      host === "open.spotify.com" ||
+      host === "podcasters.spotify.com" ||
+      host === "creators.spotify.com" ||
+      host === "anchor.fm";
+    return ok ? link : null;
+  } catch {
+    return null;
+  }
+}
+
 function cleanTitle(raw: string): string {
   // Titles like "9 Lives | Ep 15 | Eric's ADHD Experience"
   // Strip the "| Ep NN | ..." suffix, keeping just the topic.
@@ -154,6 +175,8 @@ function transformToEpisodes(items: RssItem[]): Episode[] {
       // (format: https://open.spotify.com/embed/episode/<id>) — a prior value
       // is preserved across re-fetches below. See README "Spotify embeds".
       spotifyEmbedUrl: null,
+      // Per-episode Spotify deep link, captured free from the feed's <link>.
+      spotifyUrl: spotifyUrlFromLink(item.link),
       applePodcastsUrl: null,
       amazonMusicUrl: null,
       description: shortDescription,
@@ -200,6 +223,7 @@ function preserveFields(
       featurePreserved = true;
     }
     if (prior.spotifyEmbedUrl) next.spotifyEmbedUrl = prior.spotifyEmbedUrl;
+    if (prior.spotifyUrl && !next.spotifyUrl) next.spotifyUrl = prior.spotifyUrl;
     if (prior.applePodcastsUrl) next.applePodcastsUrl = prior.applePodcastsUrl;
     if (prior.amazonMusicUrl) next.amazonMusicUrl = prior.amazonMusicUrl;
     if (prior.thumbnailUrl) next.thumbnailUrl = prior.thumbnailUrl;
