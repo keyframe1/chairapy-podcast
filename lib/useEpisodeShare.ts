@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SITE_URL } from "./site";
 import { isAbortError, triggerBlobDownload } from "./share";
 
@@ -34,6 +34,18 @@ export function useEpisodeShare({ slug, title, episodeNumber, onShared }: Option
   const [busy, setBusy] = useState<ShareFormat | null>(null);
   const [toast, setToast] = useState<string | null>(null);
   const [manualUrl, setManualUrl] = useState<string | null>(null);
+
+  // Whether the OS share sheet is available, so callers can label the control
+  // honestly ("Share" on mobile, "Copy link" on desktop). Detected after mount
+  // — never during render — so the server and first client paint agree and
+  // there's no hydration mismatch.
+  const [canNativeShare, setCanNativeShare] = useState(false);
+  useEffect(() => {
+    setCanNativeShare(
+      typeof navigator !== "undefined" &&
+        typeof navigator.share === "function",
+    );
+  }, []);
 
   // Prefer the live origin (works in dev + prod); fall back to the canonical.
   const base =
@@ -144,6 +156,7 @@ export function useEpisodeShare({ slug, title, episodeNumber, onShared }: Option
     busy,
     toast,
     manualUrl,
+    canNativeShare,
     dismissManual,
     shareLink,
     shareImage,
