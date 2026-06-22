@@ -615,6 +615,52 @@ a.editorial-link:hover,
 }
 
 /* =====================================================================
+ * Follow the show — show-level CTA on the episode page. A follow earns every
+ * future episode, so the band is styled to read at least as prominently as the
+ * "Listen now" button: a bordered panel with a faint accent wash and a 2-up
+ * grid of glowing platform cards.
+ * ===================================================================== */
+.follow-show {
+  padding: 3.5rem 0;
+  border-top: 1px solid var(--color-border);
+}
+.follow-show__band {
+  padding: 1.75rem clamp(1.25rem, 4vw, 2.5rem) 2rem;
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+  background:
+    radial-gradient(
+      120% 140% at 0% 0%,
+      rgba(57, 255, 20, 0.07),
+      transparent 55%
+    ),
+    rgba(139, 47, 230, 0.06);
+}
+.follow-show__title {
+  margin-top: 0.6rem;
+  font-size: clamp(1.9rem, 5vw, 2.75rem);
+  line-height: 1.0;
+  letter-spacing: -0.03em;
+}
+.follow-show__sub {
+  margin-top: 0.85rem;
+  max-width: 46ch;
+  font-size: 1.0625rem;
+  line-height: 1.5;
+}
+.follow-show__platforms {
+  margin-top: 1.6rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+@media (max-width: 560px) {
+  .follow-show__platforms {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =====================================================================
  * Share toast — branded confirmation that floats above the page after a
  * share/copy/download (portaled to <body>). Also hosts the selectable-URL
  * last resort when the clipboard API is unavailable.

@@ -2,10 +2,7 @@ import Container from "../../components/ui/Container";
 import PlatformLink from "../../components/podcast/PlatformLink";
 import HeroDiagonal from "../../components/podcast/HeroDiagonal";
 import Waveform from "../../components/podcast/Waveform";
-import showInfoData from "../../content/show-info.json";
-import type { ShowInfo } from "../../lib/types";
-
-const showInfo = showInfoData as ShowInfo;
+import { showInfo, showLinks } from "../../lib/show";
 
 export const metadata = {
   title: "Subscribe",
@@ -46,25 +43,25 @@ export default function SubscribePage() {
             <div className="mt-8 flex flex-col gap-3 platform-stagger" data-reveal>
               <PlatformLink
                 platform="spotify"
-                href={showInfo.distributionLinks.spotify}
+                href={showLinks.spotify}
                 iconSize={18}
                 variant="card"
               />
               <PlatformLink
                 platform="apple"
-                href={showInfo.distributionLinks.apple}
+                href={showLinks.apple}
                 iconSize={18}
                 variant="card"
               />
               <PlatformLink
                 platform="amazon"
-                href={showInfo.distributionLinks.amazon}
+                href={showLinks.amazon}
                 iconSize={18}
                 variant="card"
               />
               <PlatformLink
                 platform="rss"
-                href={showInfo.distributionLinks.rss}
+                href={showLinks.rss}
                 iconSize={18}
                 variant="card"
               />

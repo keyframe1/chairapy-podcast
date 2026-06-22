@@ -12,6 +12,7 @@ import EpisodeListRow from "../../../components/podcast/EpisodeListRow";
 import MarkAsListened from "../../../components/podcast/MarkAsListened";
 import ShareNudge from "../../../components/podcast/ShareNudge";
 import PlatformLink from "../../../components/podcast/PlatformLink";
+import FollowShow from "../../../components/podcast/FollowShow";
 import CTAButton from "../../../components/ui/CTAButton";
 
 import {
@@ -21,14 +22,13 @@ import {
   formatPublishedDate,
 } from "../../../lib/episodes";
 import { formatDurationLabel } from "../../../lib/duration";
+import { showInfo, showLinks, resolveEpisodePlatformUrl } from "../../../lib/show";
 
 import guestsData from "../../../content/guests.json";
-import showInfoData from "../../../content/show-info.json";
-import type { Guest, ShowInfo } from "../../../lib/types";
+import type { Guest } from "../../../lib/types";
 import { SITE_URL } from "../../../lib/site";
 
 const guests = guestsData as Guest[];
-const showInfo = showInfoData as ShowInfo;
 
 export function generateStaticParams() {
   return getAllEpisodes().map((ep) => ({ slug: ep.slug }));
@@ -214,7 +214,7 @@ export default function EpisodeDetailPage({
               <p className="text-center font-serif-body italic text-fg-muted">
                 Audio isn't available right now.{" "}
                 <a
-                  href={showInfo.distributionLinks.spotify}
+                  href={showLinks.spotify}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-accent editorial-link underline underline-offset-4"
@@ -225,22 +225,26 @@ export default function EpisodeDetailPage({
               </p>
             )}
 
-            <div className="mt-6 flex flex-wrap gap-3">
+            {/* Open THIS episode on each platform. A missing per-episode URL
+                falls back to the show link (resolveEpisodePlatformUrl) so a
+                button is never dead; in dev it warns naming the gap. */}
+            <p className="eyebrow mt-8 mb-3">Open this episode in</p>
+            <div className="flex flex-wrap gap-3">
               <PlatformLink
                 platform="spotify"
-                href={showInfo.distributionLinks.spotify}
+                href={resolveEpisodePlatformUrl(episode, "spotify")}
                 variant="pill"
                 iconSize={16}
               />
               <PlatformLink
                 platform="apple"
-                href={showInfo.distributionLinks.apple}
+                href={resolveEpisodePlatformUrl(episode, "apple")}
                 variant="pill"
                 iconSize={16}
               />
               <PlatformLink
                 platform="amazon"
-                href={showInfo.distributionLinks.amazon}
+                href={resolveEpisodePlatformUrl(episode, "amazon")}
                 variant="pill"
                 iconSize={16}
               />
@@ -254,6 +258,10 @@ export default function EpisodeDetailPage({
             />
           </Container>
         </section>
+
+        {/* Follow the show — show-level CTA. A follow earns every future
+            episode, so it sits high and reads as prominent as "Listen now". */}
+        <FollowShow />
 
         {/* Show notes — body copy with neon drop cap */}
         <section className="pb-16 md:pb-20">
